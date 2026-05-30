@@ -2318,7 +2318,7 @@ const HomePage = ({ navigateTo, globalProducts }) => {
           </div>
           
           <div style={{ position: 'relative' }}>
-            <div className="site-step-grid" style={{ filter: 'blur(3px)', opacity: 0.3, pointerEvents: 'none' }}>
+            <div className="site-step-grid" style={{ filter: 'none', opacity: 1, pointerEvents: 'auto' }}>
               <div className="site-step-card fade-in-up">
                 <div className="site-step-icon"><Zap size={32} /></div>
                 <h3>1. Targeted Training</h3>
@@ -2336,64 +2336,44 @@ const HomePage = ({ navigateTo, globalProducts }) => {
               </div>
             </div>
 
-            <div style={{
-              position: 'absolute',
-              inset: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              background: 'rgba(10, 10, 10, 0.65)',
-              backdropFilter: 'blur(8px)',
-              WebkitBackdropFilter: 'blur(8px)',
-              border: '1px solid rgba(255, 255, 255, 0.05)',
-              borderRadius: '16px',
-              padding: '2.5rem',
-              textAlign: 'center',
-              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5)',
-              zIndex: 5
-            }} className="fade-in-up">
-              <div style={{
-                width: '70px',
-                height: '70px',
-                background: 'rgba(0, 230, 118, 0.1)',
-                border: '1px solid rgba(0, 230, 118, 0.3)',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: '1.5rem',
-                color: 'var(--accent-green)',
-                boxShadow: '0 0 30px rgba(0, 230, 118, 0.25)',
-                animation: 'pulse 2s infinite ease-in-out'
-              }}>
-                <Sliders size={32} />
+            <div className="fade-in-up" style={{ position: 'relative', zIndex: 10, paddingTop: '2rem' }}>
+              <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
+                <h3 style={{ fontSize: '1.75rem', fontWeight: '700', color: '#ffffff', letterSpacing: '-0.5px', marginBottom: '0.5rem' }}>
+                  Free <span style={{ color: 'var(--accent-green)' }}>Optimization Tools</span>
+                </h3>
+                <p style={{ color: 'var(--text-muted-site)', fontSize: '0.95rem' }}>Click any tool to launch instantly — no sign-up required.</p>
               </div>
-              <h3 style={{ fontSize: '1.75rem', marginBottom: '0.75rem', fontWeight: '700', color: '#ffffff', letterSpacing: '-0.5px' }}>
-                Free <span style={{ color: 'var(--accent-green)' }}>Optimization Dashboards</span>
-              </h3>
-              <p style={{ maxWidth: '600px', fontSize: '1.05rem', color: 'var(--text-muted-site)', lineHeight: '1.6', marginBottom: '2rem' }}>
-                Use our interactive biometrics calculators, testosterone vitality index, biological age metrics, and personalized meal/sleep builders to optimize your longevity.
-              </p>
-              <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <span style={{
-                  fontSize: '0.8rem',
-                  textTransform: 'uppercase',
-                  color: 'var(--accent-green)',
-                  fontWeight: '700',
-                  letterSpacing: '1px',
-                  padding: '8px 20px',
-                  borderRadius: '50px',
-                  background: 'rgba(0, 230, 118, 0.08)',
-                  border: '1px solid rgba(0, 230, 118, 0.2)'
-                }}>Beta Active</span>
-                <button 
-                  onClick={() => navigateTo('tools')}
-                  className="site-btn-primary" 
-                  style={{ padding: '8px 24px', fontSize: '0.85rem' }}
-                >
-                  Launch Diagnostic Tools <ArrowRight size={16} style={{ marginLeft: '6px', verticalAlign: 'middle' }} />
-                </button>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
+                {[
+                  { icon: <Activity size={20} />, label: 'BMI & Body Composition', desc: 'Calculate your BMI and optimal weight ranges.' },
+                  { icon: <Zap size={20} />, label: 'Testosterone Assessment', desc: 'Assess your biological vitality in 60 seconds.' },
+                  { icon: <Target size={20} />, label: 'Biological Age Calculator', desc: 'Find your biological age vs. chronological age.' },
+                  { icon: <HeartPulse size={20} />, label: 'Healthspan & Longevity Score', desc: 'Evaluate your cardio, grip, and wellness markers.' },
+                  { icon: <Moon size={20} />, label: 'Sleep Quality Analyzer', desc: 'Analyze your sleep and circadian efficiency.' },
+                  { icon: <Apple size={20} />, label: 'Personalized Meal Builder', desc: 'Get a custom meal plan tailored to your goals.' },
+                ].map((tool, i) => (
+                  <button
+                    key={i}
+                    onClick={() => navigateTo('tools')}
+                    style={{
+                      display: 'flex', alignItems: 'flex-start', gap: '1rem',
+                      background: 'rgba(255,255,255,0.04)',
+                      border: '1px solid rgba(0,230,118,0.15)',
+                      borderRadius: '12px', padding: '1rem 1.25rem',
+                      cursor: 'pointer', textAlign: 'left',
+                      transition: 'all 0.2s ease',
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,230,118,0.08)'; e.currentTarget.style.borderColor = 'rgba(0,230,118,0.4)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(0,230,118,0.15)'; }}
+                  >
+                    <div style={{ color: 'var(--accent-green)', marginTop: '2px', flexShrink: 0 }}>{tool.icon}</div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontWeight: '700', color: '#ffffff', fontSize: '0.9rem', marginBottom: '2px' }}>{tool.label}</div>
+                      <div style={{ color: 'var(--text-muted-site)', fontSize: '0.8rem', lineHeight: '1.4' }}>{tool.desc}</div>
+                    </div>
+                    <ChevronRight size={16} style={{ color: 'var(--accent-green)', marginTop: '2px', flexShrink: 0 }} />
+                  </button>
+                ))}
               </div>
             </div>
           </div>
