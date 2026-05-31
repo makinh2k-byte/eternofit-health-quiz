@@ -2307,6 +2307,7 @@ const HomePage = ({ navigateTo, globalProducts }) => {
               { icon: <HeartPulse size={20} />, label: 'Healthspan & Longevity Score', desc: 'Evaluate your cardio, grip, and wellness markers.' },
               { icon: <Moon size={20} />, label: 'Sleep Quality Analyzer', desc: 'Analyze your sleep and circadian efficiency.' },
               { icon: <Apple size={20} />, label: 'Personalized Meal Builder', desc: 'Get a custom meal plan tailored to your goals.' },
+              { icon: <Brain size={20} />, label: 'ADHD Screening Quiz', desc: 'Identify attention and focus patterns in 2 minutes.' },
             ].map((tool, i) => (
               <button
                 key={i}

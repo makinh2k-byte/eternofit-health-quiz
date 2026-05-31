@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { 
   Activity, 
   Flame, 
@@ -31,7 +31,7 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
     const handleUrlChange = () => {
       const urlParams = new URLSearchParams(window.location.search);
       const toolParam = urlParams.get('tool');
-      if (toolParam && ['bmi', 'testosterone', 'realage', 'longevity', 'sleep', 'meal', 'stress'].includes(toolParam)) {
+      if (toolParam && ['bmi', 'testosterone', 'realage', 'longevity', 'sleep', 'meal', 'stress', 'adhd'].includes(toolParam)) {
         setActiveTab(toolParam);
       }
     };
@@ -98,6 +98,57 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
   });
   const [mealResult, setMealResult] = useState(null);
 
+  // Tool 8: ADHD Screening State
+  const [adhdAnswers, setAdhdAnswers] = useState({ q1: 0, q2: 0, q3: 0, q4: 0, q5: 0, q6: 0 });
+  const [adhdResult, setAdhdResult] = useState(null);
+
+  // ADHD Toolkit — Sub-tool navigation
+  const [adhdSubTool, setAdhdSubTool] = useState('screening');
+
+  // Brain Dump
+  const [brainDump, setBrainDump] = useState(() => { try { return localStorage.getItem('ef_braindump') || ''; } catch { return ''; } });
+
+  // Pomodoro
+  const [pomodoroMode, setPomodoroMode] = useState('work'); // 'work' | 'break'
+  const [pomodoroTime, setPomodoroTime] = useState(25 * 60);
+  const [pomodoroRunning, setPomodoroRunning] = useState(false);
+  const [pomodoroSessions, setPomodoroSessions] = useState(0);
+
+  // One Task
+  const [oneTaskList, setOneTaskList] = useState(() => { try { return JSON.parse(localStorage.getItem('ef_onetasks') || '[]'); } catch { return []; } });
+  const [oneTaskInput, setOneTaskInput] = useState('');
+
+  // Task Breakdown
+  const [bigTask, setBigTask] = useState('');
+  const [subtasks, setSubtasks] = useState([]);
+  const [subtaskInput, setSubtaskInput] = useState('');
+
+  // Visual Timer
+  const [visualDuration, setVisualDuration] = useState(10);
+  const [visualRemaining, setVisualRemaining] = useState(600);
+  const [visualRunning, setVisualRunning] = useState(false);
+
+  // Daily Top 3
+  const [topThree, setTopThree] = useState(() => { try { return JSON.parse(localStorage.getItem('ef_top3') || '["","",""]'); } catch { return ['','','']; } });
+
+  // Quick Capture
+  const [captureInput, setCaptureInput] = useState('');
+  const [captureItems, setCaptureItems] = useState(() => { try { return JSON.parse(localStorage.getItem('ef_capture') || '[]'); } catch { return []; } });
+
+  // Body Double Timer
+  const [bdSession, setBdSession] = useState(25);
+  const [bdElapsed, setBdElapsed] = useState(0);
+  const [bdRunning, setBdRunning] = useState(false);
+
+  // Habits
+  const [habits, setHabits] = useState(() => { try { return JSON.parse(localStorage.getItem('ef_habits') || '[]'); } catch { return []; } });
+  const [habitInput, setHabitInput] = useState('');
+
+  // Ambient Sounds
+  const [activeSound, setActiveSound] = useState(null);
+  const audioCtxRef = useRef(null);
+  const soundNodeRef = useRef(null);
+
   // Tool 7: Stress Checker State
   const [stressAnswers, setStressAnswers] = useState({ q1: 0, q2: 0, q3: 0, q4: 0, q5: 0 });
   const [stressResult, setStressResult] = useState(null);
@@ -139,6 +190,53 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
       if (interval) clearInterval(interval);
     };
   }, [isBreathingActive, breathPhase]);
+
+  // ADHD Toolkit — localStorage persistence
+  useEffect(() => { try { localStorage.setItem('ef_braindump', brainDump); } catch {} }, [brainDump]);
+  useEffect(() => { try { localStorage.setItem('ef_onetasks', JSON.stringify(oneTaskList)); } catch {} }, [oneTaskList]);
+  useEffect(() => { try { localStorage.setItem('ef_top3', JSON.stringify(topThree)); } catch {} }, [topThree]);
+  useEffect(() => { try { localStorage.setItem('ef_capture', JSON.stringify(captureItems)); } catch {} }, [captureItems]);
+  useEffect(() => { try { localStorage.setItem('ef_habits', JSON.stringify(habits)); } catch {} }, [habits]);
+
+  // Pomodoro timer
+  useEffect(() => {
+    if (!pomodoroRunning) return;
+    const id = setInterval(() => {
+      setPomodoroTime(prev => {
+        if (prev <= 1) {
+          adhdPlayBeep();
+          if (pomodoroMode === 'work') { setPomodoroSessions(s => s + 1); setPomodoroMode('break'); return 5 * 60; }
+          else { setPomodoroMode('work'); return 25 * 60; }
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(id);
+  }, [pomodoroRunning, pomodoroMode]);
+
+  // Visual timer
+  useEffect(() => {
+    if (!visualRunning) return;
+    const id = setInterval(() => {
+      setVisualRemaining(prev => {
+        if (prev <= 1) { setVisualRunning(false); adhdPlayBeep(); return 0; }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(id);
+  }, [visualRunning]);
+
+  // Body-double timer
+  useEffect(() => {
+    if (!bdRunning) return;
+    const id = setInterval(() => {
+      setBdElapsed(prev => {
+        if (prev >= bdSession * 60) { setBdRunning(false); adhdPlayBeep(); return prev; }
+        return prev + 1;
+      });
+    }, 1000);
+    return () => clearInterval(id);
+  }, [bdRunning, bdSession]);
 
   // Logic 1: BMI Calculation
   const calculateBMI = () => {
@@ -530,6 +628,87 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
     });
   };
 
+  // ADHD Toolkit — Helper functions
+  const adhdPlayBeep = () => {
+    try {
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.frequency.value = 880; osc.type = 'sine';
+      gain.gain.setValueAtTime(0.4, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+      osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.8);
+    } catch {}
+  };
+
+  const adhdStartSound = (type) => {
+    adhdStopSound();
+    try {
+      const ctx = new AudioContext();
+      audioCtxRef.current = ctx;
+      if (type === 'brown') {
+        const bufSize = 4096;
+        const node = ctx.createScriptProcessor(bufSize, 1, 1);
+        let last = 0;
+        node.onaudioprocess = (e) => {
+          const out = e.outputBuffer.getChannelData(0);
+          for (let i = 0; i < bufSize; i++) { const w = Math.random() * 2 - 1; out[i] = (last + 0.02 * w) / 1.02; last = out[i]; out[i] *= 3.5; }
+        };
+        node.connect(ctx.destination); soundNodeRef.current = node;
+      } else if (type === 'white') {
+        const bufSize = 4096;
+        const node = ctx.createScriptProcessor(bufSize, 1, 1);
+        node.onaudioprocess = (e) => { const out = e.outputBuffer.getChannelData(0); for (let i = 0; i < bufSize; i++) out[i] = (Math.random() * 2 - 1) * 0.25; };
+        node.connect(ctx.destination); soundNodeRef.current = node;
+      } else if (type === 'rain') {
+        const bufSize = 4096;
+        const node = ctx.createScriptProcessor(bufSize, 1, 1);
+        let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+        node.onaudioprocess = (e) => {
+          const out = e.outputBuffer.getChannelData(0);
+          for (let i = 0; i < bufSize; i++) {
+            const w = Math.random() * 2 - 1;
+            b0=0.99886*b0+w*0.0555179; b1=0.99332*b1+w*0.0750759; b2=0.96900*b2+w*0.1538520;
+            b3=0.86650*b3+w*0.3104856; b4=0.55000*b4+w*0.5329522; b5=-0.7616*b5-w*0.0168980;
+            out[i]=(b0+b1+b2+b3+b4+b5+b6+w*0.5362)*0.11; b6=w*0.115926;
+          }
+        };
+        node.connect(ctx.destination); soundNodeRef.current = node;
+      } else if (type === 'binaural') {
+        const oscL = ctx.createOscillator(); const oscR = ctx.createOscillator();
+        const merger = ctx.createChannelMerger(2); const gain = ctx.createGain();
+        gain.gain.value = 0.15;
+        oscL.frequency.value = 200; oscR.frequency.value = 240;
+        oscL.connect(merger, 0, 0); oscR.connect(merger, 0, 1);
+        merger.connect(gain); gain.connect(ctx.destination);
+        oscL.start(); oscR.start();
+        soundNodeRef.current = { disconnect: () => { try { oscL.stop(); oscR.stop(); merger.disconnect(); } catch {} } };
+      }
+      setActiveSound(type);
+    } catch (err) { console.error(err); }
+  };
+
+  const adhdStopSound = () => {
+    try { if (soundNodeRef.current) { soundNodeRef.current.disconnect(); soundNodeRef.current = null; } } catch {}
+    try { if (audioCtxRef.current) { audioCtxRef.current.close(); audioCtxRef.current = null; } } catch {}
+    setActiveSound(null);
+  };
+
+  const adhdFmtTime = (secs) => `${String(Math.floor(secs/60)).padStart(2,'0')}:${String(secs%60).padStart(2,'0')}`;
+
+  const adhdTodayKey = () => new Date().toDateString();
+
+  const adhdCheckHabit = (id) => {
+    setHabits(prev => prev.map(h => {
+      if (h.id !== id) return h;
+      const today = adhdTodayKey();
+      if (h.lastChecked === today) return h;
+      const yesterday = new Date(Date.now() - 86400000).toDateString();
+      return { ...h, lastChecked: today, streak: h.lastChecked === yesterday ? h.streak + 1 : 1 };
+    }));
+  };
+
   // Recommended Products Logic
   const renderRecommendedProducts = () => {
     if (!globalProducts || globalProducts.length === 0) return null;
@@ -715,6 +894,25 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
             }
           }
         };
+      case 'adhd':
+        return {
+          title: "Free ADHD Self-Screening Quiz | EternoFit",
+          description: "Take our ASRS-based ADHD screening quiz to identify attention, focus, and executive function patterns. Educational tool — not a clinical diagnosis.",
+          keywords: "adhd test, adhd quiz, adhd self assessment, adult adhd screening, focus test, attention deficit, executive function quiz",
+          url: "https://eternofit.com/tools?tool=adhd",
+          schema: {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "EternoFit ADHD Self-Screening Quiz",
+            "operatingSystem": "All",
+            "applicationCategory": "HealthApplication",
+            "offers": {
+              "@type": "Offer",
+              "price": "0.00",
+              "priceCurrency": "USD"
+            }
+          }
+        };
       default:
         return {
           title: "Clinical Health Tools & Calculators | EternoFit",
@@ -854,6 +1052,21 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
             >
               <HeartPulse size={18} style={{ color: activeTab === 'stress' ? 'var(--accent-green)' : 'inherit' }} />
               <span>Stress Checker</span>
+            </button>
+
+            <button
+              className={`tool-tab-btn ${activeTab === 'adhd' ? 'active' : ''}`}
+              onClick={() => handleTabSelect('adhd')}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '12px', padding: '1rem 1.25rem', borderRadius: '10px',
+                background: activeTab === 'adhd' ? 'rgba(0, 230, 118, 0.08)' : 'var(--bg-surface)',
+                border: activeTab === 'adhd' ? '1px solid rgba(0, 230, 118, 0.3)' : '1px solid rgba(255,255,255,0.04)',
+                color: activeTab === 'adhd' ? 'var(--text-main-site)' : 'var(--text-muted-site)',
+                cursor: 'pointer', textAlign: 'left', fontWeight: '600', transition: 'all 0.25s ease'
+              }}
+            >
+              <Brain size={18} style={{ color: activeTab === 'adhd' ? 'var(--accent-green)' : 'inherit' }} />
+              <span>ADHD Screening</span>
             </button>
           </div>
 
@@ -1788,7 +2001,331 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
               </div>
             )}
 
-            { (bmiResult || tResult || realAgeResult || longevityResult || sleepResult || mealResult || stressResult) && renderRecommendedProducts() }
+            {/* TOOL 8: ADHD TOOLKIT */}
+            {activeTab === 'adhd' && (
+              <div className="tool-content">
+                <h2 style={{ fontSize: '1.75rem', fontWeight: '700', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <Brain color="var(--accent-green)" /> ADHD Toolkit
+                </h2>
+                <p style={{ color: 'var(--text-muted-site)', marginBottom: '1.5rem' }}>
+                  Science-backed tools built for ADHD brains — screening, timers, capture, habits, and focus sounds.
+                </p>
+
+                {/* Sub-tool navigation */}
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                  {[
+                    { key: 'screening', label: '🧠 Screening' },
+                    { key: 'braindump', label: '💭 Brain Dump' },
+                    { key: 'pomodoro', label: '⏱ Pomodoro' },
+                    { key: 'onetask', label: '🎯 One Task' },
+                    { key: 'breakdown', label: '🔨 Breakdown' },
+                    { key: 'timer', label: '⏳ Visual Timer' },
+                    { key: 'top3', label: '📋 Top 3' },
+                    { key: 'capture', label: '📥 Quick Capture' },
+                    { key: 'bodydouble', label: '👥 Body Double' },
+                    { key: 'habits', label: '🔥 Habits' },
+                    { key: 'sounds', label: '🎧 Focus Sounds' },
+                  ].map(t => (
+                    <button key={t.key} onClick={() => setAdhdSubTool(t.key)} style={{
+                      padding: '6px 14px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s',
+                      background: adhdSubTool === t.key ? 'rgba(0,230,118,0.15)' : 'transparent',
+                      border: adhdSubTool === t.key ? '1px solid var(--accent-green)' : '1px solid rgba(255,255,255,0.1)',
+                      color: adhdSubTool === t.key ? 'var(--accent-green)' : 'var(--text-muted-site)',
+                    }}>{t.label}</button>
+                  ))}
+                </div>
+
+                {/* ── SCREENING ── */}
+                {adhdSubTool === 'screening' && (() => {
+                  const qs = [
+                    { key: 'q1', text: 'How often do you have trouble wrapping up the final details of a project once the challenging parts have been done?' },
+                    { key: 'q2', text: 'How often do you have difficulty getting things in order when you have to do a task that requires organization?' },
+                    { key: 'q3', text: 'How often do you have problems remembering appointments or obligations?' },
+                    { key: 'q4', text: 'When you have a task that requires a lot of thought, how often do you avoid or delay getting started?' },
+                    { key: 'q5', text: 'How often do you fidget or squirm with your hands or feet when you have to sit down for a long time?' },
+                    { key: 'q6', text: 'How often do you feel overly active and compelled to do things, like you were driven by a motor?' },
+                  ];
+                  const opts = ['Never', 'Rarely', 'Sometimes', 'Often', 'Very Often'];
+                  const calcADHD = () => {
+                    const score = Object.values(adhdAnswers).reduce((s,v) => s+v, 0);
+                    let level, description, color, badge;
+                    if (score <= 8) { level='Low Indicator'; color='#4caf50'; badge='Minimal Concern'; description='Your responses suggest minimal ADHD-related patterns. Focus challenges are likely within typical variation.'; }
+                    else if (score <= 14) { level='Moderate Indicator'; color='#ffa726'; badge='Moderate Concern'; description='Some ADHD-related patterns are present. These may impact productivity. Consider discussing with a professional if they affect daily life.'; }
+                    else { level='High Indicator'; color='#ef5350'; badge='Consult a Professional'; description='Your responses show significant ADHD-related patterns across multiple domains. Consulting a licensed clinician for formal evaluation is recommended.'; }
+                    setAdhdResult({ score, level, description, color, badge });
+                  };
+                  return (
+                    <div>
+                      <div style={{ padding: '0.6rem 1rem', background: 'rgba(255,193,7,0.08)', border: '1px solid rgba(255,193,7,0.25)', borderRadius: '8px', marginBottom: '1.5rem', display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>
+                        <AlertTriangle size={16} style={{ color: '#ffc107', marginTop: '2px', flexShrink: 0 }} />
+                        <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--text-muted-site)', lineHeight: '1.5' }}>Educational screening tool — not a clinical diagnosis. Based on ASRS-v1.1.</p>
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '2rem' }}>
+                        {qs.map((q, idx) => (
+                          <div key={q.key}>
+                            <p style={{ fontWeight: '600', marginBottom: '0.6rem', color: 'var(--text-main-site)', lineHeight: '1.5' }}><span style={{ color: 'var(--accent-green)', marginRight: '6px' }}>{idx+1}.</span>{q.text}</p>
+                            <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                              {opts.map((opt, val) => (
+                                <button key={val} onClick={() => setAdhdAnswers(p => ({...p, [q.key]: val}))} style={{ padding: '5px 12px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s', background: adhdAnswers[q.key]===val ? 'rgba(0,230,118,0.15)' : 'transparent', border: adhdAnswers[q.key]===val ? '1px solid var(--accent-green)' : '1px solid rgba(255,255,255,0.1)', color: adhdAnswers[q.key]===val ? 'var(--accent-green)' : 'var(--text-muted-site)' }}>{opt}</button>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <button onClick={calcADHD} style={{ width: '100%', padding: '14px', background: 'var(--accent-green)', border: 'none', borderRadius: '10px', color: '#0a0f0a', fontWeight: '800', fontSize: '1rem', cursor: 'pointer', marginBottom: '1.5rem' }}>Analyze My Responses</button>
+                      {adhdResult && (
+                        <div style={{ background: 'rgba(0,0,0,0.2)', borderRadius: '12px', padding: '1.5rem', border: `1px solid ${adhdResult.color}30` }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
+                            <div><span style={{ fontSize: '0.75rem', letterSpacing: '1px', color: 'var(--text-muted-site)', textTransform: 'uppercase' }}>Score</span><h3 style={{ fontSize: '2.5rem', fontWeight: '800', margin: '0.2rem 0', color: adhdResult.color }}>{adhdResult.score} / 20</h3></div>
+                            <div style={{ textAlign: 'right' }}><span style={{ fontSize: '0.75rem', letterSpacing: '1px', color: 'var(--text-muted-site)', textTransform: 'uppercase' }}>Level</span><h4 style={{ fontSize: '1rem', fontWeight: '700', margin: '0.5rem 0', color: adhdResult.color }}>{adhdResult.badge}</h4></div>
+                          </div>
+                          <div style={{ padding: '1rem', background: 'var(--bg-surface)', borderRadius: '8px', borderLeft: `4px solid ${adhdResult.color}` }}>
+                            <h4 style={{ margin: '0 0 0.5rem', fontSize: '1rem', fontWeight: '700', color: 'var(--text-main-site)' }}>{adhdResult.level}</h4>
+                            <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--text-muted-site)', lineHeight: '1.5' }}>{adhdResult.description}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
+
+                {/* ── BRAIN DUMP ── */}
+                {adhdSubTool === 'braindump' && (
+                  <div>
+                    <h3 style={{ fontWeight: '700', marginBottom: '0.5rem' }}>Brain Dump Box</h3>
+                    <p style={{ color: 'var(--text-muted-site)', fontSize: '0.9rem', marginBottom: '1rem' }}>Dump everything on your mind with zero structure. Clear the mental clutter. Auto-saved locally.</p>
+                    <textarea
+                      value={brainDump}
+                      onChange={e => setBrainDump(e.target.value)}
+                      placeholder="Just start typing… tasks, worries, ideas, random thoughts — everything goes here."
+                      style={{ width: '100%', minHeight: '260px', padding: '1rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: 'var(--text-main-site)', fontSize: '0.95rem', lineHeight: '1.7', resize: 'vertical', outline: 'none', fontFamily: 'inherit', boxSizing: 'border-box' }}
+                    />
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.75rem' }}>
+                      <span style={{ fontSize: '0.78rem', color: 'var(--text-muted-site)' }}>💾 Auto-saved · {brainDump.length} characters</span>
+                      <button onClick={() => { if (window.confirm('Clear the brain dump?')) setBrainDump(''); }} style={{ padding: '6px 14px', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', color: 'var(--text-muted-site)', fontSize: '0.8rem', cursor: 'pointer' }}>Clear</button>
+                    </div>
+                  </div>
+                )}
+
+                {/* ── POMODORO ── */}
+                {adhdSubTool === 'pomodoro' && (
+                  <div style={{ textAlign: 'center' }}>
+                    <h3 style={{ fontWeight: '700', marginBottom: '0.5rem' }}>Pomodoro Focus Timer</h3>
+                    <p style={{ color: 'var(--text-muted-site)', fontSize: '0.9rem', marginBottom: '2rem' }}>25-min work sprints + 5-min breaks. Browser alert sounds when each phase ends.</p>
+                    <div style={{ display: 'inline-flex', marginBottom: '1.5rem', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', overflow: 'hidden' }}>
+                      <button onClick={() => { setPomodoroMode('work'); setPomodoroTime(25*60); setPomodoroRunning(false); }} style={{ padding: '8px 20px', background: pomodoroMode==='work' ? 'rgba(0,230,118,0.15)' : 'transparent', border: 'none', color: pomodoroMode==='work' ? 'var(--accent-green)' : 'var(--text-muted-site)', fontWeight: '700', cursor: 'pointer', fontSize: '0.85rem' }}>Work 25m</button>
+                      <button onClick={() => { setPomodoroMode('break'); setPomodoroTime(5*60); setPomodoroRunning(false); }} style={{ padding: '8px 20px', background: pomodoroMode==='break' ? 'rgba(0,230,118,0.15)' : 'transparent', border: 'none', color: pomodoroMode==='break' ? 'var(--accent-green)' : 'var(--text-muted-site)', fontWeight: '700', cursor: 'pointer', fontSize: '0.85rem' }}>Break 5m</button>
+                    </div>
+                    <div style={{ margin: '0 auto 1.5rem', width: '180px', height: '180px', borderRadius: '50%', border: `5px solid ${pomodoroMode==='work' ? 'var(--accent-green)' : '#ffa726'}`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.2)' }}>
+                      <span style={{ fontSize: '2.8rem', fontWeight: '800', letterSpacing: '-1px', color: 'var(--text-main-site)' }}>{adhdFmtTime(pomodoroTime)}</span>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted-site)', textTransform: 'uppercase', letterSpacing: '2px' }}>{pomodoroMode}</span>
+                    </div>
+                    <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', marginBottom: '1.5rem' }}>
+                      <button onClick={() => setPomodoroRunning(r => !r)} style={{ padding: '10px 28px', background: pomodoroRunning ? '#ef5350' : 'var(--accent-green)', border: 'none', borderRadius: '8px', color: pomodoroRunning ? '#fff' : '#0a0f0a', fontWeight: '800', fontSize: '0.95rem', cursor: 'pointer' }}>{pomodoroRunning ? 'Pause' : 'Start'}</button>
+                      <button onClick={() => { setPomodoroRunning(false); setPomodoroTime(pomodoroMode==='work'?25*60:5*60); }} style={{ padding: '10px 20px', background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', color: 'var(--text-muted-site)', fontWeight: '700', cursor: 'pointer' }}>Reset</button>
+                    </div>
+                    <p style={{ color: 'var(--text-muted-site)', fontSize: '0.85rem' }}>🍅 Sessions completed today: <strong style={{ color: 'var(--accent-green)' }}>{pomodoroSessions}</strong></p>
+                  </div>
+                )}
+
+                {/* ── ONE TASK ── */}
+                {adhdSubTool === 'onetask' && (
+                  <div>
+                    <h3 style={{ fontWeight: '700', marginBottom: '0.5rem' }}>One Task at a Time</h3>
+                    <p style={{ color: 'var(--text-muted-site)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>Add your tasks. The screen shows only the current one — hiding everything else to reduce overwhelm.</p>
+                    <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                      <input value={oneTaskInput} onChange={e => setOneTaskInput(e.target.value)} onKeyDown={e => { if (e.key==='Enter' && oneTaskInput.trim()) { setOneTaskList(p => [...p, { id: Date.now(), text: oneTaskInput.trim(), done: false }]); setOneTaskInput(''); }}} placeholder="Add a task…" style={{ flex: 1, padding: '10px 14px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: 'var(--text-main-site)', fontSize: '0.9rem', outline: 'none' }} />
+                      <button onClick={() => { if (oneTaskInput.trim()) { setOneTaskList(p => [...p, { id: Date.now(), text: oneTaskInput.trim(), done: false }]); setOneTaskInput(''); }}} style={{ padding: '10px 18px', background: 'var(--accent-green)', border: 'none', borderRadius: '8px', color: '#0a0f0a', fontWeight: '700', cursor: 'pointer' }}>Add</button>
+                    </div>
+                    {oneTaskList.filter(t => !t.done).length === 0 ? (
+                      <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted-site)', fontSize: '0.9rem' }}>✅ No pending tasks — add one above!</div>
+                    ) : (
+                      <div>
+                        <div style={{ background: 'rgba(0,230,118,0.06)', border: '1px solid rgba(0,230,118,0.2)', borderRadius: '14px', padding: '2rem', textAlign: 'center', marginBottom: '1.5rem' }}>
+                          <p style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--text-muted-site)', marginBottom: '0.75rem' }}>Focus on this now</p>
+                          <p style={{ fontSize: '1.4rem', fontWeight: '700', color: 'var(--text-main-site)', marginBottom: '1.25rem', lineHeight: '1.4' }}>{oneTaskList.filter(t=>!t.done)[0]?.text}</p>
+                          <button onClick={() => setOneTaskList(p => p.map((t,i) => i===p.findIndex(x=>!x.done) ? {...t, done:true} : t))} style={{ padding: '10px 24px', background: 'var(--accent-green)', border: 'none', borderRadius: '8px', color: '#0a0f0a', fontWeight: '800', cursor: 'pointer' }}>✓ Done — Next Task</button>
+                        </div>
+                        <p style={{ fontSize: '0.78rem', color: 'var(--text-muted-site)', textAlign: 'center' }}>{oneTaskList.filter(t=>!t.done).length} task{oneTaskList.filter(t=>!t.done).length!==1?'s':''} remaining · <button onClick={() => setOneTaskList(p => p.filter(t=>!t.done))} style={{ background:'none', border:'none', color:'var(--accent-green)', cursor:'pointer', fontSize:'0.78rem', textDecoration:'underline' }}>Clear done</button></p>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* ── TASK BREAKDOWN ── */}
+                {adhdSubTool === 'breakdown' && (
+                  <div>
+                    <h3 style={{ fontWeight: '700', marginBottom: '0.5rem' }}>Task Breakdown Tool</h3>
+                    <p style={{ color: 'var(--text-muted-site)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>Type a big overwhelming task, then break it into small concrete steps you can actually start.</p>
+                    <input value={bigTask} onChange={e => setBigTask(e.target.value)} placeholder="What's the big task? e.g. 'Write monthly report'" style={{ width: '100%', padding: '12px 14px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', color: 'var(--text-main-site)', fontSize: '0.95rem', outline: 'none', marginBottom: '1.25rem', boxSizing: 'border-box' }} />
+                    <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.25rem' }}>
+                      <input value={subtaskInput} onChange={e => setSubtaskInput(e.target.value)} onKeyDown={e => { if (e.key==='Enter' && subtaskInput.trim()) { setSubtasks(p => [...p, { id: Date.now(), text: subtaskInput.trim(), done: false }]); setSubtaskInput(''); }}} placeholder="Add a step…" style={{ flex: 1, padding: '10px 14px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: 'var(--text-main-site)', fontSize: '0.9rem', outline: 'none' }} />
+                      <button onClick={() => { if (subtaskInput.trim()) { setSubtasks(p => [...p, { id: Date.now(), text: subtaskInput.trim(), done: false }]); setSubtaskInput(''); }}} style={{ padding: '10px 18px', background: 'var(--accent-green)', border: 'none', borderRadius: '8px', color: '#0a0f0a', fontWeight: '700', cursor: 'pointer' }}>+ Step</button>
+                    </div>
+                    {bigTask && <p style={{ fontWeight: '700', color: 'var(--accent-green)', marginBottom: '0.75rem', fontSize: '0.9rem' }}>🎯 {bigTask}</p>}
+                    {subtasks.length > 0 && (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        {subtasks.map((s, i) => (
+                          <div key={s.id} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '10px 14px', background: s.done ? 'rgba(0,230,118,0.05)' : 'rgba(255,255,255,0.03)', border: `1px solid ${s.done?'rgba(0,230,118,0.2)':'rgba(255,255,255,0.07)'}`, borderRadius: '8px' }}>
+                            <button onClick={() => setSubtasks(p => p.map(x => x.id===s.id ? {...x, done:!x.done} : x))} style={{ width: '20px', height: '20px', borderRadius: '50%', border: `2px solid ${s.done?'var(--accent-green)':'rgba(255,255,255,0.2)'}`, background: s.done?'var(--accent-green)':'transparent', cursor: 'pointer', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0a0f0a', fontWeight: '800', fontSize: '0.7rem' }}>{s.done?'✓':''}</button>
+                            <span style={{ flex: 1, fontSize: '0.9rem', color: s.done?'var(--text-muted-site)':'var(--text-main-site)', textDecoration: s.done?'line-through':'none' }}>{i+1}. {s.text}</span>
+                            <button onClick={() => setSubtasks(p => p.filter(x => x.id!==s.id))} style={{ background: 'none', border: 'none', color: 'var(--text-muted-site)', cursor: 'pointer', fontSize: '0.85rem' }}>✕</button>
+                          </div>
+                        ))}
+                        <p style={{ fontSize: '0.78rem', color: 'var(--text-muted-site)', marginTop: '0.5rem' }}>{subtasks.filter(s=>s.done).length}/{subtasks.length} steps done</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* ── VISUAL TIMER ── */}
+                {adhdSubTool === 'timer' && (
+                  <div style={{ textAlign: 'center' }}>
+                    <h3 style={{ fontWeight: '700', marginBottom: '0.5rem' }}>Visual Countdown Timer</h3>
+                    <p style={{ color: 'var(--text-muted-site)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>A shrinking colored bar makes time physically visible — great for time-blindness.</p>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+                      <span style={{ color: 'var(--text-muted-site)', fontSize: '0.85rem' }}>Duration (min):</span>
+                      {[5,10,15,20,25,30].map(m => (
+                        <button key={m} onClick={() => { if (!visualRunning) { setVisualDuration(m); setVisualRemaining(m*60); }}} style={{ padding: '6px 12px', borderRadius: '6px', fontSize: '0.82rem', fontWeight: '600', cursor: 'pointer', background: visualDuration===m ? 'rgba(0,230,118,0.15)' : 'transparent', border: visualDuration===m ? '1px solid var(--accent-green)' : '1px solid rgba(255,255,255,0.1)', color: visualDuration===m ? 'var(--accent-green)' : 'var(--text-muted-site)' }}>{m}</button>
+                      ))}
+                    </div>
+                    <div style={{ margin: '0 auto 1.25rem', width: '100%', maxWidth: '400px' }}>
+                      <div style={{ height: '28px', background: 'rgba(255,255,255,0.06)', borderRadius: '14px', overflow: 'hidden', marginBottom: '0.5rem' }}>
+                        <div style={{ height: '100%', width: `${(visualRemaining / (visualDuration*60)) * 100}%`, background: visualRemaining/(visualDuration*60) > 0.4 ? 'var(--accent-green)' : visualRemaining/(visualDuration*60) > 0.2 ? '#ffa726' : '#ef5350', borderRadius: '14px', transition: 'width 1s linear, background 0.5s' }} />
+                      </div>
+                      <span style={{ fontSize: '2.5rem', fontWeight: '800', color: 'var(--text-main-site)', letterSpacing: '-1px' }}>{adhdFmtTime(visualRemaining)}</span>
+                    </div>
+                    <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
+                      <button onClick={() => { if (visualRemaining > 0) setVisualRunning(r => !r); }} style={{ padding: '10px 28px', background: visualRunning ? '#ef5350' : 'var(--accent-green)', border: 'none', borderRadius: '8px', color: visualRunning?'#fff':'#0a0f0a', fontWeight: '800', cursor: 'pointer' }}>{visualRunning ? 'Pause' : 'Start'}</button>
+                      <button onClick={() => { setVisualRunning(false); setVisualRemaining(visualDuration*60); }} style={{ padding: '10px 20px', background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', color: 'var(--text-muted-site)', fontWeight: '700', cursor: 'pointer' }}>Reset</button>
+                    </div>
+                  </div>
+                )}
+
+                {/* ── DAILY TOP 3 ── */}
+                {adhdSubTool === 'top3' && (
+                  <div>
+                    <h3 style={{ fontWeight: '700', marginBottom: '0.5rem' }}>Daily Top 3 Planner</h3>
+                    <p style={{ color: 'var(--text-muted-site)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>Force yourself to pick only 3 priorities for today. Nothing else matters until these are done. Auto-saved.</p>
+                    {[0,1,2].map(i => (
+                      <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+                        <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: topThree[i] ? 'rgba(0,230,118,0.15)' : 'rgba(255,255,255,0.05)', border: `2px solid ${topThree[i]?'var(--accent-green)':'rgba(255,255,255,0.1)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', color: 'var(--accent-green)', fontSize: '0.85rem', flexShrink: 0 }}>{i+1}</div>
+                        <input value={topThree[i]} onChange={e => setTopThree(p => { const n=[...p]; n[i]=e.target.value; return n; })} placeholder={`Priority ${i+1}…`} style={{ flex: 1, padding: '12px 14px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: 'var(--text-main-site)', fontSize: '0.9rem', outline: 'none' }} />
+                      </div>
+                    ))}
+                    <p style={{ fontSize: '0.78rem', color: 'var(--text-muted-site)', marginTop: '1rem' }}>💾 Auto-saved — still here when you come back.</p>
+                  </div>
+                )}
+
+                {/* ── QUICK CAPTURE ── */}
+                {adhdSubTool === 'capture' && (
+                  <div>
+                    <h3 style={{ fontWeight: '700', marginBottom: '0.5rem' }}>Quick Capture Inbox</h3>
+                    <p style={{ color: 'var(--text-muted-site)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>Dump ideas fast — don't stop to organize. Sort them into categories when your brain is ready.</p>
+                    <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                      <input value={captureInput} onChange={e => setCaptureInput(e.target.value)} onKeyDown={e => { if (e.key==='Enter' && captureInput.trim()) { setCaptureItems(p => [{ id:Date.now(), text:captureInput.trim(), tag:'inbox' }, ...p]); setCaptureInput(''); }}} placeholder="Quick thought, idea, task…" style={{ flex: 1, padding: '10px 14px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: 'var(--text-main-site)', fontSize: '0.9rem', outline: 'none' }} />
+                      <button onClick={() => { if (captureInput.trim()) { setCaptureItems(p => [{ id:Date.now(), text:captureInput.trim(), tag:'inbox' }, ...p]); setCaptureInput(''); }}} style={{ padding: '10px 18px', background: 'var(--accent-green)', border: 'none', borderRadius: '8px', color: '#0a0f0a', fontWeight: '700', cursor: 'pointer' }}>Capture</button>
+                    </div>
+                    {captureItems.length === 0 ? <p style={{ color: 'var(--text-muted-site)', fontSize: '0.88rem', textAlign: 'center', padding: '2rem' }}>Your inbox is empty — start capturing!</p> : (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        {captureItems.map(item => (
+                          <div key={item.id} style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', padding: '10px 14px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '8px' }}>
+                            <span style={{ flex: 1, fontSize: '0.88rem', color: 'var(--text-main-site)' }}>{item.text}</span>
+                            {['inbox','todo','idea','later'].map(tag => (
+                              <button key={tag} onClick={() => setCaptureItems(p => p.map(x => x.id===item.id ? {...x, tag} : x))} style={{ padding: '3px 8px', borderRadius: '4px', fontSize: '0.72rem', fontWeight: '700', cursor: 'pointer', background: item.tag===tag ? 'rgba(0,230,118,0.15)' : 'transparent', border: item.tag===tag ? '1px solid var(--accent-green)' : '1px solid rgba(255,255,255,0.08)', color: item.tag===tag ? 'var(--accent-green)' : 'var(--text-muted-site)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{tag}</button>
+                            ))}
+                            <button onClick={() => setCaptureItems(p => p.filter(x => x.id!==item.id))} style={{ background: 'none', border: 'none', color: 'var(--text-muted-site)', cursor: 'pointer', fontSize: '0.85rem', flexShrink: 0 }}>✕</button>
+                          </div>
+                        ))}
+                        <button onClick={() => { if (window.confirm('Clear all captured items?')) setCaptureItems([]); }} style={{ alignSelf: 'flex-end', marginTop: '0.5rem', padding: '5px 12px', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', color: 'var(--text-muted-site)', fontSize: '0.78rem', cursor: 'pointer' }}>Clear all</button>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* ── BODY DOUBLE ── */}
+                {adhdSubTool === 'bodydouble' && (
+                  <div style={{ textAlign: 'center' }}>
+                    <h3 style={{ fontWeight: '700', marginBottom: '0.5rem' }}>Body Double Focus Timer</h3>
+                    <p style={{ color: 'var(--text-muted-site)', fontSize: '0.9rem', marginBottom: '0.75rem', maxWidth: '480px', margin: '0 auto 1.5rem' }}>Body doubling means focusing alongside another person — even virtually. Set your session, commit, and work.</p>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', marginBottom: '2rem' }}>
+                      <span style={{ color: 'var(--text-muted-site)', fontSize: '0.85rem' }}>Session length:</span>
+                      {[15,25,45,60].map(m => (
+                        <button key={m} onClick={() => { if (!bdRunning) { setBdSession(m); setBdElapsed(0); }}} style={{ padding: '6px 14px', borderRadius: '6px', fontSize: '0.82rem', fontWeight: '600', cursor: 'pointer', background: bdSession===m?'rgba(0,230,118,0.15)':'transparent', border: bdSession===m?'1px solid var(--accent-green)':'1px solid rgba(255,255,255,0.1)', color: bdSession===m?'var(--accent-green)':'var(--text-muted-site)' }}>{m}m</button>
+                      ))}
+                    </div>
+                    <div style={{ margin: '0 auto 1rem', width: '180px', height: '180px', borderRadius: '50%', border: `5px solid ${bdRunning?'var(--accent-green)':'rgba(255,255,255,0.1)'}`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.2)', transition: 'border-color 0.3s' }}>
+                      <span style={{ fontSize: '2.6rem', fontWeight: '800', color: 'var(--text-main-site)', letterSpacing: '-1px' }}>{adhdFmtTime(bdElapsed)}</span>
+                      <span style={{ fontSize: '0.72rem', color: 'var(--text-muted-site)', textTransform: 'uppercase', letterSpacing: '2px' }}>/ {adhdFmtTime(bdSession*60)}</span>
+                    </div>
+                    <div style={{ width: '100%', maxWidth: '300px', margin: '0 auto 1.5rem', height: '6px', background: 'rgba(255,255,255,0.06)', borderRadius: '3px', overflow: 'hidden' }}>
+                      <div style={{ height: '100%', width: `${(bdElapsed/(bdSession*60))*100}%`, background: 'var(--accent-green)', borderRadius: '3px', transition: 'width 1s linear' }} />
+                    </div>
+                    <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
+                      <button onClick={() => setBdRunning(r => !r)} style={{ padding: '10px 28px', background: bdRunning?'#ef5350':'var(--accent-green)', border: 'none', borderRadius: '8px', color: bdRunning?'#fff':'#0a0f0a', fontWeight: '800', cursor: 'pointer' }}>{bdRunning?'Pause':'Start Session'}</button>
+                      <button onClick={() => { setBdRunning(false); setBdElapsed(0); }} style={{ padding: '10px 20px', background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', color: 'var(--text-muted-site)', fontWeight: '700', cursor: 'pointer' }}>Reset</button>
+                    </div>
+                    {bdElapsed >= bdSession*60 && <p style={{ color: 'var(--accent-green)', fontWeight: '700', marginTop: '1.5rem', fontSize: '1.1rem' }}>🎉 Session complete! Great work.</p>}
+                  </div>
+                )}
+
+                {/* ── HABITS ── */}
+                {adhdSubTool === 'habits' && (
+                  <div>
+                    <h3 style={{ fontWeight: '700', marginBottom: '0.5rem' }}>Habit & Streak Tracker</h3>
+                    <p style={{ color: 'var(--text-muted-site)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>Check off daily habits to build streaks. Saved locally so your progress persists between visits.</p>
+                    <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                      <input value={habitInput} onChange={e => setHabitInput(e.target.value)} onKeyDown={e => { if (e.key==='Enter' && habitInput.trim()) { setHabits(p => [...p, { id: Date.now(), name: habitInput.trim(), streak: 0, lastChecked: null }]); setHabitInput(''); }}} placeholder="Add a habit (e.g. Take meds, 10-min walk)…" style={{ flex: 1, padding: '10px 14px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: 'var(--text-main-site)', fontSize: '0.9rem', outline: 'none' }} />
+                      <button onClick={() => { if (habitInput.trim()) { setHabits(p => [...p, { id: Date.now(), name: habitInput.trim(), streak: 0, lastChecked: null }]); setHabitInput(''); }}} style={{ padding: '10px 18px', background: 'var(--accent-green)', border: 'none', borderRadius: '8px', color: '#0a0f0a', fontWeight: '700', cursor: 'pointer' }}>Add</button>
+                    </div>
+                    {habits.length === 0 ? <p style={{ color: 'var(--text-muted-site)', fontSize: '0.88rem', textAlign: 'center', padding: '2rem' }}>No habits yet — add one above!</p> : (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                        {habits.map(h => {
+                          const doneToday = h.lastChecked === adhdTodayKey();
+                          return (
+                            <div key={h.id} style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '12px 16px', background: doneToday?'rgba(0,230,118,0.07)':'rgba(255,255,255,0.03)', border: `1px solid ${doneToday?'rgba(0,230,118,0.25)':'rgba(255,255,255,0.07)'}`, borderRadius: '10px' }}>
+                              <button onClick={() => adhdCheckHabit(h.id)} style={{ width: '28px', height: '28px', borderRadius: '50%', border: `2px solid ${doneToday?'var(--accent-green)':'rgba(255,255,255,0.2)'}`, background: doneToday?'var(--accent-green)':'transparent', cursor: doneToday?'default':'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0a0f0a', fontWeight: '800', fontSize: '0.8rem', flexShrink: 0 }} disabled={doneToday}>{doneToday?'✓':''}</button>
+                              <span style={{ flex: 1, fontWeight: '600', color: doneToday?'var(--text-muted-site)':'var(--text-main-site)', textDecoration: doneToday?'line-through':'none', fontSize: '0.9rem' }}>{h.name}</span>
+                              <span style={{ fontSize: '0.88rem', fontWeight: '700', color: h.streak>=7?'#ffa726':h.streak>=3?'var(--accent-green)':'var(--text-muted-site)' }}>🔥 {h.streak}</span>
+                              <button onClick={() => setHabits(p => p.filter(x => x.id!==h.id))} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.2)', cursor: 'pointer', fontSize: '0.85rem' }}>✕</button>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* ── FOCUS SOUNDS ── */}
+                {adhdSubTool === 'sounds' && (
+                  <div>
+                    <h3 style={{ fontWeight: '700', marginBottom: '0.5rem' }}>Ambient Focus Sounds</h3>
+                    <p style={{ color: 'var(--text-muted-site)', fontSize: '0.9rem', marginBottom: '0.75rem' }}>Generated in your browser — no downloads. Click to play/stop. Use headphones for binaural beats.</p>
+                    <div style={{ padding: '0.6rem 1rem', background: 'rgba(255,193,7,0.06)', border: '1px solid rgba(255,193,7,0.2)', borderRadius: '8px', marginBottom: '1.5rem' }}>
+                      <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted-site)' }}>ℹ️ All sounds are generated using the Web Audio API. <strong style={{ color: '#ffc107' }}>Binaural beats require headphones</strong> to be effective.</p>
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+                      {[
+                        { key: 'brown', label: 'Brown Noise', desc: 'Deep rumble, like a strong waterfall. Best for blocking distractions and improving focus.', icon: '🌊' },
+                        { key: 'white', label: 'White Noise', desc: 'Bright, steady hiss. Masks external sounds — good for busy or unpredictable environments.', icon: '📻' },
+                        { key: 'rain', label: 'Pink Noise / Rain', desc: 'Soft, natural-feeling static. Relaxing without drowning alertness.', icon: '🌧️' },
+                        { key: 'binaural', label: '40Hz Binaural Beats', desc: 'Gamma wave entrainment (headphones required). Associated with focused cognitive states.', icon: '🎧' },
+                      ].map(s => (
+                        <button key={s.key} onClick={() => activeSound===s.key ? adhdStopSound() : adhdStartSound(s.key)} style={{ padding: '1.25rem', borderRadius: '12px', textAlign: 'left', cursor: 'pointer', transition: 'all 0.2s', background: activeSound===s.key ? 'rgba(0,230,118,0.1)' : 'rgba(255,255,255,0.03)', border: `1px solid ${activeSound===s.key?'rgba(0,230,118,0.4)':'rgba(255,255,255,0.08)'}` }}>
+                          <div style={{ fontSize: '1.8rem', marginBottom: '0.6rem' }}>{s.icon}</div>
+                          <div style={{ fontWeight: '700', color: activeSound===s.key?'var(--accent-green)':'var(--text-main-site)', marginBottom: '0.3rem', fontSize: '0.92rem' }}>{s.label} {activeSound===s.key && <span style={{ fontSize: '0.72rem', background: 'rgba(0,230,118,0.2)', padding: '2px 7px', borderRadius: '10px', marginLeft: '4px' }}>▶ ON</span>}</div>
+                          <div style={{ fontSize: '0.78rem', color: 'var(--text-muted-site)', lineHeight: '1.4' }}>{s.desc}</div>
+                        </button>
+                      ))}
+                    </div>
+                    {activeSound && <p style={{ textAlign: 'center', marginTop: '1.5rem', color: 'var(--accent-green)', fontSize: '0.85rem', fontWeight: '600' }}>▶ Now playing: {activeSound === 'brown' ? 'Brown Noise' : activeSound === 'white' ? 'White Noise' : activeSound === 'rain' ? 'Pink Noise / Rain' : '40Hz Binaural Beats'} — click again to stop.</p>}
+                  </div>
+                )}
+
+              </div>
+            )}
+
+            { (bmiResult || tResult || realAgeResult || longevityResult || sleepResult || mealResult || stressResult || adhdResult) && renderRecommendedProducts() }
           </div>
         </div>
       </div>
