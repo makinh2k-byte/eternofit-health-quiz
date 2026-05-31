@@ -330,7 +330,7 @@ const VisualEmailTemplate = ({ globalProducts }) => {
             <a href={`${window.location.origin}/terms`} style={{ color: '#94a3b8', textDecoration: 'underline' }}>Terms of Service</a>
           </div>
           <p style={{ margin: '0 0 8px 0' }}>© 2026 EternoFit Wellness. All rights reserved.</p>
-          <p style={{ margin: '0 0 1rem 0' }}>clinical@eternofit.com | Secure ID: {data.id}</p>
+          <p style={{ margin: '0 0 1rem 0' }}>support@eternofit.com | Secure ID: {data.id}</p>
           <a href="#unsubscribe" style={{ color: '#ef4444', textDecoration: 'underline', fontWeight: '600' }}>Unsubscribe from future health insights</a>
         </div>
       </div>
@@ -384,7 +384,7 @@ const ClinicalSupport = () => (
     <p className="subtitle">Direct access to our human health team.</p>
     <p style={{ color: 'var(--text-main-site)', fontSize: '1.2rem', marginBottom: '2rem' }}>
       Contact our clinical team directly at:<br/>
-      <strong style={{ color: 'var(--accent-green)' }}>clinical@eternofit.com</strong>
+      <strong style={{ color: 'var(--accent-green)' }}>support@eternofit.com</strong>
     </p>
     <button className="btn-secondary" onClick={() => { window.history.pushState({}, '', '/'); window.dispatchEvent(new PopStateEvent('popstate')); }}>Return Home</button>
   </div>
@@ -600,7 +600,7 @@ const ContactUs = () => {
       
       <div style={{ borderTop: '1px solid var(--border-subtle)', marginTop: '2.5rem', paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'center' }}>
         <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-muted-site)' }}>Or contact our clinical support team directly at:</p>
-        <strong style={{ fontSize: '1.1rem', color: 'var(--accent-green)' }}>clinical@eternofit.com</strong>
+        <strong style={{ fontSize: '1.1rem', color: 'var(--accent-green)' }}>support@eternofit.com</strong>
       </div>
     </div>
   );
@@ -624,7 +624,7 @@ const Unsubscribe = () => {
       }
       setDone(true);
     } catch (e) {
-      alert("Error processing request. Please contact clinical@eternofit.com.");
+      alert("Error processing request. Please contact support@eternofit.com.");
     }
   };
 
@@ -1634,7 +1634,7 @@ const Results = ({ answers, onRestart, globalProducts, deliveryMode }) => {
       }
     } catch (e) {
       setSendStatus('error');
-      alert("❌ Failed to dispatch email. Please try again or contact clinical@eternofit.com.");
+      alert("❌ Failed to dispatch email. Please try again or contact support@eternofit.com.");
     } finally {
       setIsSending(false);
     }
