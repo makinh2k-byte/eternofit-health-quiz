@@ -1924,7 +1924,8 @@ const GlobalNavbar = ({ navigateTo, currentView }) => {
     { key: 'longevity', label: 'Longevity Score', icon: <Sparkles size={16} /> },
     { key: 'sleep', label: 'Sleep Analyzer', icon: <Moon size={16} /> },
     { key: 'meal', label: 'Meal Planner', icon: <Apple size={16} /> },
-    { key: 'stress', label: 'Stress Checker', icon: <HeartPulse size={16} /> }
+    { key: 'stress', label: 'Stress Checker', icon: <HeartPulse size={16} /> },
+    { key: 'adhd', label: 'ADHD Toolkit', icon: <Brain size={16} /> },
   ];
 
   return (
@@ -2109,6 +2110,19 @@ const Footer = ({ navigateTo }) => (
             <li><a href="/tools" onClick={(e) => { e.preventDefault(); navigateTo('tools'); }}>Tools</a></li>
             <li><a href="/about" onClick={(e) => { e.preventDefault(); navigateTo('about'); }}>About Us</a></li>
             <li><a href="/contact" onClick={(e) => { e.preventDefault(); navigateTo('contact'); }}>Contact Us</a></li>
+          </ul>
+        </div>
+        <div className="site-footer-links">
+          <h4>Free Tools</h4>
+          <ul>
+            <li><a href="/tools?tool=bmi" onClick={(e) => { e.preventDefault(); navigateTo('tools?tool=bmi'); }}>BMI Calculator</a></li>
+            <li><a href="/tools?tool=testosterone" onClick={(e) => { e.preventDefault(); navigateTo('tools?tool=testosterone'); }}>Testosterone Quiz</a></li>
+            <li><a href="/tools?tool=realage" onClick={(e) => { e.preventDefault(); navigateTo('tools?tool=realage'); }}>Real Age Calculator</a></li>
+            <li><a href="/tools?tool=longevity" onClick={(e) => { e.preventDefault(); navigateTo('tools?tool=longevity'); }}>Longevity Score</a></li>
+            <li><a href="/tools?tool=sleep" onClick={(e) => { e.preventDefault(); navigateTo('tools?tool=sleep'); }}>Sleep Analyzer</a></li>
+            <li><a href="/tools?tool=meal" onClick={(e) => { e.preventDefault(); navigateTo('tools?tool=meal'); }}>Meal Planner</a></li>
+            <li><a href="/tools?tool=stress" onClick={(e) => { e.preventDefault(); navigateTo('tools?tool=stress'); }}>Stress Checker</a></li>
+            <li><a href="/tools?tool=adhd" onClick={(e) => { e.preventDefault(); navigateTo('tools?tool=adhd'); }}>ADHD Toolkit</a></li>
           </ul>
         </div>
         <div className="site-footer-links">
@@ -2301,17 +2315,17 @@ const HomePage = ({ navigateTo, globalProducts }) => {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
             {[
-              { icon: <Activity size={20} />, label: 'BMI & Body Composition', desc: 'Calculate your BMI and optimal weight ranges.' },
-              { icon: <Zap size={20} />, label: 'Testosterone Assessment', desc: 'Assess your biological vitality in 60 seconds.' },
-              { icon: <Target size={20} />, label: 'Biological Age Calculator', desc: 'Find your biological age vs. chronological age.' },
-              { icon: <HeartPulse size={20} />, label: 'Healthspan & Longevity Score', desc: 'Evaluate your cardio, grip, and wellness markers.' },
-              { icon: <Moon size={20} />, label: 'Sleep Quality Analyzer', desc: 'Analyze your sleep and circadian efficiency.' },
-              { icon: <Apple size={20} />, label: 'Personalized Meal Builder', desc: 'Get a custom meal plan tailored to your goals.' },
-              { icon: <Brain size={20} />, label: 'ADHD Screening Quiz', desc: 'Identify attention and focus patterns in 2 minutes.' },
+              { key: 'bmi', icon: <Activity size={20} />, label: 'BMI & Body Composition', desc: 'Calculate your BMI and optimal weight ranges.' },
+              { key: 'testosterone', icon: <Zap size={20} />, label: 'Testosterone Assessment', desc: 'Assess your biological vitality in 60 seconds.' },
+              { key: 'realage', icon: <Target size={20} />, label: 'Biological Age Calculator', desc: 'Find your biological age vs. chronological age.' },
+              { key: 'longevity', icon: <HeartPulse size={20} />, label: 'Healthspan & Longevity Score', desc: 'Evaluate your cardio, grip, and wellness markers.' },
+              { key: 'sleep', icon: <Moon size={20} />, label: 'Sleep Quality Analyzer', desc: 'Analyze your sleep and circadian efficiency.' },
+              { key: 'meal', icon: <Apple size={20} />, label: 'Personalized Meal Builder', desc: 'Get a custom meal plan tailored to your goals.' },
+              { key: 'adhd', icon: <Brain size={20} />, label: 'ADHD Toolkit', desc: 'Screening, timers, brain dump, habits & focus sounds.' },
             ].map((tool, i) => (
               <button
                 key={i}
-                onClick={() => navigateTo('tools')}
+                onClick={() => navigateTo(`tools?tool=${tool.key}`)}
                 className="fade-in-up"
                 style={{
                   display: 'flex', alignItems: 'flex-start', gap: '1rem',
