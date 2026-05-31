@@ -8,6 +8,8 @@ export const articles = [
     primaryKeyword: 'how to get rid of bloating',
     readTime: '4 min read',
     date: 'Mar 20, 2025',
+  author: 'Dr. Elena Vasquez',
+  authorBio: 'Registered dietitian and metabolic health researcher specializing in gut health, fat loss, and evidence-based nutrition.',
     content: `
       <p>You sit down after lunch and your jeans suddenly feel two sizes too small. Sound familiar? Bloating is one of those everyday annoyances most people just live with, but it's not something you have to put up with. Once you figure out what's causing it, getting your stomach back to normal is usually pretty straightforward.</p>
       <p>Here's what's actually going on and what you can do about it tonight.</p>
@@ -56,6 +58,8 @@ export const articles = [
     primaryKeyword: "can't sleep",
     readTime: '4 min read',
     date: 'Dec 23, 2025',
+  author: 'Dr. Priya Nair',
+  authorBio: 'MD specializing in sleep medicine and autonomic nervous system health. Expert in circadian rhythm disorders and stress-related sleep conditions.',
     content: `
       <p>It's 2 a.m. You've been staring at the ceiling for an hour. You've already done the math on how many hours of sleep you'll get if you fall asleep right now. Spoiler: it's not enough.</p>
       <p>If this is your life most nights, you're not broken and you're not alone. About one in three adults deal with this regularly. The good news is that most sleep problems come down to a handful of fixable habits, not some mysterious medical issue.</p>

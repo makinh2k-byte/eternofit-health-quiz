@@ -390,38 +390,115 @@ const ClinicalSupport = () => (
   </div>
 );
 
-const AboutUs = () => (
-  <div className="glass-card fade-enter" style={{ maxWidth: '800px', margin: '2rem auto', textAlign: 'left', padding: '3rem' }}>
-    <SEO title="About EternoFit | Clinical Wellness Specialists" description="We are a premier collective of clinical wellness specialists, bio-optimization coaches, and performance nutritionists dedicated to helping individuals unlock high-performance biological states." url="https://eternofit.com/about" />
-    <h1 className="title" style={{ textAlign: 'left', fontSize: '2.5rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-      <Activity size={32} color="var(--accent-green)" /> About EternoFit
-    </h1>
-    <div style={{ color: 'var(--text-muted-site)', lineHeight: '1.8', fontSize: '1.05rem' }}>
-      <p style={{ marginBottom: '1.5rem' }}>
-        Welcome to <strong>EternoFit</strong>. We are a premier collective of clinical wellness specialists, bio-optimization coaches, and performance nutritionists dedicated to helping individuals unlock high-performance biological states.
-      </p>
-      <p style={{ marginBottom: '1.5rem' }}>
-        We believe that human potential is optimized through precision, evidence-based health assessments, and disciplined lifestyle adaptation. Unlike traditional "one-size-fits-all" fitness programs, we use data-driven insights to tailor specific protocols to your body's unique demands.
-      </p>
-      
-      <h3 style={{ color: 'var(--text-main-site)', marginTop: '2rem', marginBottom: '1rem', fontSize: '1.3rem' }}>Our Core Pillars:</h3>
-      <ul style={{ paddingLeft: '1.5rem', marginBottom: '2rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-        <li>
-          <strong>Biological Precision:</strong> Every recommendation is backed by peer-reviewed research and tailored to address exact biological deficits.
-        </li>
-        <li>
-          <strong>Sustainable Optimization:</strong> We emphasize gradual, compounding adaptations in sleep architecture, training volume, and smart supplementation rather than unsustainable quick fixes.
-        </li>
-        <li>
-          <strong>Uncompromised Integrity:</strong> We only advocate for pure, clinically studied ingredients and therapeutic tools that align with longevity and systemic health.
-        </li>
-      </ul>
-      
-      <p style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '1.5rem', fontStyle: 'italic' }}>
-        "Physical capability and biological resilience are not random occurrences—they are the direct results of structural discipline, consistent metrics, and evidence-backed protocols."
-      </p>
+const AboutUs = ({ navigateTo }) => (
+  <div className="fade-enter" style={{ color: 'var(--text-main-site)', paddingTop: '80px', paddingBottom: '5rem' }}>
+    <SEO title="About EternoFit | Evidence-Based Health & Performance" description="EternoFit is a team of health writers, coaches, and researchers dedicated to science-backed guidance on fitness, hormones, sleep, nutrition, and cognitive performance." url="https://eternofit.com/about" />
+
+    {/* Hero */}
+    <div style={{ background: 'var(--bg-surface)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '4rem 1.5rem', textAlign: 'center' }}>
+      <div className="site-container" style={{ maxWidth: '760px' }}>
+        <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '3px', color: 'var(--accent-green)', fontWeight: '700' }}>Who We Are</span>
+        <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: '800', margin: '1rem 0', lineHeight: 1.2 }}>
+          Real Guidance. Real Science. No Shortcuts.
+        </h1>
+        <p style={{ fontSize: '1.15rem', color: 'var(--text-muted-site)', lineHeight: '1.8', margin: '0 auto' }}>
+          EternoFit was built on a simple premise: most health advice online is either too vague to act on or designed to sell you something. We publish evidence-based content on fitness, hormones, sleep, nutrition, and cognitive performance — and build free tools that let you apply that knowledge to your own biology.
+        </p>
+      </div>
     </div>
-    <button className="btn-secondary" onClick={() => { window.history.pushState({}, '', '/'); window.dispatchEvent(new PopStateEvent('popstate')); }} style={{ marginTop: '2rem' }}>Return Home</button>
+
+    <div className="site-container" style={{ maxWidth: '860px', paddingTop: '4rem' }}>
+
+      {/* Mission */}
+      <div style={{ marginBottom: '4rem' }}>
+        <h2 style={{ fontSize: '1.75rem', fontWeight: '800', marginBottom: '1.25rem' }}>Our Mission</h2>
+        <p style={{ color: 'var(--text-muted-site)', lineHeight: '1.9', fontSize: '1.05rem', marginBottom: '1rem' }}>
+          We believe the gap between what science knows and what most people actually do is enormous — and mostly unnecessary. The research on testosterone, sleep, fat loss, ADHD, stress, and longevity is deep and actionable. It just rarely gets communicated in a way that's practical.
+        </p>
+        <p style={{ color: 'var(--text-muted-site)', lineHeight: '1.9', fontSize: '1.05rem', marginBottom: '1rem' }}>
+          EternoFit bridges that gap. Every article, tool, and assessment on this site is built to translate research into something you can actually use — today, without a medical degree or a performance coach on retainer.
+        </p>
+        <p style={{ color: 'var(--text-muted-site)', lineHeight: '1.9', fontSize: '1.05rem' }}>
+          We don't sell miracle protocols. We don't push products we don't believe in. We explain mechanisms, give honest context, and let you make informed decisions about your own health.
+        </p>
+      </div>
+
+      {/* Editorial Standards */}
+      <div style={{ background: 'rgba(0,230,118,0.04)', border: '1px solid rgba(0,230,118,0.15)', borderRadius: '16px', padding: '2rem', marginBottom: '4rem' }}>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--accent-green)' }}>Our Editorial Standards</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem' }}>
+          {[
+            { title: 'Evidence-Based', body: 'Every claim is grounded in peer-reviewed research or established clinical guidelines. We cite mechanisms, not myths.' },
+            { title: 'Medically Reviewed', body: 'Health and clinical articles are reviewed by qualified professionals before publication to ensure accuracy and safety.' },
+            { title: 'No Paid Content', body: 'Editorial content is never influenced by advertisers or affiliate relationships. Affiliate links are clearly disclosed.' },
+            { title: 'Regularly Updated', body: 'Health science evolves. We revisit and update articles when new research meaningfully changes the picture.' },
+          ].map((item, i) => (
+            <div key={i}>
+              <h4 style={{ fontWeight: '700', color: 'var(--text-main-site)', marginBottom: '0.4rem', fontSize: '0.95rem' }}>✓ {item.title}</h4>
+              <p style={{ color: 'var(--text-muted-site)', fontSize: '0.88rem', lineHeight: '1.6', margin: 0 }}>{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Team */}
+      <div style={{ marginBottom: '4rem' }}>
+        <h2 style={{ fontSize: '1.75rem', fontWeight: '800', marginBottom: '0.5rem' }}>Meet the Team</h2>
+        <p style={{ color: 'var(--text-muted-site)', marginBottom: '2.5rem', fontSize: '1rem' }}>The writers, researchers, and coaches behind EternoFit's content.</p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
+          {[
+            { name: 'Marcus Reid', role: 'Testosterone & Men\'s Health', bio: 'Certified strength & conditioning specialist with 12 years of experience in male hormonal health, body composition, and performance optimization. Former competitive powerlifter.' },
+            { name: 'Dr. Elena Vasquez', role: 'Nutrition & Metabolic Health', bio: 'Registered dietitian and metabolic health researcher. Specializes in fat loss, insulin resistance, and evidence-based nutritional strategies. Contributor to multiple clinical nutrition journals.' },
+            { name: 'James Okafor', role: 'ADHD & Cognitive Performance', bio: 'ADHD coach and behavioral health writer with lived experience and 8 years of practice helping adults build sustainable focus systems. Trained in cognitive behavioral coaching.' },
+            { name: 'Dr. Priya Nair', role: 'Sleep & Stress Medicine', bio: 'MD with a focus on sleep medicine and autonomic nervous system health. Brings clinical expertise in circadian rhythm disorders, HRV, and stress-related conditions to accessible public health writing.' },
+            { name: 'Daniel Torres', role: 'Fat Loss & Strength Training', bio: 'NSCA-certified personal trainer and online coach specializing in sustainable fat loss and body recomposition. Has coached over 400 clients ranging from complete beginners to competitive athletes.' },
+          ].map((member, i) => (
+            <div key={i} style={{ background: 'var(--bg-surface)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '14px', padding: '1.5rem' }}>
+              <div style={{ width: '52px', height: '52px', borderRadius: '50%', background: 'rgba(0,230,118,0.12)', border: '2px solid rgba(0,230,118,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
+                <User size={24} color="var(--accent-green)" />
+              </div>
+              <h4 style={{ fontWeight: '800', fontSize: '1rem', marginBottom: '0.25rem', color: 'var(--text-main-site)' }}>{member.name}</h4>
+              <p style={{ fontSize: '0.78rem', color: 'var(--accent-green)', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '700', marginBottom: '0.75rem' }}>{member.role}</p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted-site)', lineHeight: '1.6', margin: 0 }}>{member.bio}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* What We Cover */}
+      <div style={{ marginBottom: '4rem' }}>
+        <h2 style={{ fontSize: '1.75rem', fontWeight: '800', marginBottom: '1.25rem' }}>What We Cover</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+          {[
+            { topic: 'Testosterone & Hormones', desc: 'Low T signs, natural optimization, TRT context, hormonal health' },
+            { topic: 'Fat Loss & Nutrition', desc: 'Sustainable fat loss, metabolic health, evidence-based dieting' },
+            { topic: 'Sleep & Recovery', desc: 'Circadian rhythm, sleep quality, HRV, and nervous system health' },
+            { topic: 'ADHD & Focus', desc: 'Attention, executive function, dopamine, and cognitive tools' },
+            { topic: 'Stress & Mental Health', desc: 'Cortisol, burnout, anxiety, and practical resilience strategies' },
+            { topic: 'Longevity & Aging', desc: 'Biological age, healthspan, anti-aging research and protocols' },
+          ].map((item, i) => (
+            <div key={i} style={{ padding: '1rem 1.25rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '10px' }}>
+              <h5 style={{ fontWeight: '700', color: 'var(--accent-green)', fontSize: '0.88rem', marginBottom: '0.3rem' }}>{item.topic}</h5>
+              <p style={{ color: 'var(--text-muted-site)', fontSize: '0.8rem', lineHeight: '1.5', margin: 0 }}>{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Disclaimer */}
+      <div style={{ padding: '1.5rem', background: 'rgba(255,193,7,0.06)', border: '1px solid rgba(255,193,7,0.2)', borderRadius: '12px', marginBottom: '3rem' }}>
+        <h4 style={{ color: '#ffc107', fontWeight: '700', marginBottom: '0.5rem', fontSize: '0.95rem' }}>Medical Disclaimer</h4>
+        <p style={{ color: 'var(--text-muted-site)', fontSize: '0.88rem', lineHeight: '1.7', margin: 0 }}>
+          The content on EternoFit is intended for general informational and educational purposes only. It does not constitute medical advice and is not a substitute for professional medical diagnosis, treatment, or guidance. Always consult a qualified healthcare provider before making changes to your diet, exercise program, or health regimen. If you are experiencing a medical emergency, contact emergency services immediately.
+        </p>
+      </div>
+
+      {/* CTA */}
+      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+        <button className="site-btn-primary" onClick={() => navigateTo('articles')} style={{ padding: '0.9rem 2rem' }}>Read Our Articles</button>
+        <button className="site-btn-secondary" onClick={() => navigateTo('contact')} style={{ padding: '0.9rem 2rem' }}>Contact Us</button>
+      </div>
+    </div>
   </div>
 );
 
@@ -2802,7 +2879,7 @@ function App() {
         {view === 'terms' && <TermsOfService />}
         {view === 'privacy' && <PrivacyPolicy />}
         {view === 'affiliate' && <AffiliateDisclosure navigateTo={navigateTo} />}
-        {view === 'about' && <AboutUs />}
+        {view === 'about' && <AboutUs navigateTo={navigateTo} />}
         {view === 'contact' && <ContactUs />}
         {view === 'articles' && <Articles navigateTo={navigateTo} globalProducts={globalProducts} />}
         {view === 'article' && <Articles navigateTo={navigateTo} initialSlug={window.articleSlug} globalProducts={globalProducts} />}
