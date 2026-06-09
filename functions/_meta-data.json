@@ -1,0 +1,426 @@
+{
+  "articleMap": {
+    "how-to-get-rid-of-bloating": {
+      "title": "How to Get Rid of Bloating: 9 Things That Actually Work | EternoFit",
+      "desc": "Bloated stomach driving you crazy? Here are 9 simple, proven ways to debloat fast — plus what's really causing it in the first place.",
+      "image": "https://eternofit.com/images/articles/bloating.jpg"
+    },
+    "cant-sleep-what-to-do": {
+      "title": "Can't Sleep? Here's Why (And What Actually Helps) | EternoFit",
+      "desc": "Tossing and turning every night? Find out the real reasons you can't sleep and the simple changes that finally fix it.",
+      "image": "https://eternofit.com/images/articles/sleep.jpg"
+    },
+    "brain-fog-causes-remedies": {
+      "title": "Brain Fog Won't Lift? Here's What's Really Going On | EternoFit",
+      "desc": "Can't focus, forgetting things, feeling mentally slow? Here are the real causes of brain fog and what actually clears it up.",
+      "image": "https://eternofit.com/images/articles/brain_fog_real.jpg"
+    },
+    "how-to-calm-anxiety": {
+      "title": "Anxiety That Won't Quit: Practical Ways to Calm Down | EternoFit",
+      "desc": "Stuck in anxiety that won't ease up? Here are real, science-backed ways to calm your nervous system and feel like yourself again.",
+      "image": "https://eternofit.com/images/articles/anxiety_real.jpg"
+    },
+    "lower-back-pain-from-sitting": {
+      "title": "Lower Back Pain From Sitting All Day: Real Fixes That Work | EternoFit",
+      "desc": "Sitting at a desk is wrecking your back? Here are the real causes of lower back pain and the simple fixes that finally help.",
+      "image": "https://eternofit.com/images/articles/back_pain_real.jpg"
+    },
+    "how-to-stop-heartburn": {
+      "title": "Heartburn Keeps Coming Back? Here's How to Stop It | EternoFit",
+      "desc": "Sick of that burning chest after meals? Find out why heartburn keeps coming back — and what actually puts it out for good.",
+      "image": "https://eternofit.com/images/articles/heartburn_real.jpg"
+    },
+    "tired-all-the-time-causes": {
+      "title": "Tired All the Time? Common Reasons and What to Do | EternoFit",
+      "desc": "Exhausted no matter how much you sleep? Here are the real reasons you're tired all the time — and what finally fixes it.",
+      "image": "https://eternofit.com/images/articles/fatigue_real.jpg"
+    },
+    "daily-headaches-causes-remedies": {
+      "title": "Headaches Every Day? Find Out Why and Fix It | EternoFit",
+      "desc": "Getting headaches all the time? Here are the real causes of daily headaches and the changes that actually make them stop.",
+      "image": "https://eternofit.com/images/articles/headache_real.jpg"
+    },
+    "hair-falling-out-causes": {
+      "title": "Hair Falling Out? The Real Causes and What Helps | EternoFit",
+      "desc": "Finding hair on your pillow, in the shower, everywhere? Here are the real reasons for hair loss and what genuinely helps regrow it.",
+      "image": "https://eternofit.com/images/articles/hair_loss_real.jpg"
+    },
+    "stiff-achy-joints-causes": {
+      "title": "Stiff, Achy Joints in Your 30s and 40s: Here's What's Going On | EternoFit",
+      "desc": "Joints getting stiff and creaky too early? Find out what's causing it and the simple changes that actually keep you moving.",
+      "image": "https://eternofit.com/images/articles/stiff_joints_real.jpg"
+    },
+    "prevent-falls-stay-steady": {
+      "title": "Worried About Falling? Simple Ways to Stay Steady on Your Feet | EternoFit",
+      "desc": "Falls are common after 60 but mostly preventable. Here are simple, practical ways to improve your balance and stay steady at home.",
+      "image": "https://eternofit.com/images/articles/prevent_falls.jpg"
+    },
+    "knee-pain-after-60": {
+      "title": "Knee Pain After 60: What Helps and What to Avoid | EternoFit",
+      "desc": "Knee pain doesn't have to slow you down. Here's what's causing it, what actually helps, and how to keep moving comfortably.",
+      "image": "https://eternofit.com/images/articles/knee_pain.jpg"
+    },
+    "lower-blood-pressure-simple-habits": {
+      "title": "High Blood Pressure: Simple Habits That Make a Real Difference | EternoFit",
+      "desc": "Managing high blood pressure doesn't have to be complicated. Here are simple, proven habits that help bring your numbers down.",
+      "image": "https://eternofit.com/images/articles/blood_pressure.jpg"
+    },
+    "memory-changes-what-is-normal": {
+      "title": "Forgetting Things More Often? When It's Normal and When to Check | EternoFit",
+      "desc": "Misplacing your keys or forgetting a name? Here's what's normal aging, what's not, and how to keep your memory sharp.",
+      "image": "https://eternofit.com/images/articles/memory_loss.jpg"
+    },
+    "better-sleep-as-you-age": {
+      "title": "Trouble Sleeping As You Get Older? Here's What Helps | EternoFit",
+      "desc": "Waking up at night or up too early? Sleep changes with age, but you can still sleep well. Here's what genuinely helps.",
+      "image": "https://eternofit.com/images/articles/better_sleep.jpg"
+    },
+    "managing-your-medications-safely": {
+      "title": "Taking Several Medications? How to Stay Safe and Organized | EternoFit",
+      "desc": "Juggling multiple prescriptions? Here's how to manage your medications safely, avoid mistakes, and keep everything on track.",
+      "image": "https://eternofit.com/images/articles/manage_meds.jpg"
+    },
+    "protect-your-bones-prevent-fractures": {
+      "title": "Protecting Your Bones: How to Stay Strong and Prevent Fractures | EternoFit",
+      "desc": "Bones weaken with age, but you can protect them. Here's how to keep your bones strong and lower your risk of fractures.",
+      "image": "https://eternofit.com/images/articles/strong_bones.jpg"
+    },
+    "staying-active-after-65": {
+      "title": "Staying Active After 65: Safe, Simple Exercise That Works | EternoFit",
+      "desc": "Want to stay active but not sure where to start? Here's safe, simple exercise for older adults that builds strength and energy.",
+      "image": "https://eternofit.com/images/articles/senior_exercise.jpg"
+    },
+    "constipation-relief-gentle-ways": {
+      "title": "Constipation Got You Uncomfortable? Gentle Ways to Find Relief | EternoFit",
+      "desc": "Constipation is common with age but very manageable. Here are gentle, natural ways to stay regular and feel comfortable again.",
+      "image": "https://eternofit.com/images/articles/constipation.jpg"
+    },
+    "feeling-lonely-ways-to-reconnect": {
+      "title": "Feeling Lonely or Isolated? Ways to Reconnect and Feel Better | EternoFit",
+      "desc": "Loneliness is common later in life and affects health. Here are warm, practical ways to reconnect and feel more engaged.",
+      "image": "https://eternofit.com/images/articles/connection.jpg"
+    },
+    "adhd-signs-in-adults": {
+      "title": "ADHD in Adults: 12 Signs You've Been Overlooking for Years | EternoFit",
+      "desc": "Think ADHD is just a childhood thing? These 12 adult ADHD signs are frequently missed — and understanding them can change everything.",
+      "image": "https://eternofit.com/images/articles/adhd-adults.jpg"
+    },
+    "adhd-focus-strategies": {
+      "title": "How to Actually Finish Tasks When You Have ADHD | EternoFit",
+      "desc": "ADHD makes starting and finishing tasks genuinely hard. These evidence-based strategies work with your brain chemistry, not against it.",
+      "image": "https://eternofit.com/images/articles/adhd-focus.jpg"
+    },
+    "adhd-diet-and-nutrition": {
+      "title": "The ADHD Diet: Foods That Help (and Destroy) Your Focus | EternoFit",
+      "desc": "What you eat directly affects dopamine, norepinephrine, and brain inflammation — the core drivers of ADHD symptoms. Here's what to eat and avoid.",
+      "image": "https://eternofit.com/images/articles/adhd-diet.jpg"
+    },
+    "low-testosterone-signs": {
+      "title": "7 Signs Your Testosterone Is Low (And What to Do About It) | EternoFit",
+      "desc": "Low testosterone affects far more men than realize it. These 7 warning signs — and what to do about each — could change how you feel day to day.",
+      "image": "https://eternofit.com/images/articles/testosterone-signs.jpg"
+    },
+    "how-to-boost-testosterone-naturally": {
+      "title": "How to Naturally Boost Testosterone After 30 | EternoFit",
+      "desc": "Testosterone declines with age, but lifestyle is the bigger driver than most realize. Here's what actually moves the needle — backed by research.",
+      "image": "https://eternofit.com/images/articles/boost-testosterone.jpg"
+    },
+    "why-not-losing-weight": {
+      "title": "Why You're Not Losing Weight Even in a Calorie Deficit | EternoFit",
+      "desc": "Eating less and still not losing weight? These are the real reasons a calorie deficit isn't working — and how to fix each one.",
+      "image": "https://eternofit.com/images/articles/weight-loss-plateau.jpg"
+    },
+    "intermittent-fasting-guide": {
+      "title": "Intermittent Fasting: What Happens to Your Body Hour by Hour | EternoFit",
+      "desc": "Intermittent fasting isn't just about skipping breakfast. Here's exactly what's happening in your body during a fast — hour by hour.",
+      "image": "https://eternofit.com/images/articles/intermittent-fasting.jpg"
+    },
+    "foods-for-fat-loss": {
+      "title": "The 12 Best Foods for Fat Loss (That Are Actually Satisfying) | EternoFit",
+      "desc": "The best fat-loss foods aren't bland diet food. These 12 choices are satisfying, nutrient-dense, and proven to support body composition.",
+      "image": "https://eternofit.com/images/articles/fat-loss-foods.jpg"
+    },
+    "cortisol-and-stress": {
+      "title": "Cortisol: The Hidden Hormone That's Quietly Destroying Your Health | EternoFit",
+      "desc": "Cortisol is your body's stress hormone — and in modern life, it's chronically elevated in ways that damage nearly every system in your body. Here's how to fix it.",
+      "image": "https://eternofit.com/images/articles/cortisol-stress.jpg"
+    },
+    "fix-sleep-schedule": {
+      "title": "How to Fix Your Sleep Schedule in 7 Days | EternoFit",
+      "desc": "A disrupted sleep schedule is fixable in about a week with the right approach. Here's the exact plan — no medication required.",
+      "image": "https://eternofit.com/images/articles/fix-sleep.jpg"
+    },
+    "hrv-explained": {
+      "title": "HRV Explained: The One Number That Tells You How Your Body Is Really Doing | EternoFit",
+      "desc": "Heart rate variability (HRV) is the most underused health metric available to everyone with a smartwatch. Here's what it means and how to use it.",
+      "image": "https://eternofit.com/images/articles/hrv.jpg"
+    },
+    "speed-up-metabolism": {
+      "title": "How to Speed Up Your Metabolism After 35 | EternoFit",
+      "desc": "Metabolism slows with age — but much less than people think, and the slowdown is largely reversible. Here's what actually drives metabolic rate.",
+      "image": "https://eternofit.com/images/articles/metabolism.jpg"
+    },
+    "dopamine-and-adhd": {
+      "title": "Dopamine and ADHD: Why Your Brain Craves Stimulation | EternoFit",
+      "desc": "ADHD is fundamentally a dopamine regulation disorder. Understanding the neuroscience explains the behavior — and points to real solutions.",
+      "image": "https://eternofit.com/images/articles/dopamine-adhd.jpg"
+    },
+    "testosterone-sleep-connection": {
+      "title": "The Testosterone-Sleep Connection: Why Poor Sleep Is Tanking Your T Levels | EternoFit",
+      "desc": "Most of your daily testosterone is produced during sleep. One week of poor sleep reduces testosterone by up to 15%. Here's the research — and what to do about it.",
+      "image": "https://eternofit.com/images/articles/testosterone-sleep.jpg"
+    },
+    "best-male-enhancement-pills": {
+      "title": "Best Male Enhancement Pills in 2025: What Actually Works (And What Doesn't) | EternoFit",
+      "desc": "Looking for the best male enhancement pills? We break down the top-rated options by category — erection quality, stamina, size, and sensation — based on ingredients and clinical evidence.",
+      "image": "https://eternofit.com/products/male-enhancement-pills.jpg"
+    },
+    "best-testosterone-booster-supplements": {
+      "title": "Best Testosterone Booster Supplements in 2025: Ranked by Evidence | EternoFit",
+      "desc": "After 40, testosterone drops 1–2% every year. These are the best testosterone booster supplements with real clinical evidence — ranked by mechanism, ingredients, and results.",
+      "image": "https://eternofit.com/products/testosterone-booster.jpg"
+    },
+    "best-libido-supplements-for-women": {
+      "title": "Best Libido Supplements for Women in 2025: What the Research Says | EternoFit",
+      "desc": "Low libido affects 1 in 3 women at some point. These are the best natural libido supplements for women — reviewed by mechanism, clinical evidence, and real-world effectiveness.",
+      "image": "https://eternofit.com/products/female-libido-supplements.jpg"
+    },
+    "how-to-fall-asleep-faster": {
+      "title": "How to Fall Asleep Faster: 11 Science-Backed Tricks That Work Tonight | EternoFit",
+      "desc": "Lying awake staring at the ceiling? These 11 evidence-based techniques help you fall asleep faster — starting tonight. No pills required.",
+      "image": "https://eternofit.com/og/og-articles.jpg"
+    },
+    "cortisol-belly-fat": {
+      "title": "Cortisol and Belly Fat: Why Stress Makes You Fat and What to Do About It | EternoFit",
+      "desc": "Can't lose belly fat no matter what you eat? Chronically elevated cortisol could be the reason. Here's what stress does to your waistline and how to fix it.",
+      "image": "https://eternofit.com/og/og-articles.jpg"
+    },
+    "creatine-benefits-for-men": {
+      "title": "Creatine Benefits for Men: What It Actually Does (And What It Doesn't) | EternoFit",
+      "desc": "Creatine is the most studied supplement in history. Here's what the science actually says about muscle, strength, brain health, and who should take it.",
+      "image": "https://eternofit.com/og/og-articles.jpg"
+    }
+  },
+  "productMap": {
+    "testosil": {
+      "title": "Testosil Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Testosil uses clinically studied KSM-66 Ashwagandha to naturally boost testosterone, increase energy, and support muscle recovery — no synthetic hormones.",
+      "image": "https://eternofit.com/products/Testosil.jpg"
+    },
+    "genf20-plus": {
+      "title": "GenF20 Plus Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "GenF20 Plus naturally stimulates HGH production to fight aging, boost energy, and restore vitality. Enteric-coated tablets for maximum absorption.",
+      "image": "https://eternofit.com/products/GenF20 Plus.jpg"
+    },
+    "dim-3x": {
+      "title": "DIM 3X Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "DIM 3X helps men balance estrogen and support healthy testosterone with Diindolylmethane and Bioperine. Ideal for hormonal balance and lean muscle.",
+      "image": "https://eternofit.com/products/DIM 3X.jpg"
+    },
+    "testodren": {
+      "title": "Testodren Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Testodren uses patented Furosap fenugreek extract to increase free testosterone by up to 72%. A single-ingredient, clinically studied booster for men.",
+      "image": "https://eternofit.com/products/Testodren.jpg"
+    },
+    "calmlean": {
+      "title": "CalmLean Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "CalmLean is a stimulant-free fat burner using ForsLean Coleus forskohlii to support lean body composition without jitters or caffeine. Ideal for men.",
+      "image": "https://eternofit.com/products/CalmLean.jpg"
+    },
+    "cortisync": {
+      "title": "CortiSync Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "CortiSync uses 7 adaptogenic ingredients to lower cortisol, reduce stress, and naturally restore testosterone levels in men. Clinically studied formula.",
+      "image": "https://eternofit.com/products/CortiSync.jpg"
+    },
+    "hypergh-14x": {
+      "title": "HyperGH 14x Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "HyperGH 14x combines oral capsules and oral spray to maximize HGH release during workouts and sleep, supporting muscle growth and faster recovery.",
+      "image": "https://eternofit.com/products/HyperGH14x.jpg"
+    },
+    "testrx": {
+      "title": "TestRX Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "TestRX uses ZMA (zinc, magnesium, B6) with ashwagandha to naturally restore testosterone, improve sleep quality, and rebuild gym performance in men.",
+      "image": "https://eternofit.com/products/TestRX.jpg"
+    },
+    "genfx": {
+      "title": "GenFX Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "GenFX is a daily anti-aging supplement with amino acids and plant extracts to naturally support HGH production, metabolism, and mental clarity.",
+      "image": "https://eternofit.com/products/GenFX.jpg"
+    },
+    "provacyl": {
+      "title": "Provacyl Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Provacyl tackles male andropause with amino acids, herbs, and DHEA to restore testosterone, HGH levels, and overall male vitality after 40.",
+      "image": "https://eternofit.com/products/Provacyl.jpg"
+    },
+    "brain-pill": {
+      "title": "Brain Pill Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Brain Pill is a premium nootropic with Cognizin and Vinpocetine to sharpen memory, boost focus, and enhance mental clarity. Rated #1 by executives.",
+      "image": "https://eternofit.com/products/BrainPill.jpg"
+    },
+    "primegenix-prostate-support": {
+      "title": "PrimeGENIX Prostate Support Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "PrimeGENIX Prostate Support uses Saw Palmetto and Beta-Sitosterol to reduce frequent urination and support healthy prostate function in men.",
+      "image": "https://eternofit.com/products/PrimeGENIXProstateSupport.jpg"
+    },
+    "total-curve": {
+      "title": "Total Curve Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Total Curve combines a daily herbal supplement with Volufiline gel to naturally lift, firm, and enhance breast shape — no surgery required.",
+      "image": "https://eternofit.com/products/TotalCurve.jpg"
+    },
+    "confitrol24": {
+      "title": "Confitrol24 Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Confitrol24 uses clinically studied Urox to reduce bladder leakage, urgency, and nighttime trips to the bathroom by up to 76% in just 8 weeks.",
+      "image": "https://eternofit.com/products/Confitrol24.jpg"
+    },
+    "kollagen-intensiv": {
+      "title": "Kollagen Intensiv Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Kollagen Intensiv uses patented SYN-COLL peptides to clinically reduce wrinkles and firm skin, shown to boost collagen production by up to 354%.",
+      "image": "https://eternofit.com/products/KollagenIntensiv.jpg"
+    },
+    "dermefface-fx7": {
+      "title": "Dermefface FX7 Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Dermefface FX7 reduces acne scars, surgical scars, stretch marks, and dark spots with 7 clinically proven active ingredients. Results in 4–8 weeks.",
+      "image": "https://eternofit.com/products/DermeffaceFX7.jpg"
+    },
+    "illuminatural-6i": {
+      "title": "Illuminatural 6i Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Illuminatural 6i is a chemical-free skin lightener using 6 active ingredients to safely reduce dark spots, hyperpigmentation, and uneven skin tone.",
+      "image": "https://eternofit.com/products/Illuminatural6i.jpg"
+    },
+    "icelandic-red-algae-calcium-by-genf20": {
+      "title": "Icelandic Red Algae Calcium by GenF20 Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Icelandic Red Algae Calcium by GenF20 delivers premium plant-based calcium from Nordic algae for superior bone density and joint health support.",
+      "image": "https://eternofit.com/products/GenF20.jpg"
+    },
+    "primegenix-bone-complex": {
+      "title": "PrimeGENIX Bone Complex Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "PrimeGENIX Bone Complex blends calcium, vitamin D3, and magnesium to protect bone density and joint strength in men over 40. Doctor-recommended.",
+      "image": "https://eternofit.com/products/PrimeGENIXBoneComplex.jpg"
+    },
+    "vigrx-plus": {
+      "title": "VigRX Plus Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "VigRX Plus is the #1 clinically studied male enhancement pill — proven to improve erection quality, sexual stamina, and satisfaction in 84-day trials.",
+      "image": "https://eternofit.com/products/VigRXPlus.jpg"
+    },
+    "erectin": {
+      "title": "Erectin Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Erectin uses enteric-coated liquid gel caps for superior absorption, clinically proven to improve erection hardness, libido, and sexual satisfaction.",
+      "image": "https://eternofit.com/products/Erectin.jpg"
+    },
+    "semenax": {
+      "title": "Semenax Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Semenax is a clinically tested semen volume enhancer proven to increase ejaculation volume, orgasm intensity, and sexual pleasure. Doctor endorsed.",
+      "image": "https://eternofit.com/products/Semenax.jpg"
+    },
+    "erectin-gummies": {
+      "title": "Erectin Gummies Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Erectin Gummies deliver beet root and six nitric oxide boosters in a daily chewable for stronger erections and improved male sexual performance.",
+      "image": "https://eternofit.com/products/Erectin Gummies.jpg"
+    },
+    "proextender": {
+      "title": "ProExtender Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "ProExtender is a urologist-endorsed penis extender device clinically shown to increase length and girth safely over time — no surgery required.",
+      "image": "https://eternofit.com/products/ProExtender.jpg"
+    },
+    "prosolution-plus": {
+      "title": "ProSolution Plus Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "ProSolution Plus is the only clinically proven natural supplement for premature ejaculation, shown to improve stamina by 64% in a double-blind trial.",
+      "image": "https://eternofit.com/products/ProsolutionPlus.jpg"
+    },
+    "erectin-gel": {
+      "title": "Erectin Gel Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Erectin Gel is a fast-acting topical male enhancement gel delivering harder erections and heightened sensitivity within minutes of application.",
+      "image": "https://eternofit.com/products/ErectinGel.jpg"
+    },
+    "volume-pills": {
+      "title": "Volume Pills Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Volume Pills is a potent herbal formula that increases semen volume, boosts ejaculation force, and intensifies orgasms in men. A decade of results.",
+      "image": "https://eternofit.com/products/VolumePills.jpg"
+    },
+    "prosolution-pills": {
+      "title": "ProSolution Pills Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "ProSolution Pills is a leading male enhancement supplement with patented ingredients clinically shown to improve erection quality, libido, and confidence.",
+      "image": "https://eternofit.com/products/ProsolutionPills.jpg"
+    },
+    "vigrx-oil": {
+      "title": "VigRX Oil Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "VigRX Oil is a doctor-endorsed topical male enhancement oil delivering instant erection support and heightened sexual sensation. Apply and feel results.",
+      "image": "https://eternofit.com/products/VigRXOil.jpg"
+    },
+    "vigrx-delay-spray": {
+      "title": "VigRX Delay Spray Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "VigRX Delay Spray uses benzocaine to reduce sensitivity and help men last longer during sex — fast-acting, discreet, and doctor endorsed.",
+      "image": "https://eternofit.com/products/VigRXDelaySpray.jpg"
+    },
+    "prosolution-gel": {
+      "title": "ProSolution Gel Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "ProSolution Gel is an instant-action arousal gel for men that boosts erection speed, hardness, and sensation on contact. Results felt within seconds.",
+      "image": "https://eternofit.com/products/ProsolutionGel.jpg"
+    },
+    "nexus-pheromones": {
+      "title": "Nexus Pheromones Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Nexus Pheromones is a scientifically formulated men's cologne with androstenone pheromones shown to increase female attention and social confidence.",
+      "image": "https://eternofit.com/products/NexusPheromones.jpg"
+    },
+    "magnarx": {
+      "title": "MagnaRX Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "MagnaRX is a natural male enhancement formula developed by Dr. George Aguilar MD to improve erection quality, stamina, and sexual performance safely.",
+      "image": "https://eternofit.com/products/MagnaRX.jpg"
+    },
+    "vigrx-delay-wipes": {
+      "title": "VigRX Delay Wipes Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "VigRX Delay Wipes are all-natural benzocaine wipes that reduce penile sensitivity to help men last longer — discreet, portable, and effective.",
+      "image": "https://eternofit.com/products/VigRXDelayWipes.jpg"
+    },
+    "semenhance": {
+      "title": "SemEnhance Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "SemEnhance is a natural supplement that improves the taste and scent of semen using pineapple, kiwi, and vitamin C. Made by the Semenax team.",
+      "image": "https://eternofit.com/products/SemEnhance.jpg"
+    },
+    "fertility-factor-5": {
+      "title": "Fertility Factor 5 Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Fertility Factor 5 by VigRX uses clinically studied ingredients to improve sperm count, motility, and overall male fertility naturally and safely.",
+      "image": "https://eternofit.com/products/FertilityFactor5.jpg"
+    },
+    "extenze": {
+      "title": "Extenze Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Extenze is one of the world's best-selling male enhancement supplements — over 1 billion pills sold — for stronger erections, libido, and performance.",
+      "image": "https://eternofit.com/products/BuyExtenze.jpg"
+    },
+    "vigrx-nitric-oxide": {
+      "title": "VigRX Nitric Oxide Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "VigRX Nitric Oxide uses patented Velox technology with L-Citrulline to boost blood flow, enhance workout performance, and support strong erections.",
+      "image": "https://eternofit.com/products/VigRXNitricOxide.jpg"
+    },
+    "vigrx-incontinix": {
+      "title": "VigRX Incontinix Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "VigRX Incontinix uses a clinically studied blend with GRC, Lindera Root, and Horsetail to reduce male urinary incontinence and improve bladder control.",
+      "image": "https://eternofit.com/products/VigrxIncontinix.jpg"
+    },
+    "vigrx-max-volume": {
+      "title": "VigRX Max Volume Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "VigRX Max Volume uses Zinc, Sunflower Lecithin, and L-Arginine to naturally increase semen volume, ejaculation force, and orgasm intensity for men.",
+      "image": "https://eternofit.com/products/VigrxMaxVolume.jpg"
+    },
+    "hersolution": {
+      "title": "HerSolution Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "HerSolution is a doctor-endorsed daily supplement for women to boost libido, improve lubrication, and restore sexual desire naturally and safely.",
+      "image": "https://eternofit.com/products/HerSolution.jpg"
+    },
+    "provestra": {
+      "title": "Provestra Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Provestra is a doctor-endorsed female libido supplement that restores desire, improves lubrication, and enhances pleasure in women with low sex drive.",
+      "image": "https://eternofit.com/products/Provestra.jpg"
+    },
+    "vigorelle": {
+      "title": "Vigorelle Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "Vigorelle is an all-natural arousal cream for women that enhances sensitivity and sexual pleasure instantly on contact. Hormone-free and safe daily.",
+      "image": "https://eternofit.com/products/Vigorelle.jpg"
+    },
+    "hersolution-gel": {
+      "title": "HerSolution Gel Review — Benefits, Ingredients & Where to Buy | EternoFit",
+      "desc": "HerSolution Gel is an instant-action female arousal gel that boosts lubrication, clitoral sensitivity, and sexual pleasure within minutes of use.",
+      "image": "https://eternofit.com/products/HerSolutionGel.jpg"
+    }
+  }
+}

@@ -1,23 +1,24 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { 
-  Activity, 
-  Flame, 
-  Clock, 
-  Sparkles, 
-  Moon, 
-  Apple, 
-  HeartPulse, 
-  ChevronRight, 
-  RefreshCw, 
-  Zap, 
-  Brain, 
-  CheckCircle2, 
-  Sliders, 
-  ChevronDown, 
-  TrendingUp, 
+import {
+  Activity,
+  Flame,
+  Clock,
+  Sparkles,
+  Moon,
+  Apple,
+  HeartPulse,
+  ChevronRight,
+  RefreshCw,
+  Zap,
+  Brain,
+  CheckCircle2,
+  Sliders,
+  ChevronDown,
+  TrendingUp,
   Award,
   AlertTriangle,
-  Info
+  Info,
+  Smile
 } from 'lucide-react';
 import SEO from './components/SEO';
 
@@ -31,7 +32,7 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
     const handleUrlChange = () => {
       const urlParams = new URLSearchParams(window.location.search);
       const toolParam = urlParams.get('tool');
-      if (toolParam && ['bmi', 'testosterone', 'realage', 'longevity', 'sleep', 'meal', 'stress', 'adhd'].includes(toolParam)) {
+      if (toolParam && ['bmi', 'testosterone', 'realage', 'longevity', 'sleep', 'meal', 'stress', 'adhd', 'mental'].includes(toolParam)) {
         setActiveTab(toolParam);
       }
     };
@@ -152,6 +153,10 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
   // Tool 7: Stress Checker State
   const [stressAnswers, setStressAnswers] = useState({ q1: 0, q2: 0, q3: 0, q4: 0, q5: 0 });
   const [stressResult, setStressResult] = useState(null);
+
+  // Tool 9: Mental Health Wellness State
+  const [mentalAnswers, setMentalAnswers] = useState({ q1: 0, q2: 0, q3: 0, q4: 0, q5: 0, q6: 0, q7: 0, q8: 0, q9: 0, q10: 0 });
+  const [mentalResult, setMentalResult] = useState(null);
   
   // Stress Checker Box Breathing Animation State
   const [breathPhase, setBreathPhase] = useState('In'); // In, Hold (Full), Out, Hold (Empty)
@@ -334,7 +339,7 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
       color = '#ef5350';
       advice = [
         'Consult with a functional medicine provider for a full biological hormone panel.',
-        'Implement strict sleep hygiene rules and stress-reduction protocols (high cortisol suppresses T production).',
+        'Implement strict sleep hygiene rules and stress-reduction strategies (high cortisol suppresses T production).',
         'Adopt a clinical strength-focused exercise routine, avoiding excessive high-stress chronic cardio.'
       ];
     }
@@ -448,27 +453,27 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
 
     let tier = '';
     let color = '';
-    let protocol = '';
+    let plan = '';
 
     if (score >= 85) {
       tier = 'Elite Centenarian Trajectory';
       color = 'var(--accent-green)';
-      protocol = 'Maintain extreme cardiorespiratory fitness (VO2 max) and muscular load. Integrate long periodic fasts (24-48h) or NAD+ boosting nutrients to activate advanced cellular longevity pathways.';
+      plan = 'Maintain extreme cardiorespiratory fitness (VO2 max) and muscular load. Integrate long periodic fasts (24-48h) or NAD+ boosting nutrients to activate advanced cellular longevity pathways.';
     } else if (score >= 60 && score < 85) {
       tier = 'Good Longevity Horizon';
       color = '#ffb300';
-      protocol = 'Improve zone 2 aerobic base to lower your resting heart rate. Focus on grip and core strength (critical biomarkers for longevity). Increase intake of sirtuin-activating foods (blueberries, dark leafy greens, olive oil).';
+      plan = 'Improve zone 2 aerobic base to lower your resting heart rate. Focus on grip and core strength (critical biomarkers for longevity). Increase intake of sirtuin-activating foods (blueberries, dark leafy greens, olive oil).';
     } else {
       tier = 'Accelerated Biological Decline Trap';
       color = '#ef5350';
-      protocol = 'Urgent longevity intervention required. Prioritize physical strength training and cardiorespiratory health to escape risk indices. Integrate stress management and basic social connection habits immediately.';
+      plan = 'Urgent longevity intervention required. Prioritize physical strength training and cardiorespiratory health to escape risk indices. Integrate stress management and basic social connection habits immediately.';
     }
 
     setLongevityResult({
       score,
       tier,
       color,
-      protocol
+      plan
     });
   };
 
@@ -628,6 +633,79 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
     });
   };
 
+  // Logic 9: Mental Health Wellness Calculation
+  const calculateMentalHealth = () => {
+    const scores = Object.values(mentalAnswers);
+    if (scores.some(s => s === 0)) {
+      alert("Please answer all questions before submitting.");
+      return;
+    }
+
+    // Q1-Q5: lower score = better (1=never, 4=always) — invert for wellness
+    // Q6-Q10: higher score = better (1=never, 4=always) — keep as-is
+    const negativeScore = [mentalAnswers.q1, mentalAnswers.q2, mentalAnswers.q3, mentalAnswers.q4, mentalAnswers.q5].reduce((a, b) => a + b, 0); // 5–20
+    const positiveScore = [mentalAnswers.q6, mentalAnswers.q7, mentalAnswers.q8, mentalAnswers.q9, mentalAnswers.q10].reduce((a, b) => a + b, 0); // 5–20
+
+    // Normalise: negative inverted (20 - negativeScore) + positive, range 10–40 → map to 0–100
+    const rawScore = (20 - negativeScore) + positiveScore;
+    const wellnessScore = Math.round(((rawScore - 10) / 30) * 100);
+
+    // Sub-dimension scores
+    const moodScore = Math.round(((8 - (mentalAnswers.q1 + mentalAnswers.q2)) / 6) * 100);
+    const anxietyScore = Math.round(((8 - (mentalAnswers.q3 + mentalAnswers.q4)) / 6) * 100);
+    const resilienceScore = Math.round(((mentalAnswers.q5 === 0 ? 0 : (5 - mentalAnswers.q5)) + mentalAnswers.q6) / 7 * 100);
+    const purposeScore = Math.round(((mentalAnswers.q7 + mentalAnswers.q8) / 8) * 100);
+    const selfCareScore = Math.round(((mentalAnswers.q9 + mentalAnswers.q10 === 0 ? 0 : (5 - mentalAnswers.q10) + mentalAnswers.q9) ) / 7 * 100);
+
+    let tier, color, summary, strategies;
+
+    if (wellnessScore >= 75) {
+      tier = 'Flourishing Mental Wellness';
+      color = 'var(--accent-green)';
+      summary = 'Your psychological resilience and emotional regulation are functioning at a high level. You demonstrate strong protective factors against stress, anxiety, and mood disruption. Maintain and deepen these habits.';
+      strategies = [
+        'Continue practicing gratitude journalling — even 3 sentences a day sustains neuroplastic changes in the prefrontal cortex.',
+        'Invest in deepening social bonds. Strong relationships are the #1 predictor of psychological wellbeing.',
+        'Explore advanced practices like breathwork, cold exposure, or meditation to further sharpen emotional regulation.'
+      ];
+    } else if (wellnessScore >= 50) {
+      tier = 'Moderate Psychological Load';
+      color = '#ffb300';
+      summary = 'You have a functional baseline but are carrying moderate psychological strain in one or more areas. Targeted lifestyle interventions can significantly lift your mental wellbeing within 4–8 weeks.';
+      strategies = [
+        'Implement daily box breathing (4-4-4-4) to down-regulate your sympathetic nervous system and reduce cortisol.',
+        'Limit social media to defined time windows — passive scrolling is clinically linked to increased anxiety and low mood.',
+        'Prioritize 7–9 hours of consistent sleep. Poor sleep is the #1 amplifier of emotional reactivity and negative cognition.',
+        'Consider Magnesium Glycinate (400mg) and Ashwagandha supplementation for cortisol and mood regulation support.'
+      ];
+    } else {
+      tier = 'Elevated Psychological Distress';
+      color = '#ef5350';
+      summary = 'Your responses indicate significant psychological distress across mood, anxiety, or resilience dimensions. This is a meaningful signal worth taking seriously. We recommend speaking with a qualified mental health professional.';
+      strategies = [
+        'Reach out to a licensed therapist or counsellor. CBT (Cognitive Behavioural Therapy) has the strongest clinical evidence for anxiety and depression.',
+        'Begin with small, non-negotiable daily movement — even a 15-minute walk produces measurable mood improvement via BDNF and endorphin release.',
+        'Avoid alcohol and high-caffeine intake — both significantly worsen anxiety and disrupt the serotonin-dopamine systems.',
+        'Connect with at least one trusted person in your life. Social isolation is both a symptom and amplifier of mental health challenges.'
+      ];
+    }
+
+    setMentalResult({
+      wellnessScore,
+      tier,
+      color,
+      summary,
+      strategies,
+      dimensions: [
+        { label: 'Mood', score: Math.max(0, Math.min(100, moodScore)) },
+        { label: 'Anxiety', score: Math.max(0, Math.min(100, anxietyScore)) },
+        { label: 'Resilience', score: Math.max(0, Math.min(100, resilienceScore)) },
+        { label: 'Purpose', score: Math.max(0, Math.min(100, purposeScore)) },
+        { label: 'Self-Care', score: Math.max(0, Math.min(100, selfCareScore)) },
+      ]
+    });
+  };
+
   // ADHD Toolkit — Helper functions
   const adhdPlayBeep = () => {
     try {
@@ -718,6 +796,8 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
        relevantProducts = globalProducts.filter(p => p.subniche === 'Fat Loss' || p.category === 'General Health');
     } else if (activeTab === 'testosterone') {
        relevantProducts = globalProducts.filter(p => p.subniche === 'Testosterone Boost');
+    } else if (activeTab === 'mental') {
+       relevantProducts = globalProducts.filter(p => p.subniche === 'Brain Health' || p.name === 'CortiSync' || p.name === 'Brain Pill');
     } else if (activeTab === 'sleep' || activeTab === 'stress') {
        relevantProducts = globalProducts.filter(p => p.subniche === 'Brain Health' || p.name.includes('Magnesium'));
     } else if (activeTab === 'realage' || activeTab === 'longevity') {
@@ -859,7 +939,7 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
       case 'meal':
         return {
           title: "Personalized Anti-Inflammatory Meal Plan Builder | EternoFit",
-          description: "Build a highly customized anti-inflammatory meal plan aligned with keto, vegan, or Mediterranean protocols.",
+          description: "Build a highly customized anti-inflammatory meal plan aligned with keto, vegan, or Mediterranean approaches.",
           keywords: "anti-inflammatory meal planner, personalized meal builder, clean keto meal plan, plant based meal tracker, mediterranean nutrition builder",
           url: "https://eternofit.com/tools?tool=meal",
           schema: {
@@ -894,6 +974,21 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
             }
           }
         };
+      case 'mental':
+        return {
+          title: "Mental Health Wellness Assessment | EternoFit",
+          description: "Take our 10-question mental wellness assessment covering mood, anxiety, resilience, purpose, and self-care. Get personalised wellbeing strategies — not a clinical diagnosis.",
+          keywords: "mental health test, mental wellness assessment, anxiety check, mood assessment, psychological wellbeing quiz, stress and depression indicator",
+          url: "https://eternofit.com/tools?tool=mental",
+          schema: {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "EternoFit Mental Health Wellness Assessment",
+            "operatingSystem": "All",
+            "applicationCategory": "HealthApplication",
+            "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD" }
+          }
+        };
       case 'adhd':
         return {
           title: "Free ADHD Self-Screening Quiz | EternoFit",
@@ -917,7 +1012,7 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
         return {
           title: "Clinical Health Tools & Calculators | EternoFit",
           description: "Science-backed diagnostic tools, bio-calculators, and lifestyle analyzers to measure and advance your healthspan.",
-          keywords: "clinical health assessment, performance optimization, tactical fitness, bio-identical nutrition, longevity protocols, health coaching, hormone health",
+          keywords: "clinical health assessment, performance optimization, tactical fitness, bio-identical nutrition, longevity programs, health coaching, hormone health",
           url: "https://eternofit.com/tools",
           schema: null
         };
@@ -925,7 +1020,7 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
   }, [activeTab]);
 
   return (
-    <div className="tools-page-container" style={{ background: 'transparent', minHeight: '80vh', color: 'var(--text-main-site)' }}>
+    <div className="tools-page-container page-bg" style={{ minHeight: '80vh', color: 'var(--text-main-site)' }}>
       <SEO 
         title={seoConfig.title} 
         description={seoConfig.description} 
@@ -944,132 +1039,7 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
           </p>
         </div>
 
-        <div className="tools-layout">
-          {/* Sidebar Tabs */}
-          <div className="tools-sidebar">
-            <h4 style={{ textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '2px', color: 'var(--text-muted-site)', marginBottom: '0.75rem', fontWeight: '700' }}>Select Diagnostic Tool</h4>
-            
-            <button 
-              className={`tool-tab-btn ${activeTab === 'bmi' ? 'active' : ''}`}
-              onClick={() => handleTabSelect('bmi')}
-              style={{
-                display: 'flex', alignItems: 'center', gap: '12px', padding: '1rem 1.25rem', borderRadius: '10px',
-                background: activeTab === 'bmi' ? 'rgba(0, 230, 118, 0.08)' : 'var(--bg-surface)',
-                border: activeTab === 'bmi' ? '1px solid rgba(0, 230, 118, 0.3)' : '1px solid rgba(255,255,255,0.04)',
-                color: activeTab === 'bmi' ? 'var(--text-main-site)' : 'var(--text-muted-site)',
-                cursor: 'pointer', textAlign: 'left', fontWeight: '600', transition: 'all 0.25s ease'
-              }}
-            >
-              <Activity size={18} style={{ color: activeTab === 'bmi' ? 'var(--accent-green)' : 'inherit' }} />
-              <span>BMI Calculator</span>
-            </button>
- 
-            <button 
-              className={`tool-tab-btn ${activeTab === 'testosterone' ? 'active' : ''}`}
-              onClick={() => handleTabSelect('testosterone')}
-              style={{
-                display: 'flex', alignItems: 'center', gap: '12px', padding: '1rem 1.25rem', borderRadius: '10px',
-                background: activeTab === 'testosterone' ? 'rgba(0, 230, 118, 0.08)' : 'var(--bg-surface)',
-                border: activeTab === 'testosterone' ? '1px solid rgba(0, 230, 118, 0.3)' : '1px solid rgba(255,255,255,0.04)',
-                color: activeTab === 'testosterone' ? 'var(--text-main-site)' : 'var(--text-muted-site)',
-                cursor: 'pointer', textAlign: 'left', fontWeight: '600', transition: 'all 0.25s ease'
-              }}
-            >
-              <Flame size={18} style={{ color: activeTab === 'testosterone' ? 'var(--accent-green)' : 'inherit' }} />
-              <span>Testosterone Quiz</span>
-            </button>
- 
-            <button 
-              className={`tool-tab-btn ${activeTab === 'realage' ? 'active' : ''}`}
-              onClick={() => handleTabSelect('realage')}
-              style={{
-                display: 'flex', alignItems: 'center', gap: '12px', padding: '1rem 1.25rem', borderRadius: '10px',
-                background: activeTab === 'realage' ? 'rgba(0, 230, 118, 0.08)' : 'var(--bg-surface)',
-                border: activeTab === 'realage' ? '1px solid rgba(0, 230, 118, 0.3)' : '1px solid rgba(255,255,255,0.04)',
-                color: activeTab === 'realage' ? 'var(--text-main-site)' : 'var(--text-muted-site)',
-                cursor: 'pointer', textAlign: 'left', fontWeight: '600', transition: 'all 0.25s ease'
-              }}
-            >
-              <Clock size={18} style={{ color: activeTab === 'realage' ? 'var(--accent-green)' : 'inherit' }} />
-              <span>Real Age Calculator</span>
-            </button>
- 
-            <button 
-              className={`tool-tab-btn ${activeTab === 'longevity' ? 'active' : ''}`}
-              onClick={() => handleTabSelect('longevity')}
-              style={{
-                display: 'flex', alignItems: 'center', gap: '12px', padding: '1rem 1.25rem', borderRadius: '10px',
-                background: activeTab === 'longevity' ? 'rgba(0, 230, 118, 0.08)' : 'var(--bg-surface)',
-                border: activeTab === 'longevity' ? '1px solid rgba(0, 230, 118, 0.3)' : '1px solid rgba(255,255,255,0.04)',
-                color: activeTab === 'longevity' ? 'var(--text-main-site)' : 'var(--text-muted-site)',
-                cursor: 'pointer', textAlign: 'left', fontWeight: '600', transition: 'all 0.25s ease'
-              }}
-            >
-              <Sparkles size={18} style={{ color: activeTab === 'longevity' ? 'var(--accent-green)' : 'inherit' }} />
-              <span>Longevity Score</span>
-            </button>
- 
-            <button 
-              className={`tool-tab-btn ${activeTab === 'sleep' ? 'active' : ''}`}
-              onClick={() => handleTabSelect('sleep')}
-              style={{
-                display: 'flex', alignItems: 'center', gap: '12px', padding: '1rem 1.25rem', borderRadius: '10px',
-                background: activeTab === 'sleep' ? 'rgba(0, 230, 118, 0.08)' : 'var(--bg-surface)',
-                border: activeTab === 'sleep' ? '1px solid rgba(0, 230, 118, 0.3)' : '1px solid rgba(255,255,255,0.04)',
-                color: activeTab === 'sleep' ? 'var(--text-main-site)' : 'var(--text-muted-site)',
-                cursor: 'pointer', textAlign: 'left', fontWeight: '600', transition: 'all 0.25s ease'
-              }}
-            >
-              <Moon size={18} style={{ color: activeTab === 'sleep' ? 'var(--accent-green)' : 'inherit' }} />
-              <span>Sleep Analyzer</span>
-            </button>
- 
-            <button 
-              className={`tool-tab-btn ${activeTab === 'meal' ? 'active' : ''}`}
-              onClick={() => handleTabSelect('meal')}
-              style={{
-                display: 'flex', alignItems: 'center', gap: '12px', padding: '1rem 1.25rem', borderRadius: '10px',
-                background: activeTab === 'meal' ? 'rgba(0, 230, 118, 0.08)' : 'var(--bg-surface)',
-                border: activeTab === 'meal' ? '1px solid rgba(0, 230, 118, 0.3)' : '1px solid rgba(255,255,255,0.04)',
-                color: activeTab === 'meal' ? 'var(--text-main-site)' : 'var(--text-muted-site)',
-                cursor: 'pointer', textAlign: 'left', fontWeight: '600', transition: 'all 0.25s ease'
-              }}
-            >
-              <Apple size={18} style={{ color: activeTab === 'meal' ? 'var(--accent-green)' : 'inherit' }} />
-              <span>Meal Planner</span>
-            </button>
- 
-            <button 
-              className={`tool-tab-btn ${activeTab === 'stress' ? 'active' : ''}`}
-              onClick={() => handleTabSelect('stress')}
-              style={{
-                display: 'flex', alignItems: 'center', gap: '12px', padding: '1rem 1.25rem', borderRadius: '10px',
-                background: activeTab === 'stress' ? 'rgba(0, 230, 118, 0.08)' : 'var(--bg-surface)',
-                border: activeTab === 'stress' ? '1px solid rgba(0, 230, 118, 0.3)' : '1px solid rgba(255,255,255,0.04)',
-                color: activeTab === 'stress' ? 'var(--text-main-site)' : 'var(--text-muted-site)',
-                cursor: 'pointer', textAlign: 'left', fontWeight: '600', transition: 'all 0.25s ease'
-              }}
-            >
-              <HeartPulse size={18} style={{ color: activeTab === 'stress' ? 'var(--accent-green)' : 'inherit' }} />
-              <span>Stress Checker</span>
-            </button>
-
-            <button
-              className={`tool-tab-btn ${activeTab === 'adhd' ? 'active' : ''}`}
-              onClick={() => handleTabSelect('adhd')}
-              style={{
-                display: 'flex', alignItems: 'center', gap: '12px', padding: '1rem 1.25rem', borderRadius: '10px',
-                background: activeTab === 'adhd' ? 'rgba(0, 230, 118, 0.08)' : 'var(--bg-surface)',
-                border: activeTab === 'adhd' ? '1px solid rgba(0, 230, 118, 0.3)' : '1px solid rgba(255,255,255,0.04)',
-                color: activeTab === 'adhd' ? 'var(--text-main-site)' : 'var(--text-muted-site)',
-                cursor: 'pointer', textAlign: 'left', fontWeight: '600', transition: 'all 0.25s ease'
-              }}
-            >
-              <Brain size={18} style={{ color: activeTab === 'adhd' ? 'var(--accent-green)' : 'inherit' }} />
-              <span>ADHD Screening</span>
-            </button>
-          </div>
-
+        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
           {/* Main Dashboard Card Panel */}
           <div className="tool-main-panel" style={{ background: 'var(--bg-surface)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '20px', padding: '2.5rem', backdropFilter: 'blur(20px)' }}>
             
@@ -1330,7 +1300,7 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
                       </p>
                     </div>
 
-                    <h4 style={{ fontSize: '1rem', fontWeight: '700', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '8px' }}><Award size={18} color="var(--accent-green)" /> Recommended Androgenic Optimization Protocol</h4>
+                    <h4 style={{ fontSize: '1rem', fontWeight: '700', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '8px' }}><Award size={18} color="var(--accent-green)" /> Recommended Testosterone Optimisation Plan</h4>
                     <ul style={{ paddingLeft: '1.25rem', margin: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--text-muted-site)' }}>
                       {tResult.advice.map((adv, i) => (
                         <li key={i} style={{ lineHeight: '1.4' }}>
@@ -1591,7 +1561,7 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
 
                     <div style={{ padding: '1rem', background: 'var(--bg-surface)', borderRadius: '8px', borderLeft: `4px solid ${longevityResult.color}` }}>
                       <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--text-muted-site)', lineHeight: '1.5' }}>
-                        <strong>Actionable Longevity Protocol:</strong> {longevityResult.protocol}
+                        <strong>Actionable Longevity Plan:</strong> {longevityResult.plan}
                       </p>
                     </div>
                   </div>
@@ -2324,6 +2294,135 @@ export const ToolsPage = ({ navigateTo, globalProducts }) => {
 
               </div>
             )}
+
+            {/* TOOL 9: MENTAL HEALTH WELLNESS ASSESSMENT */}
+            {activeTab === 'mental' && (() => {
+              const mentalQuestions = [
+                { id: 'q1', label: 'Over the past 2 weeks, how often have you felt down, depressed, or hopeless?', reverse: true },
+                { id: 'q2', label: 'How often have you felt little interest or pleasure in things you used to enjoy?', reverse: true },
+                { id: 'q3', label: 'How often do you feel nervous, anxious, or on edge?', reverse: true },
+                { id: 'q4', label: 'How often are you unable to stop or control worrying?', reverse: true },
+                { id: 'q5', label: 'How often do you feel overwhelmed by daily tasks or responsibilities?', reverse: true },
+                { id: 'q6', label: 'How well are you able to bounce back from setbacks or difficult situations?', reverse: false },
+                { id: 'q7', label: 'How often do you feel meaningfully connected to the people around you?', reverse: false },
+                { id: 'q8', label: 'How often do you feel a sense of purpose or meaning in your daily life?', reverse: false },
+                { id: 'q9', label: 'How consistently do you practice self-care (sleep, movement, nutrition, rest)?', reverse: false },
+                { id: 'q10', label: 'How often do you engage in negative self-talk or harsh self-criticism?', reverse: true },
+              ];
+              const reverseOpts = ['Never', 'Rarely', 'Sometimes', 'Often'];
+              const forwardOpts = ['Never / Rarely', 'Sometimes', 'Often', 'Almost Always'];
+              return (
+                <div className="tool-content">
+                  <h2 style={{ fontSize: '1.75rem', fontWeight: '700', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <Smile color="var(--accent-green)" /> Mental Health Wellness Assessment
+                  </h2>
+                  <p style={{ color: 'var(--text-muted-site)', marginBottom: '0.75rem' }}>
+                    A 10-question evidence-informed wellbeing check covering mood, anxiety, resilience, purpose, and self-care.
+                  </p>
+                  <div style={{ background: 'rgba(255,193,7,0.06)', border: '1px solid rgba(255,193,7,0.2)', borderRadius: '10px', padding: '0.75rem 1rem', marginBottom: '2rem', fontSize: '0.82rem', color: 'var(--text-muted-site)' }}>
+                    ⚠️ If you are experiencing a mental health crisis, please contact a qualified mental health professional or a crisis helpline immediately.
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem', marginBottom: '2rem' }}>
+                    {mentalQuestions.map((q, idx) => {
+                      const opts = q.reverse ? reverseOpts : forwardOpts;
+                      return (
+                        <div key={q.id}>
+                          <p style={{ fontWeight: '600', color: 'var(--text-main-site)', marginBottom: '0.75rem', fontSize: '0.95rem', lineHeight: '1.5' }}>
+                            <span style={{ color: 'var(--accent-green)', fontWeight: '700', marginRight: '6px' }}>{idx + 1}.</span>{q.label}
+                          </p>
+                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem' }}>
+                            {opts.map((opt, i) => {
+                              const val = i + 1;
+                              const selected = mentalAnswers[q.id] === val;
+                              return (
+                                <button
+                                  key={i}
+                                  onClick={() => { setMentalAnswers(prev => ({ ...prev, [q.id]: val })); setMentalResult(null); }}
+                                  style={{
+                                    padding: '10px 14px', borderRadius: '8px', fontSize: '0.85rem', fontWeight: '600', textAlign: 'left', cursor: 'pointer', transition: 'all 0.15s ease',
+                                    background: selected ? 'rgba(0,230,118,0.12)' : 'rgba(255,255,255,0.03)',
+                                    border: selected ? '1px solid var(--accent-green)' : '1px solid rgba(255,255,255,0.08)',
+                                    color: selected ? 'var(--accent-green)' : 'var(--text-muted-site)',
+                                  }}
+                                >
+                                  {opt}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '1rem' }}>
+                    <button
+                      onClick={calculateMentalHealth}
+                      style={{ flex: 1, padding: '14px', background: 'var(--accent-green)', border: 'none', borderRadius: '10px', color: '#0a0f0a', fontWeight: '800', fontSize: '1rem', cursor: 'pointer' }}
+                    >
+                      Analyse My Mental Wellness
+                    </button>
+                    <button
+                      onClick={() => { setMentalAnswers({ q1:0,q2:0,q3:0,q4:0,q5:0,q6:0,q7:0,q8:0,q9:0,q10:0 }); setMentalResult(null); }}
+                      style={{ padding: '14px 18px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: 'var(--text-muted-site)', cursor: 'pointer' }}
+                    >
+                      <RefreshCw size={16} />
+                    </button>
+                  </div>
+
+                  {mentalResult && (
+                    <div style={{ marginTop: '2.5rem', padding: '2rem', background: 'rgba(255,255,255,0.02)', border: `1px solid ${mentalResult.color}40`, borderRadius: '16px' }}>
+                      {/* Overall score */}
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
+                        <div>
+                          <h3 style={{ color: mentalResult.color, fontSize: '1.3rem', fontWeight: '800', marginBottom: '4px' }}>{mentalResult.tier}</h3>
+                          <p style={{ color: 'var(--text-muted-site)', fontSize: '0.88rem' }}>Wellness Score: <strong style={{ color: '#fff' }}>{mentalResult.wellnessScore}/100</strong></p>
+                        </div>
+                        <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: `${mentalResult.color}18`, border: `3px solid ${mentalResult.color}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: '900', color: mentalResult.color }}>
+                          {mentalResult.wellnessScore}
+                        </div>
+                      </div>
+
+                      {/* Dimension bars */}
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.75rem' }}>
+                        {mentalResult.dimensions.map((d, i) => (
+                          <div key={i}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', fontSize: '0.83rem' }}>
+                              <span style={{ color: 'var(--text-muted-site)', fontWeight: '600' }}>{d.label}</span>
+                              <span style={{ color: '#fff', fontWeight: '700' }}>{d.score}%</span>
+                            </div>
+                            <div style={{ height: '6px', background: 'rgba(255,255,255,0.07)', borderRadius: '3px', overflow: 'hidden' }}>
+                              <div style={{ height: '100%', width: `${d.score}%`, background: d.score >= 70 ? 'var(--accent-green)' : d.score >= 45 ? '#ffb300' : '#ef5350', borderRadius: '3px', transition: 'width 0.6s ease' }} />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Summary */}
+                      <p style={{ color: 'var(--text-muted-site)', fontSize: '0.92rem', lineHeight: '1.7', marginBottom: '1.5rem' }}>{mentalResult.summary}</p>
+
+                      {/* Strategies */}
+                      <h4 style={{ fontWeight: '700', color: 'var(--text-main-site)', marginBottom: '0.75rem', fontSize: '0.95rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Recommended Actions</h4>
+                      <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                        {mentalResult.strategies.map((s, i) => (
+                          <li key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', fontSize: '0.9rem', color: 'var(--text-muted-site)', lineHeight: '1.55' }}>
+                            <span style={{ color: 'var(--accent-green)', fontWeight: '800', flexShrink: 0 }}>→</span>
+                            {s}
+                          </li>
+                        ))}
+                      </ul>
+
+                      <p style={{ marginTop: '1.5rem', fontSize: '0.78rem', color: 'rgba(255,255,255,0.3)', fontStyle: 'italic' }}>
+                        This assessment is for general wellness awareness only and does not constitute a medical diagnosis. If you are concerned about your mental health, please consult a qualified professional.
+                      </p>
+                    </div>
+                  )}
+
+                  {mentalResult && renderRecommendedProducts()}
+                </div>
+              );
+            })()}
 
             { (bmiResult || tResult || realAgeResult || longevityResult || sleepResult || mealResult || stressResult || adhdResult) && renderRecommendedProducts() }
           </div>

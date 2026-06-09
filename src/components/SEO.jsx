@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 
 const SEO = ({ 
-  title = "EternoFit | High-Performance Clinical Health & Fitness Protocols",
-  description = "EternoFit provides evidence-based health assessments and clinical performance protocols. Optimizing human biology through precision nutrition, tactical training, and hormonal health.",
-  keywords = "clinical health assessment, performance optimization, tactical fitness, bio-identical nutrition, longevity protocols, health coaching, hormone health",
-  image = "https://www.eternofit.com/Metatag.jpg",
-  url = "https://www.eternofit.com",
+  title = "EternoFit | High-Performance Clinical Health & Fitness Programs",
+  description = "EternoFit provides evidence-based health assessments and clinical performance programs. Optimizing human biology through precision nutrition, tactical training, and hormonal health.",
+  keywords = "clinical health assessment, performance optimization, tactical fitness, bio-identical nutrition, longevity programs, health coaching, hormone health",
+  image = "https://eternofit.com/Metatag.jpg",
+  url = "https://eternofit.com",
   schema = null
 }) => {
   useEffect(() => {

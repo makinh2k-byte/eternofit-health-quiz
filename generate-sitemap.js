@@ -24,6 +24,7 @@ const staticRoutes = [
   '/tools?tool=sleep',
   '/tools?tool=meal',
   '/tools?tool=stress',
+  '/tools?tool=mental',
   '/quiz',
   '/about',
   '/contact',
@@ -48,6 +49,14 @@ staticRoutes.forEach(addUrl);
 categories.forEach(cat => {
   addUrl(`/marketplace?category=${encodeURIComponent(cat)}`);
 });
+
+// Add individual product detail pages (active only)
+products
+  .filter(p => p.status !== 'inactive')
+  .forEach(p => {
+    const slug = p.name.toLowerCase().replace(/\s+/g, '-');
+    addUrl(`/product/${slug}`);
+  });
 
 // Add articles
 articles.forEach(art => {

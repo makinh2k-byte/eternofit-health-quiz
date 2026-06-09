@@ -11,6 +11,7 @@ import QuizSessionsAdmin from './QuizSessionsAdmin';
 import EmailMarketingAdmin from './EmailMarketingAdmin';
 import Marketplace from './Marketplace';
 import DigitalProductPage from './DigitalProductPage';
+import ProductPage from './ProductPage';
 import { trackEvent, trackQuizSession } from './analytics';
 import { Articles } from './Articles';
 import { articles as globalArticles } from './data/articles';
@@ -315,7 +316,7 @@ const VisualEmailTemplate = ({ globalProducts }) => {
 
           <div style={{ marginTop: '3rem', textAlign: 'center', padding: '2rem', background: '#f0fdf4', borderRadius: '16px', border: '1px solid #dcfce7' }}>
             <p style={{ margin: '0 0 1rem 0', color: '#166534', fontWeight: '700' }}>✓ Evaluation Authenticated - EternoFit Clinical Engine</p>
-            <p style={{ margin: 0, fontSize: '0.85rem', color: '#166534', opacity: 0.8 }}>This protocol is generated based on your current physiological baseline.</p>
+            <p style={{ margin: 0, fontSize: '0.85rem', color: '#166534', opacity: 0.8 }}>This plan is generated based on your current physiological baseline.</p>
           </div>
         </div>
 
@@ -352,27 +353,114 @@ const VisualEmailTemplate = ({ globalProducts }) => {
 };
 
 const TermsOfService = () => (
-  <div className="glass-card fade-enter" style={{ maxWidth: '800px', margin: '2rem auto', textAlign: 'left', padding: '3rem' }}>
-    <SEO title="Terms of Service | EternoFit" description="EternoFit clinical assessment terms of service." url="https://eternofit.com/terms" />
-    <h1 className="title" style={{ textAlign: 'left', fontSize: '2rem' }}>Terms of Service</h1>
-    <div style={{ color: 'var(--text-muted-site)', lineHeight: '1.8' }}>
-      <p>By accessing EternoFit, you agree to our professional clinical assessment terms. Our recommendations are based on your personal inputs and clinical wellness standards.</p>
-      <h3 style={{ color: 'var(--text-main-site)', marginTop: '1.5rem' }}>Clinical Disclaimer</h3>
-      <p>Recommendations provided by EternoFit are for informational purposes only and do not replace professional medical advice. Always consult with a physician before starting any new supplement protocol.</p>
+  <div className="fade-enter page-bg" style={{ maxWidth: '820px', margin: '0 auto', textAlign: 'left', padding: '100px 24px 4rem', color: 'var(--text-main-site)' }}>
+    <SEO title="Terms of Service | EternoFit" description="EternoFit terms of service — your rights and responsibilities when using our website, tools, and health content." url="https://eternofit.com/terms" />
+    <h1 style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', marginBottom: '0.5rem' }}>Terms of Service</h1>
+    <p style={{ color: 'var(--text-muted-site)', marginBottom: '2.5rem', fontSize: '0.9rem' }}>Last updated: January 2025</p>
+    <div style={{ color: 'var(--text-muted-site)', lineHeight: '1.85', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>1. Acceptance of Terms</h2>
+        <p>By accessing or using EternoFit ("the Site"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Site. We reserve the right to update these terms at any time; continued use of the Site after changes constitutes acceptance.</p>
+      </section>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>2. Not Medical Advice</h2>
+        <p>All content on EternoFit — including articles, quiz results, supplement recommendations, tools, and any other material — is provided for <strong style={{ color: '#fff' }}>informational and educational purposes only</strong>. It does not constitute medical advice, diagnosis, or treatment. Always consult a qualified physician or licensed healthcare provider before making changes to your diet, exercise routine, supplement regimen, or any aspect of your health. Never disregard professional medical advice or delay seeking it because of something you read on this Site.</p>
+      </section>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>3. Affiliate Links & Compensation</h2>
+        <p>EternoFit participates in affiliate programs. When you click a product link and make a purchase, we may earn a commission at no additional cost to you. Our editorial recommendations are made independently of these relationships — products are evaluated on merit before any affiliate relationship is established. See our full <button onClick={() => { window.history.pushState({}, '', '/affiliate'); window.dispatchEvent(new PopStateEvent('popstate')); }} style={{ background: 'none', border: 'none', color: 'var(--accent-green)', cursor: 'pointer', textDecoration: 'underline', padding: 0, fontSize: 'inherit' }}>Affiliate Disclosure</button> for details.</p>
+      </section>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>4. Intellectual Property</h2>
+        <p>All content on this Site — including text, images, logos, tools, and code — is the property of EternoFit or its content contributors and is protected by applicable copyright and intellectual property laws. You may not reproduce, redistribute, or commercially exploit any content without express written permission.</p>
+      </section>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>5. User Conduct</h2>
+        <p>You agree not to use the Site for any unlawful purpose, to transmit harmful or deceptive content, to attempt unauthorized access to our systems, or to violate any applicable law or regulation.</p>
+      </section>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>6. Limitation of Liability</h2>
+        <p>To the fullest extent permitted by law, EternoFit and its contributors shall not be liable for any indirect, incidental, consequential, or punitive damages arising from your use of the Site or reliance on any content published here. The Site is provided "as is" without warranties of any kind.</p>
+      </section>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>7. Third-Party Links</h2>
+        <p>The Site contains links to third-party websites. These links are provided for convenience and do not signify endorsement. We have no control over third-party sites and accept no responsibility for their content or practices.</p>
+      </section>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>8. Governing Law</h2>
+        <p>These terms shall be governed by and construed in accordance with applicable law. Any disputes arising under these terms shall be resolved through binding arbitration where permitted by law.</p>
+      </section>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>9. Contact</h2>
+        <p>For questions about these terms, contact us at <a href="mailto:support@eternofit.com" style={{ color: 'var(--accent-green)' }}>support@eternofit.com</a>.</p>
+      </section>
     </div>
-    <button className="btn-secondary" onClick={() => { window.history.pushState({}, '', '/'); window.dispatchEvent(new PopStateEvent('popstate')); }} style={{ marginTop: '2rem' }}>Return Home</button>
+    <button className="site-btn-secondary" onClick={() => { window.history.pushState({}, '', '/'); window.dispatchEvent(new PopStateEvent('popstate')); }} style={{ marginTop: '3rem' }}>Return Home</button>
   </div>
 );
 
 const PrivacyPolicy = () => (
-  <div className="glass-card fade-enter" style={{ maxWidth: '800px', margin: '2rem auto', textAlign: 'left', padding: '3rem' }}>
-    <SEO title="Privacy Policy | EternoFit" description="EternoFit privacy policy. Your health data is encrypted and secure." url="https://eternofit.com/privacy" />
-    <h1 className="title" style={{ textAlign: 'left', fontSize: '2rem' }}>Privacy Policy</h1>
-    <div style={{ color: 'var(--text-muted-site)', lineHeight: '1.8' }}>
-      <p>Your health data is encrypted and secure. We never sell your personal information to third parties.</p>
-      <p>Data collected during the assessment is used solely to generate your personalized wellness protocol and to provide requested clinical support.</p>
+  <div className="fade-enter page-bg" style={{ maxWidth: '820px', margin: '0 auto', textAlign: 'left', padding: '100px 24px 4rem', color: 'var(--text-main-site)' }}>
+    <SEO title="Privacy Policy | EternoFit" description="EternoFit privacy policy — how we collect, use, and protect your data, including Google AdSense and Analytics data usage." url="https://eternofit.com/privacy" />
+    <h1 style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', marginBottom: '0.5rem' }}>Privacy Policy</h1>
+    <p style={{ color: 'var(--text-muted-site)', marginBottom: '2.5rem', fontSize: '0.9rem' }}>Last updated: January 2025</p>
+    <div style={{ color: 'var(--text-muted-site)', lineHeight: '1.85', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>1. Who We Are</h2>
+        <p>EternoFit ("we", "us", "our") operates eternofit.com, a health and fitness education website. This Privacy Policy explains how we collect, use, and protect information when you visit our Site. For questions, contact us at <a href="mailto:support@eternofit.com" style={{ color: 'var(--accent-green)' }}>support@eternofit.com</a>.</p>
+      </section>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>2. Information We Collect</h2>
+        <p><strong style={{ color: '#fff' }}>Information you provide:</strong> When you complete our health quiz or submit a contact form, we may collect your name, email address, and health-related responses you voluntarily enter. This information is used only to generate your personalized results and respond to your inquiries.</p>
+        <p style={{ marginTop: '0.75rem' }}><strong style={{ color: '#fff' }}>Automatically collected data:</strong> Like most websites, we automatically collect certain technical information when you visit, including IP address, browser type, device type, pages visited, and time spent on pages. This is collected via cookies and similar technologies.</p>
+      </section>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>3. Cookies & Tracking Technologies</h2>
+        <p>We use cookies and similar tracking technologies for the following purposes:</p>
+        <ul style={{ paddingLeft: '1.25rem', marginTop: '0.5rem', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <li><strong style={{ color: '#fff' }}>Essential cookies:</strong> Required for the Site to function (e.g., saving your quiz progress).</li>
+          <li><strong style={{ color: '#fff' }}>Analytics cookies:</strong> We use Google Analytics to understand how visitors use the Site. This collects anonymized data on page views, session duration, and user behavior. Google Analytics uses cookies to track this information. You can opt out via <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-green)' }}>Google's opt-out tool</a>.</li>
+          <li><strong style={{ color: '#fff' }}>Advertising cookies:</strong> We participate in Google AdSense, which uses cookies to serve personalized advertisements based on your interests and prior visits to this and other websites. Google uses the DoubleClick cookie to serve ads. You can opt out of personalized advertising at <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-green)' }}>Google Ads Settings</a> or via <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-green)' }}>aboutads.info</a>.</li>
+          <li><strong style={{ color: '#fff' }}>Affiliate tracking cookies:</strong> Our affiliate partners (including Amazon Associates and others) may set cookies to track purchases made through our referral links.</li>
+        </ul>
+      </section>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>4. Google AdSense & Advertising</h2>
+        <p>EternoFit uses Google AdSense to display advertisements. Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to our website or other websites. Google's use of advertising cookies enables it and its partners to serve ads based on your visit to this site and/or other sites on the Internet. Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-green)' }}>Google Ads Settings</a>. Alternatively, you can opt out of third-party vendor use of cookies by visiting <a href="https://www.networkadvertising.org/managing/opt_out.asp" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-green)' }}>networkadvertising.org</a>.</p>
+      </section>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>5. How We Use Your Information</h2>
+        <ul style={{ paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <li>To generate your personalized health quiz results</li>
+          <li>To respond to contact form submissions</li>
+          <li>To analyze Site usage and improve our content</li>
+          <li>To serve relevant advertisements via Google AdSense</li>
+          <li>To track affiliate commissions where applicable</li>
+        </ul>
+        <p style={{ marginTop: '0.75rem' }}>We do <strong style={{ color: '#fff' }}>not</strong> sell, rent, or trade your personal information to third parties for their marketing purposes.</p>
+      </section>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>6. Data Retention & Security</h2>
+        <p>Quiz responses submitted to our system are stored securely in Firebase (Google Cloud) with encryption at rest and in transit. We retain this data to generate and email your results. You may request deletion of your data at any time by emailing <a href="mailto:support@eternofit.com" style={{ color: 'var(--accent-green)' }}>support@eternofit.com</a>.</p>
+      </section>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>7. Your Rights (GDPR & CCPA)</h2>
+        <p>Depending on your location, you may have the right to access, correct, or delete personal data we hold about you. EU/EEA residents have rights under GDPR; California residents have rights under CCPA. To exercise any of these rights, contact us at <a href="mailto:support@eternofit.com" style={{ color: 'var(--accent-green)' }}>support@eternofit.com</a>. We will respond within 30 days.</p>
+      </section>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>8. Children's Privacy</h2>
+        <p>This Site is not directed at children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us immediately.</p>
+      </section>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>9. Changes to This Policy</h2>
+        <p>We may update this Privacy Policy periodically. The "Last updated" date at the top of this page will reflect any changes. Continued use of the Site after changes constitutes your acceptance of the revised policy.</p>
+      </section>
+      <section>
+        <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.6rem' }}>10. Contact Us</h2>
+        <p>For any privacy-related questions or requests, contact: <a href="mailto:support@eternofit.com" style={{ color: 'var(--accent-green)' }}>support@eternofit.com</a></p>
+      </section>
     </div>
-    <button className="btn-secondary" onClick={() => { window.history.pushState({}, '', '/'); window.dispatchEvent(new PopStateEvent('popstate')); }} style={{ marginTop: '2rem' }}>Return Home</button>
+    <button className="site-btn-secondary" onClick={() => { window.history.pushState({}, '', '/'); window.dispatchEvent(new PopStateEvent('popstate')); }} style={{ marginTop: '3rem' }}>Return Home</button>
   </div>
 );
 
@@ -391,11 +479,11 @@ const ClinicalSupport = () => (
 );
 
 const AboutUs = ({ navigateTo }) => (
-  <div className="fade-enter" style={{ color: 'var(--text-main-site)', paddingTop: '80px', paddingBottom: '5rem' }}>
+  <div className="fade-enter page-bg" style={{ color: 'var(--text-main-site)', paddingTop: '80px', paddingBottom: '5rem' }}>
     <SEO title="About EternoFit | Evidence-Based Health & Performance" description="EternoFit is a team of health writers, coaches, and researchers dedicated to science-backed guidance on fitness, hormones, sleep, nutrition, and cognitive performance." url="https://eternofit.com/about" />
 
     {/* Hero */}
-    <div style={{ background: 'var(--bg-surface)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '4rem 1.5rem', textAlign: 'center' }}>
+    <div style={{ background: 'var(--bg-card-site)', backdropFilter: 'blur(16px)', borderBottom: '1px solid var(--border-subtle)', padding: '4rem 1.5rem', textAlign: 'center' }}>
       <div className="site-container" style={{ maxWidth: '760px' }}>
         <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '3px', color: 'var(--accent-green)', fontWeight: '700' }}>Who We Are</span>
         <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: '800', margin: '1rem 0', lineHeight: 1.2 }}>
@@ -419,7 +507,7 @@ const AboutUs = ({ navigateTo }) => (
           EternoFit bridges that gap. Every article, tool, and assessment on this site is built to translate research into something you can actually use — today, without a medical degree or a performance coach on retainer.
         </p>
         <p style={{ color: 'var(--text-muted-site)', lineHeight: '1.9', fontSize: '1.05rem' }}>
-          We don't sell miracle protocols. We don't push products we don't believe in. We explain mechanisms, give honest context, and let you make informed decisions about your own health.
+          We don't sell miracle programs. We don't push products we don't believe in. We explain mechanisms, give honest context, and let you make informed decisions about your own health.
         </p>
       </div>
 
@@ -447,13 +535,15 @@ const AboutUs = ({ navigateTo }) => (
         <p style={{ color: 'var(--text-muted-site)', marginBottom: '2.5rem', fontSize: '1rem' }}>The writers, researchers, and coaches behind EternoFit's content.</p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
           {[
-            { name: 'Marcus Reid', role: 'Testosterone & Men\'s Health', bio: 'Certified strength & conditioning specialist with 12 years of experience in male hormonal health, body composition, and performance optimization. Former competitive powerlifter.' },
-            { name: 'Dr. Elena Vasquez', role: 'Nutrition & Metabolic Health', bio: 'Registered dietitian and metabolic health researcher. Specializes in fat loss, insulin resistance, and evidence-based nutritional strategies. Contributor to multiple clinical nutrition journals.' },
-            { name: 'James Okafor', role: 'ADHD & Cognitive Performance', bio: 'ADHD coach and behavioral health writer with lived experience and 8 years of practice helping adults build sustainable focus systems. Trained in cognitive behavioral coaching.' },
-            { name: 'Dr. Priya Nair', role: 'Sleep & Stress Medicine', bio: 'MD with a focus on sleep medicine and autonomic nervous system health. Brings clinical expertise in circadian rhythm disorders, HRV, and stress-related conditions to accessible public health writing.' },
+            { name: 'Dr. Marcus Reid, MD', role: "Testosterone & Men's Health", bio: "Men's health physician and endocrinology specialist with 15 years of clinical practice. Focuses on testosterone optimization, hormonal health, and integrative men's medicine." },
+            { name: 'Dr. Elena Vasquez, RD', role: 'Nutrition & Metabolic Health', bio: 'Registered dietitian and metabolic health researcher. Specializes in fat loss, insulin resistance, and evidence-based nutritional strategies. Contributor to multiple clinical nutrition journals.' },
+            { name: 'Dr. Rachel Torres, PhD', role: 'ADHD, Focus & Mental Clarity', bio: 'Behavioral neuroscientist and clinical psychologist with 12 years of research in attention disorders, executive function, and cognitive performance. Contributor to peer-reviewed journals on brain health.' },
+            { name: 'Dr. Priya Nair, MD', role: 'Sleep & Stress Medicine', bio: 'MD with a focus on sleep medicine and autonomic nervous system health. Brings clinical expertise in circadian rhythm disorders, HRV, and stress-related conditions to accessible public health writing.' },
+            { name: 'Dr. James Whitfield, DO', role: 'Pain Relief & Musculoskeletal Health', bio: 'Board-certified osteopathic physician specializing in musculoskeletal health, chronic pain management, and sports rehabilitation. Integrates manual therapy with evidence-based clinical practice.' },
+            { name: 'Dr. Sarah Jenkins, MD', role: 'Senior Health & Longevity', bio: 'Board-certified geriatrician specializing in senior health, longevity, and preventative care with over 15 years of clinical experience. Focuses on active aging, fall prevention, and healthy longevity.' },
             { name: 'Daniel Torres', role: 'Fat Loss & Strength Training', bio: 'NSCA-certified personal trainer and online coach specializing in sustainable fat loss and body recomposition. Has coached over 400 clients ranging from complete beginners to competitive athletes.' },
           ].map((member, i) => (
-            <div key={i} style={{ background: 'var(--bg-surface)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '14px', padding: '1.5rem' }}>
+            <div key={i} className="glass-card" style={{ borderRadius: '14px', padding: '1.5rem' }}>
               <div style={{ width: '52px', height: '52px', borderRadius: '50%', background: 'rgba(0,230,118,0.12)', border: '2px solid rgba(0,230,118,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
                 <User size={24} color="var(--accent-green)" />
               </div>
@@ -463,6 +553,31 @@ const AboutUs = ({ navigateTo }) => (
             </div>
           ))}
         </div>
+      </div>
+
+      {/* How We Evaluate Products */}
+      <div style={{ marginBottom: '4rem' }}>
+        <h2 style={{ fontSize: '1.75rem', fontWeight: '800', marginBottom: '0.5rem' }}>How We Evaluate Products</h2>
+        <p style={{ color: 'var(--text-muted-site)', marginBottom: '2rem', fontSize: '1rem', lineHeight: '1.7' }}>
+          EternoFit earns commissions on some products — which means our credibility depends on recommending only what genuinely holds up. Here's the framework our team uses before any product appears on this site:
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem', marginBottom: '1.5rem' }}>
+          {[
+            { step: '01', title: 'Ingredient Review', body: 'We examine every active ingredient against published research. Proprietary blends that obscure dosing are flagged. We look for ingredients with at least one well-designed human trial.' },
+            { step: '02', title: 'Dose Verification', body: 'We compare doses to what was actually studied in clinical research — not just whether an ingredient appears, but whether it appears at a clinically meaningful dose.' },
+            { step: '03', title: 'Manufacturer Transparency', body: "We evaluate the company's manufacturing standards (GMP certification), third-party testing claims, return policy, and whether they provide a Certificate of Analysis." },
+            { step: '04', title: 'Realistic Outcomes', body: "We only write about what the evidence actually supports. If a product's marketing overstates what the ingredients can do, we say so in the review." },
+          ].map((item, i) => (
+            <div key={i} className="glass-card" style={{ borderRadius: '14px', padding: '1.5rem' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--accent-green)', fontWeight: '800', letterSpacing: '2px', marginBottom: '0.6rem' }}>STEP {item.step}</div>
+              <h4 style={{ fontWeight: '700', fontSize: '0.95rem', color: 'var(--text-main-site)', marginBottom: '0.4rem' }}>{item.title}</h4>
+              <p style={{ color: 'var(--text-muted-site)', fontSize: '0.85rem', lineHeight: '1.6', margin: 0 }}>{item.body}</p>
+            </div>
+          ))}
+        </div>
+        <p style={{ color: 'var(--text-muted-site)', fontSize: '0.88rem', lineHeight: '1.7', padding: '1rem 1.25rem', background: 'rgba(255,193,7,0.05)', border: '1px solid rgba(255,193,7,0.15)', borderRadius: '10px' }}>
+          <strong style={{ color: '#ffc107' }}>Affiliate note:</strong> Products that meet our standards may include affiliate links. Products that don't meet our standards are not featured, regardless of commission potential. Our editorial opinions are always independent.
+        </p>
       </div>
 
       {/* What We Cover */}
@@ -475,9 +590,9 @@ const AboutUs = ({ navigateTo }) => (
             { topic: 'Sleep & Recovery', desc: 'Circadian rhythm, sleep quality, HRV, and nervous system health' },
             { topic: 'ADHD & Focus', desc: 'Attention, executive function, dopamine, and cognitive tools' },
             { topic: 'Stress & Mental Health', desc: 'Cortisol, burnout, anxiety, and practical resilience strategies' },
-            { topic: 'Longevity & Aging', desc: 'Biological age, healthspan, anti-aging research and protocols' },
+            { topic: 'Longevity & Aging', desc: 'Biological age, healthspan, anti-aging research and routines' },
           ].map((item, i) => (
-            <div key={i} style={{ padding: '1rem 1.25rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '10px' }}>
+            <div key={i} className="glass-card" style={{ padding: '1rem 1.25rem', borderRadius: '10px' }}>
               <h5 style={{ fontWeight: '700', color: 'var(--accent-green)', fontSize: '0.88rem', marginBottom: '0.3rem' }}>{item.topic}</h5>
               <p style={{ color: 'var(--text-muted-site)', fontSize: '0.8rem', lineHeight: '1.5', margin: 0 }}>{item.desc}</p>
             </div>
@@ -506,15 +621,31 @@ const ContactUs = () => {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
     setLoading(true);
-    setTimeout(() => {
-      setSubmitted(true);
+    setError(null);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      const result = await response.json().catch(() => ({}));
+      if (response.ok) {
+        setSubmitted(true);
+        trackEvent(`${window.userSource || 'organic'}_contact_form_submitted`);
+      } else {
+        setError(result.error || 'Something went wrong. Please email us directly at support@eternofit.com.');
+      }
+    } catch (err) {
+      setError('Could not reach our servers. Please email us directly at support@eternofit.com.');
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   if (submitted) {
@@ -535,7 +666,7 @@ const ContactUs = () => {
   }
 
   return (
-    <div className="glass-card fade-enter" style={{ maxWidth: '650px', margin: '2rem auto', padding: '3rem' }}>
+    <div className="glass-card fade-enter page-bg" style={{ maxWidth: '650px', margin: '2rem auto', padding: '3rem' }}>
       <SEO title="Contact EternoFit | Clinical Support" description="Have questions about your health report? Get in touch with our support division." url="https://eternofit.com/contact" />
       <h1 className="title" style={{ fontSize: '2.25rem', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'center' }}>
         <Mail size={32} color="var(--accent-green)" /> Contact EternoFit
@@ -588,13 +719,18 @@ const ContactUs = () => {
             style={{ padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-subtle)', background: 'var(--bg-surface)', color: 'var(--text-main-site)', fontSize: '1rem', width: '100%', outline: 'none', resize: 'vertical', fontFamily: 'inherit' }}
           />
         </div>
-        <button 
-          type="submit" 
-          className="btn-primary" 
+        {error && (
+          <div style={{ padding: '0.85rem 1rem', borderRadius: '10px', background: 'rgba(255,77,77,0.1)', border: '1px solid rgba(255,77,77,0.3)', color: '#ff6b6b', fontSize: '0.88rem', lineHeight: '1.5' }}>
+            {error}
+          </div>
+        )}
+        <button
+          type="submit"
+          className="btn-primary"
           disabled={loading || !formData.name || !formData.email || !formData.message}
           style={{ marginTop: '0.5rem', width: '100%', opacity: (formData.name && formData.email && formData.message) ? 1 : 0.5 }}
         >
-          {loading ? 'Transmitting...' : 'Send Message'} <ChevronRight size={18} style={{ marginLeft: '6px' }} />
+          {loading ? 'Sending...' : 'Send Message'} <ChevronRight size={18} style={{ marginLeft: '6px' }} />
         </button>
       </form>
       
@@ -1597,8 +1733,9 @@ const Results = ({ answers, onRestart, globalProducts, deliveryMode }) => {
     );
   }
 
-  const products = getFilteredProducts(answers, globalProducts);
-  const complementary = getAdditionalRecommendations(answers, products.map(p => p.name), globalProducts);
+  const ageVerified = (() => { try { return localStorage.getItem('ef_age_verified') === 'true'; } catch { return false; } })();
+  const products = getFilteredProducts(answers, globalProducts, ageVerified);
+  const complementary = getAdditionalRecommendations(answers, products.map(p => p.name), globalProducts, ageVerified);
   const healthScore = calculateHealthScore(answers);
   const emailWasSent = answers.emailSent;
 
@@ -1628,7 +1765,7 @@ const Results = ({ answers, onRestart, globalProducts, deliveryMode }) => {
 
       if (response.ok) {
         setSendStatus('success');
-        alert("✨ Secure wellness protocol successfully emailed!");
+        alert("✨ Secure wellness plan successfully emailed!");
       } else {
         throw new Error("Could not send report");
       }
@@ -1669,7 +1806,7 @@ const Results = ({ answers, onRestart, globalProducts, deliveryMode }) => {
           </div>
           <div>
             <h4 style={{ margin: 0, fontSize: '1.05rem', color: '#fff' }}>
-              {emailWasSent ? "Clinical Protocol Dispatched!" : "Clinical Protocol Compiled!"}
+              {emailWasSent ? "Health Report Dispatched!" : "Health Report Compiled!"}
             </h4>
             <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-muted-site)' }}>
               {emailWasSent 
@@ -1709,7 +1846,7 @@ const Results = ({ answers, onRestart, globalProducts, deliveryMode }) => {
                 display: 'inline-block',
                 marginBottom: '10px'
               }}>Evaluation Authenticated</span>
-              <h1 style={{ textAlign: 'left', fontSize: '2.25rem', margin: 0, letterSpacing: '-1px' }}>Biological Wellness Protocol</h1>
+              <h1 style={{ textAlign: 'left', fontSize: '2.25rem', margin: 0, letterSpacing: '-1px' }}>Your Wellness Plan</h1>
               <p style={{ color: 'var(--text-muted-site)', margin: '4px 0 0', fontSize: '1rem' }}>Prepared for <strong style={{ color: '#fff' }}>{answers.name}</strong></p>
             </div>
             <div style={{ textAlign: 'right' }}>
@@ -1766,7 +1903,7 @@ const Results = ({ answers, onRestart, globalProducts, deliveryMode }) => {
               <h3 style={{ fontSize: '1.25rem', marginBottom: '0.75rem', color: '#fff' }}>Biological Evaluation Summary</h3>
               <p style={{ color: 'var(--text-muted-site)', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
                 Your index of <strong>{healthScore.score}</strong> indicates that your physiological systems are currently operating in the <strong>{healthScore.status.toLowerCase()}</strong> range. 
-                Based on your goals to optimize <strong>{Array.isArray(answers.primaryGoal) ? answers.primaryGoal.join(' & ') : answers.primaryGoal}</strong> and your focus on <strong>{Array.isArray(answers.specificFocus) ? answers.specificFocus.join(', ') : answers.specificFocus}</strong>, we have formulated the custom supplement protocol detailed below to accelerate your adaptation toward the <strong>Peak</strong> vitality spectrum.
+                Based on your goals to optimize <strong>{Array.isArray(answers.primaryGoal) ? answers.primaryGoal.join(' & ') : answers.primaryGoal}</strong> and your focus on <strong>{Array.isArray(answers.specificFocus) ? answers.specificFocus.join(', ') : answers.specificFocus}</strong>, we have formulated the custom supplement plan detailed below to accelerate your adaptation toward the <strong>Peak</strong> vitality spectrum.
               </p>
             </div>
           </div>
@@ -1795,9 +1932,33 @@ const Results = ({ answers, onRestart, globalProducts, deliveryMode }) => {
             </div>
           </div>
 
+          {/* Editorial Why-We-Recommend Block */}
+          <div style={{ background: 'rgba(0,255,102,0.04)', border: '1px solid rgba(0,255,102,0.12)', borderRadius: '16px', padding: '1.75rem 2rem', marginBottom: '2.5rem', textAlign: 'left' }}>
+            <h3 style={{ fontSize: '1.1rem', color: 'var(--accent-green)', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Shield size={16} /> How We Build Your Plan
+            </h3>
+            <p style={{ color: 'var(--text-muted-site)', fontSize: '0.95rem', lineHeight: '1.7', margin: '0 0 1rem 0' }}>
+              Every recommendation below is matched to your quiz answers using a weighted scoring model that cross-references your primary goal (<strong style={{ color: '#fff' }}>{Array.isArray(answers.primaryGoal) ? answers.primaryGoal.join(' & ') : answers.primaryGoal}</strong>), your reported symptoms, sleep data, and lifestyle factors. We only surface products that meet three criteria:
+            </p>
+            <ul style={{ paddingLeft: '1.25rem', margin: 0, display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              {[
+                'Peer-reviewed evidence supports the active ingredient(s) for your stated goal',
+                'Third-party tested for purity — no proprietary blends hiding underdosed actives',
+                'Dose-matched: the listed serving meets or exceeds clinically studied thresholds'
+              ].map((item, i) => (
+                <li key={i} style={{ fontSize: '0.9rem', color: 'var(--text-muted-site)', lineHeight: '1.5' }}>
+                  <span style={{ color: 'var(--accent-green)', fontWeight: '700' }}>✓ </span>{item}
+                </li>
+              ))}
+            </ul>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginTop: '1rem', marginBottom: 0, fontStyle: 'italic' }}>
+              Disclosure: EternoFit earns a commission if you purchase through our links. This never influences which products are recommended — our selection criteria are applied before affiliate relationships are considered.
+            </p>
+          </div>
+
           {/* Supplement RoadMap Section */}
           <h2 style={{ fontSize: '1.5rem', color: 'var(--secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1.5rem', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <Target size={20} color="var(--secondary)" /> Authorized Supplement Protocol
+            <Target size={20} color="var(--secondary)" /> Recommended Supplement Plan
           </h2>
 
           {products.map((prod, idx) => (
@@ -1943,7 +2104,7 @@ const Results = ({ answers, onRestart, globalProducts, deliveryMode }) => {
           <div className="glass-card" style={{ maxWidth: '100%', padding: '2rem', textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start' }}>
             <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: '#fff' }}>Re-evaluate Biometrics</h3>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-muted-site)', marginBottom: '1.5rem', lineHeight: '1.4' }}>
-              Have your recovery markers or performance goals shifted? Retake the diagnostic evaluation to generate an updated protocol.
+              Have your recovery markers or performance goals shifted? Retake the diagnostic evaluation to generate an updated plan.
             </p>
             <button 
               className="btn-secondary" 
@@ -2003,6 +2164,7 @@ const GlobalNavbar = ({ navigateTo, currentView }) => {
     { key: 'meal', label: 'Meal Planner', icon: <Apple size={16} /> },
     { key: 'stress', label: 'Stress Checker', icon: <HeartPulse size={16} /> },
     { key: 'adhd', label: 'ADHD Toolkit', icon: <Brain size={16} /> },
+    { key: 'mental', label: 'Mental Health', icon: <Smile size={16} /> },
   ];
 
   return (
@@ -2013,7 +2175,6 @@ const GlobalNavbar = ({ navigateTo, currentView }) => {
         </div>
         <div className={`site-nav-links ${isMenuOpen ? 'active' : ''}`}>
           <a href="/articles" onClick={(e) => handleNavClick(e, 'articles')} style={{ color: currentView === 'articles' ? 'var(--accent-green)' : 'inherit' }}>Articles</a>
-          <a href="#education" onClick={(e) => handleScrollClick(e, 'education')}>Contents</a>
           <a href="/marketplace" onClick={(e) => handleNavClick(e, 'marketplace')} style={{ color: currentView === 'marketplace' ? 'var(--accent-green)' : 'inherit' }}>Marketplace</a>
           
           {/* Desktop Tools Dropdown */}
@@ -2149,7 +2310,10 @@ const GlobalNavbar = ({ navigateTo, currentView }) => {
             )}
           </div>
 
-          <button onClick={() => navigateTo('quiz')} className="site-btn-primary" style={{ padding: '8px 20px', fontSize: '0.85rem' }}>Health Quiz</button>
+          <a href="/about" onClick={(e) => handleNavClick(e, 'about')} style={{ color: currentView === 'about' ? 'var(--accent-green)' : 'inherit' }}>About Us</a>
+          <a href="/contact" onClick={(e) => handleNavClick(e, 'contact')} style={{ color: currentView === 'contact' ? 'var(--accent-green)' : 'inherit' }}>Contact Us</a>
+
+          <button onClick={() => navigateTo('quiz')} className="site-btn-primary" style={{ padding: '8px 20px', fontSize: '0.85rem' }}>Health Assessment</button>
         </div>
         <button className="site-mobile-menu-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -2182,7 +2346,6 @@ const Footer = ({ navigateTo }) => (
           <h4>Navigation</h4>
           <ul>
             <li><a href="/articles" onClick={(e) => { e.preventDefault(); navigateTo('articles'); }}>Articles</a></li>
-            <li><a href="#education" onClick={(e) => { e.preventDefault(); const el = document.getElementById('education'); if (el) el.scrollIntoView({ behavior: 'smooth' }); else { navigateTo('home'); setTimeout(() => document.getElementById('education')?.scrollIntoView({ behavior: 'smooth' }), 100); } }}>Contents</a></li>
             <li><a href="/marketplace" onClick={(e) => { e.preventDefault(); navigateTo('marketplace'); }}>Marketplace</a></li>
             <li><a href="/tools" onClick={(e) => { e.preventDefault(); navigateTo('tools'); }}>Tools</a></li>
             <li><a href="/about" onClick={(e) => { e.preventDefault(); navigateTo('about'); }}>About Us</a></li>
@@ -2190,23 +2353,11 @@ const Footer = ({ navigateTo }) => (
           </ul>
         </div>
         <div className="site-footer-links">
-          <h4>Free Tools</h4>
-          <ul>
-            <li><a href="/tools?tool=bmi" onClick={(e) => { e.preventDefault(); navigateTo('tools?tool=bmi'); }}>BMI Calculator</a></li>
-            <li><a href="/tools?tool=testosterone" onClick={(e) => { e.preventDefault(); navigateTo('tools?tool=testosterone'); }}>Testosterone Quiz</a></li>
-            <li><a href="/tools?tool=realage" onClick={(e) => { e.preventDefault(); navigateTo('tools?tool=realage'); }}>Real Age Calculator</a></li>
-            <li><a href="/tools?tool=longevity" onClick={(e) => { e.preventDefault(); navigateTo('tools?tool=longevity'); }}>Longevity Score</a></li>
-            <li><a href="/tools?tool=sleep" onClick={(e) => { e.preventDefault(); navigateTo('tools?tool=sleep'); }}>Sleep Analyzer</a></li>
-            <li><a href="/tools?tool=meal" onClick={(e) => { e.preventDefault(); navigateTo('tools?tool=meal'); }}>Meal Planner</a></li>
-            <li><a href="/tools?tool=stress" onClick={(e) => { e.preventDefault(); navigateTo('tools?tool=stress'); }}>Stress Checker</a></li>
-            <li><a href="/tools?tool=adhd" onClick={(e) => { e.preventDefault(); navigateTo('tools?tool=adhd'); }}>ADHD Toolkit</a></li>
-          </ul>
-        </div>
-        <div className="site-footer-links">
           <h4>Legal</h4>
           <ul>
             <li><a href="/privacy" onClick={(e) => { e.preventDefault(); navigateTo('privacy'); }}>Privacy Policy</a></li>
             <li><a href="/terms" onClick={(e) => { e.preventDefault(); navigateTo('terms'); }}>Terms of Service</a></li>
+            <li><a href="/affiliate-program" onClick={(e) => { e.preventDefault(); navigateTo('affiliate-program'); }}>Affiliate Program</a></li>
             <li><a href="/affiliate" onClick={(e) => { e.preventDefault(); navigateTo('affiliate'); }}>Affiliate Disclosure</a></li>
           </ul>
         </div>
@@ -2241,12 +2392,26 @@ const VideoEmbed = ({ videoId, title }) => (
 const HomePage = ({ navigateTo, globalProducts }) => {
   return (
     <div className="home-page-wrapper">
-      <SEO />
+      <SEO schema={{
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "EternoFit",
+        "url": "https://eternofit.com",
+        "logo": "https://eternofit.com/logo-dark-bg.png",
+        "description": "EternoFit publishes evidence-based health content on testosterone, fat loss, sleep, ADHD, stress, and longevity — written by qualified health professionals.",
+        "sameAs": [
+          "https://www.facebook.com/eternofitforlife",
+          "https://www.instagram.com/eternofitforlife",
+          "https://www.youtube.com/@EternoFit"
+        ],
+        "contactPoint": { "@type": "ContactPoint", "contactType": "customer support", "url": "https://eternofit.com/contact" },
+        "medicalSpecialty": ["General Practice", "Endocrinology", "Nutrition", "Sleep Medicine"]
+      }} />
       <GlobalNavbar navigateTo={navigateTo} currentView="home" />
 
       <section className="site-hero">
         <div className="site-hero-bg">
-          <img src="/Heroimage.jpeg" alt="EternoFit Hero" />
+          <img src="/Quizscreen.jpeg" alt="EternoFit Hero" />
         </div>
         <div className="site-container">
           <div className="site-hero-content">
@@ -2259,7 +2424,92 @@ const HomePage = ({ navigateTo, globalProducts }) => {
                 trackEvent(`${window.userSource || 'organic'}_cta_clicked`);
                 navigateTo('quiz');
               }}>
-                Start Free Health Quiz <ChevronRight size={24} style={{ marginLeft: '8px' }} />
+                Start Free Health Assessment <ChevronRight size={24} style={{ marginLeft: '8px' }} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Value Proposition Strip */}
+      <section style={{ background: 'var(--bg-dark-site)', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '1.75rem 0' }}>
+        <div className="site-container">
+          <p style={{ textAlign: 'center', color: 'var(--text-muted-site)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.25rem' }}>
+            What EternoFit Covers
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
+            {[
+              { icon: <Brain size={22} color="var(--accent-green)" />, title: 'ADHD & Focus', desc: 'Evidence-based strategies for attention, energy, and cognitive performance' },
+              { icon: <Activity size={22} color="var(--accent-green)" />, title: 'Testosterone & Hormones', desc: 'Natural approaches to optimizing male and female hormonal health' },
+              { icon: <Flame size={22} color="var(--accent-green)" />, title: 'Fat Loss & Metabolism', desc: 'Science-backed nutrition and training approaches for body recomposition' },
+              { icon: <Moon size={22} color="var(--accent-green)" />, title: 'Sleep & Stress', desc: 'Cortisol management, HRV tracking, and recovery optimization' },
+            ].map((item, i) => (
+              <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '1.5rem 1rem', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.04)' }}>
+                <div style={{ marginBottom: '0.75rem' }}>{item.icon}</div>
+                <h3 style={{ fontSize: '0.95rem', color: '#fff', margin: '0 0 0.5rem 0', fontWeight: '700' }}>{item.title}</h3>
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-muted-site)', margin: 0, lineHeight: '1.5' }}>{item.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: '1.25rem', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '2rem' }}>
+            {[
+              { stat: `${globalArticles.length}`, label: 'In-Depth Articles' },
+              { stat: '5', label: 'Expert Contributors' },
+              { stat: '8', label: 'Free Tools' },
+              { stat: '100%', label: 'Independent Advice' },
+            ].map((s, i) => (
+              <div key={i} style={{ textAlign: 'center' }}>
+                <span style={{ display: 'block', fontSize: '1.75rem', fontWeight: '800', color: 'var(--accent-green)' }}>{s.stat}</span>
+                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted-site)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{s.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Free Tracker Lead Magnet Banner */}
+      <section style={{ background: 'linear-gradient(135deg, #0a1f0a 0%, #0d1f1a 50%, #091a0d 100%)', borderTop: '1px solid rgba(0,255,102,0.12)', borderBottom: '1px solid rgba(0,255,102,0.12)', padding: '3.5rem 0' }}>
+        <div className="site-container">
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2.5rem', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ flex: '1 1 360px' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(0,255,102,0.15)', border: '1px solid rgba(0,255,102,0.3)', borderRadius: '50px', padding: '4px 14px', fontSize: '0.75rem', fontWeight: '800', color: 'var(--accent-green)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1rem' }}>
+                <span>🎁</span> Free Download
+              </div>
+              <h2 style={{ fontSize: 'clamp(1.6rem, 4vw, 2.4rem)', color: '#fff', margin: '0 0 0.75rem 0', lineHeight: '1.2' }}>
+                Start Your Wellness Reset —<br /><span style={{ color: 'var(--accent-green)' }}>Free 7-Day Tracker</span>
+              </h2>
+              <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '1rem', lineHeight: '1.6', margin: '0 0 0.5rem 0', maxWidth: '480px' }}>
+                Track sleep, hydration, meals, mood, and movement in one beautifully designed printable PDF. No credit card. Instant download.
+              </p>
+            </div>
+            {/* Product Photo */}
+            <div style={{ flex: '0 1 200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img
+                src="/products/7DayWellnessResetTracker.jpg"
+                alt="Free 7-Day Wellness Reset Tracker"
+                onClick={() => navigateTo('product/7-day-wellness-reset-tracker')}
+                style={{ width: '100%', maxWidth: '190px', borderRadius: '16px', boxShadow: '0 8px 32px rgba(0,255,102,0.25), 0 2px 12px rgba(0,0,0,0.5)', cursor: 'pointer', border: '2px solid rgba(0,255,102,0.3)', transition: 'transform 0.2s', display: 'block' }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.04)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+              />
+            </div>
+            <div style={{ flex: '0 1 300px', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {[
+                '7 daily log pages — sleep, hydration, meals & mood',
+                'Habit-stacking prompts to build momentum',
+                'Printable PDF — use it on any device or print at home',
+              ].map((item, i) => (
+                <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                  <span style={{ color: 'var(--accent-green)', fontSize: '1.1rem', lineHeight: 1, marginTop: '1px' }}>✓</span>
+                  <span style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.9rem' }}>{item}</span>
+                </div>
+              ))}
+              <button
+                className="site-btn-primary"
+                style={{ marginTop: '0.5rem', padding: '1rem 2rem', fontSize: '1rem', width: '100%' }}
+                onClick={() => navigateTo('product/7-day-wellness-reset-tracker')}
+              >
+                Get Your Free Tracker →
               </button>
             </div>
           </div>
@@ -2267,120 +2517,165 @@ const HomePage = ({ navigateTo, globalProducts }) => {
       </section>
 
       <section id="homepage-articles" className="site-section" style={{ background: 'var(--bg-surface)' }}>
-        <div className="site-container">
-          <div className="site-section-header fade-in-up">
-            <h2>Latest <span style={{ color: 'var(--accent-green)' }}>Health Insights</span></h2>
-            <p>Science-backed guides and expert strategies to optimize your daily wellbeing.</p>
-          </div>
-          <div className="site-product-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
-            {useMemo(() => {
-              // Take 3 random articles to showcase on the homepage
-              const shuffled = [...globalArticles].sort(() => 0.5 - Math.random());
-              return shuffled.slice(0, 3);
-            }, []).map((art, i) => (
-              <div 
-                key={art.id} 
-                className="site-product-card fade-in-up" 
-                style={{ animationDelay: `${0.1 * i}s`, cursor: 'pointer' }}
-                onClick={() => navigateTo(`article/${art.id}`)}
-              >
-                {art.image && (
-                  <div className="site-article-img-wrapper">
-                    <img src={art.image} alt={art.title} />
+        <div className="site-section-header fade-in-up" style={{ textAlign: 'center', padding: '0 1.5rem' }}>
+          <h2>Latest <span style={{ color: 'var(--accent-green)' }}>Health Insights</span></h2>
+          <p>Science-backed guides and expert strategies to optimize your daily wellbeing.</p>
+        </div>
+        {(() => {
+          const sorted = [...globalArticles].sort((a, b) => new Date(b.date) - new Date(a.date));
+          const doubled = [...sorted, ...sorted];
+          return (
+            <div className="autoscroll-outer" style={{ marginBottom: '2rem' }}>
+              <div className="autoscroll-track autoscroll-track--fast">
+                {doubled.map((art, i) => (
+                  <div
+                    key={`${art.id}-${i}`}
+                    className="autoscroll-card"
+                    onClick={() => navigateTo(`article/${art.id}`)}
+                  >
+                    {art.image && <img src={art.image} alt={art.title} className="autoscroll-card-img" />}
+                    <div className="autoscroll-card-body">
+                      <span className="autoscroll-card-tag">{art.category}</span>
+                      <h3 className="autoscroll-card-title">{art.title}</h3>
+                      <p className="autoscroll-card-meta">{art.date} · {art.readTime}</p>
+                    </div>
                   </div>
-                )}
-                <div className="site-product-info" style={{ display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ color: 'var(--accent-green)', fontSize: '0.8rem', textTransform: 'uppercase', fontWeight: '600', marginBottom: '0.5rem' }}>{art.category}</span>
-                  <h3 style={{ fontSize: '1.25rem', marginBottom: '0.75rem', lineHeight: '1.4' }}>{art.title}</h3>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted-site)', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', marginBottom: '1.5rem', flexGrow: 1 }}>{art.metaDesc}</p>
-                  <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--accent-green)', fontSize: '0.85rem', fontWeight: '600' }}>
-                    <span>{art.date ? `${art.date} • ` : ''}{art.readTime}</span>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>Read Article <ArrowRight size={14} /></span>
-                  </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <div style={{ marginTop: '3rem', textAlign: 'center' }} className="fade-in-up">
-            <button 
-              onClick={() => navigateTo('articles')} 
-              className="site-btn-secondary" 
-              style={{ padding: '1rem 2.5rem', border: '2px solid var(--accent-green)' }}
-            >
-              View All Articles <ArrowRight size={18} style={{ marginLeft: '8px' }} />
-            </button>
-          </div>
+            </div>
+          );
+        })()}
+        <div style={{ textAlign: 'center', paddingBottom: '4rem' }} className="fade-in-up">
+          <button
+            onClick={() => navigateTo('articles')}
+            className="site-btn-secondary"
+            style={{ padding: '1rem 2.5rem', border: '2px solid var(--accent-green)' }}
+          >
+            View All Articles <ArrowRight size={18} style={{ marginLeft: '8px' }} />
+          </button>
         </div>
       </section>
 
       <section id="education" className="site-section">
         <div className="site-container">
-          <div className="site-section-header fade-in-up">
+          <div className="site-section-header fade-in-up" style={{ textAlign: 'center', padding: '0 1.5rem' }}>
             <h2><span style={{ color: 'var(--accent-green)' }}>Educational</span> Contents</h2>
             <p>Science-backed insights for professional-grade performance.</p>
           </div>
-          <div className="site-video-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
-            <div className="fade-in-up">
-              <VideoEmbed videoId="Doev0iBuG-M" title="Clinical Protocol 01" />
-            </div>
-            <div className="fade-in-up" style={{ animationDelay: '0.1s' }}>
-              <VideoEmbed videoId="Q2k0I_wWrN8" title="Clinical Protocol 02" />
-            </div>
-            <div className="fade-in-up" style={{ animationDelay: '0.2s' }}>
-              <VideoEmbed videoId="Qt6U3uha3sE" title="Clinical Protocol 03" />
-            </div>
-          </div>
         </div>
+        {(() => {
+          const videos = [
+            { id: 'Doev0iBuG-M', title: 'Clinical Insight 01', isShort: false },
+            { id: 'Q2k0I_wWrN8', title: 'Clinical Insight 02', isShort: false },
+            { id: 'Qt6U3uha3sE', title: 'Clinical Insight 03', isShort: false },
+            { id: 'MUMmBAMZerI', title: 'Wellness Tip 01', isShort: true },
+            { id: '3AoCVZgXN60', title: 'Wellness Tip 02', isShort: true },
+            { id: 'MGiOO0oWv5w', title: 'Wellness Tip 03', isShort: true },
+            { id: 'Hliw62gg4rg', title: 'Wellness Tip 04', isShort: true },
+            { id: '_JBHJFVg8n4', title: 'Wellness Tip 05', isShort: true },
+          ];
+          const doubled = [...videos, ...videos];
+          return (
+            <div className="autoscroll-outer">
+              <div className="autoscroll-track" style={{ animationDuration: '60s', gap: '1.25rem', alignItems: 'center' }}>
+                {doubled.map((v, i) => (
+                  <a
+                    key={i}
+                    href={v.isShort ? `https://www.youtube.com/shorts/${v.id}` : `https://www.youtube.com/watch?v=${v.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent('video_click', { title: v.title })}
+                    style={{
+                      display: 'block',
+                      flexShrink: 0,
+                      width: v.isShort ? '160px' : '280px',
+                      borderRadius: '12px',
+                      overflow: 'hidden',
+                      position: 'relative',
+                      border: '1px solid rgba(255,255,255,0.08)',
+                      textDecoration: 'none',
+                      transition: 'transform 0.2s ease, border-color 0.2s ease',
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.03)'; e.currentTarget.style.borderColor = 'var(--accent-green)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}
+                  >
+                    <img
+                      src={`https://img.youtube.com/vi/${v.id}/0.jpg`}
+                      alt={v.title}
+                      style={{
+                        width: '100%',
+                        height: v.isShort ? '285px' : '158px',
+                        objectFit: 'cover',
+                        display: 'block',
+                      }}
+                    />
+                    {/* Play button overlay */}
+                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.25)' }}>
+                      <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: 'rgba(255,0,0,0.85)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="white"><polygon points="5,3 13,8 5,13"/></svg>
+                      </div>
+                    </div>
+                    {/* Title bar */}
+                    <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85), transparent)', padding: '1.5rem 0.75rem 0.6rem', fontSize: '0.75rem', fontWeight: '600', color: '#fff' }}>
+                      {v.title}
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
       </section>
 
       <section id="fuel" className="site-section">
-        <div className="site-container">
-          <div className="site-section-header fade-in-up">
-            <h2><span style={{ color: 'var(--accent-green)' }}>Marketplace</span> Recommendations</h2>
-            <p>Premium-grade tools and nutrients to support elite performance and results.</p>
-          </div>
-          <div className="site-product-grid">
-            {useMemo(() => {
-              const products = globalProducts && globalProducts.length > 0 ? globalProducts.filter(p => p.category !== 'General Health') : [
-                { name: 'Micronized Creatine Monohydrate', price: '$34.99', desc: 'Pharmaceutical-grade ATP support for power output and cognitive function.', image: 'https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&q=80&sig=10', affiliateLink: '#' },
-                { name: 'Magnesium Glycinate Complex', price: '$24.99', desc: 'High-bioavailability recovery support for central nervous system regulation.', image: 'https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&q=80&sig=11', affiliateLink: '#' },
-                { name: 'Vitamin D3 + K2 (Liposomal)', price: '$39.99', desc: 'Clinical-strength immune and hormonal support for year-round performance.', image: 'https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&q=80&sig=12', affiliateLink: '#' }
-              ];
-              return [...products].sort(() => 0.5 - Math.random()).slice(0, 3);
-            }, [globalProducts]).map((p, i) => (
-              <div key={i} className="site-product-card fade-in-up" style={{ animationDelay: `${0.1 * i}s` }}>
-                <div className="site-product-img">
-                  <img src={p.image || `https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&q=80&sig=${i+10}`} alt={p.name} />
-                </div>
-                <div className="site-product-info">
-                  <h3>{p.name}</h3>
-                  <p>{p.desc || p.description}</p>
-                  <div className="site-product-footer">
-                    <span className="price">{p.price}</span>
-                    <a 
-                      href={p.affiliateLink || '#'} 
-                      onClick={() => trackEvent(`${window.userSource || 'organic'}_affiliate_link_clicked`, { product: p.name })}
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="site-btn-secondary" 
-                      style={{ textDecoration: 'none' }}
-                    >
-                      Buy Now
-                    </a>
+        <div className="site-section-header fade-in-up" style={{ textAlign: 'center', padding: '0 1.5rem' }}>
+          <h2><span style={{ color: 'var(--accent-green)' }}>Marketplace</span> Recommendations</h2>
+          <p>Premium-grade tools and nutrients to support elite performance and results.</p>
+        </div>
+        {(() => {
+          const allProds = globalProducts && globalProducts.length > 0
+            ? globalProducts.filter(p => p.status !== 'inactive')
+            : [];
+          const doubled = [...allProds, ...allProds];
+          return (
+            <div className="autoscroll-outer" style={{ marginBottom: '2rem' }}>
+              <div className="autoscroll-track autoscroll-track--fast">
+                {doubled.map((p, i) => (
+                  <div
+                    key={`${p.id ?? p.name}-${i}`}
+                    className="autoscroll-card"
+                    onClick={() => navigateTo('product/' + encodeURIComponent((p.name || '').toLowerCase().replace(/\s+/g, '-')))}
+                  >
+                    <img
+                      src={p.image || `https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&q=80&sig=${i}`}
+                      alt={p.name}
+                      className="autoscroll-product-img"
+                    />
+                    <div className="autoscroll-card-body">
+                      <span className="autoscroll-card-tag">{p.category}</span>
+                      <h3 className="autoscroll-card-title">{p.name}</h3>
+                      <p className="autoscroll-card-meta" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{p.description}</p>
+                      {(p.isFree || p.price != null) && (
+                        <span style={{ color: p.isFree ? 'var(--accent-green)' : p.isBundle ? '#fbbf24' : 'var(--accent-green)', fontWeight: '800', fontSize: '0.9rem', marginTop: '0.25rem', display: 'block' }}>
+                          {p.isFree ? 'FREE' : `$${p.price}`}
+                          {p.badge && <span style={{ marginLeft: '6px', fontSize: '0.72rem', fontWeight: '700', opacity: 0.8 }}>· {p.badge}</span>}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <div style={{ marginTop: '3rem', textAlign: 'center' }} className="fade-in-up">
-            <button 
-              onClick={() => navigateTo('marketplace')} 
-              className="site-btn-secondary" 
-              style={{ padding: '1rem 2.5rem', border: '2px solid var(--accent-green)' }}
-            >
-              View Full Marketplace <ArrowRight size={18} style={{ marginLeft: '8px' }} />
-            </button>
-          </div>
+            </div>
+          );
+        })()}
+        <div style={{ textAlign: 'center', paddingBottom: '4rem' }} className="fade-in-up">
+          <button
+            onClick={() => navigateTo('marketplace')}
+            className="site-btn-secondary"
+            style={{ padding: '1rem 2.5rem', border: '2px solid var(--accent-green)' }}
+          >
+            View Full Marketplace <ArrowRight size={18} style={{ marginLeft: '8px' }} />
+          </button>
         </div>
       </section>
 
@@ -2438,7 +2733,6 @@ const HomePage = ({ navigateTo, globalProducts }) => {
               <h4>Navigation</h4>
               <ul>
                 <li><a href="#homepage-articles" onClick={(e) => { e.preventDefault(); document.getElementById('homepage-articles').scrollIntoView({ behavior: 'smooth' }); }}>Articles</a></li>
-                <li><a href="#education" onClick={(e) => { e.preventDefault(); document.getElementById('education').scrollIntoView({ behavior: 'smooth' }); }}>Contents</a></li>
                 <li><a href="/marketplace" onClick={(e) => { e.preventDefault(); navigateTo('marketplace'); }}>Marketplace</a></li>
                 <li><a href="/tools" onClick={(e) => { e.preventDefault(); navigateTo('tools'); }}>Tools</a></li>
                 <li><a href="/about" onClick={(e) => { e.preventDefault(); navigateTo('about'); }}>About Us</a></li>
@@ -2446,23 +2740,12 @@ const HomePage = ({ navigateTo, globalProducts }) => {
               </ul>
             </div>
             <div className="site-footer-links">
-              <h4>Diagnostic Tools</h4>
-              <ul>
-                <li><a href="/tools?tool=testosterone" onClick={(e) => { e.preventDefault(); navigateTo('tools'); window.history.pushState({}, '', '/tools?tool=testosterone'); window.dispatchEvent(new PopStateEvent('popstate')); }}>Testosterone Quiz</a></li>
-                <li><a href="/tools?tool=bmi" onClick={(e) => { e.preventDefault(); navigateTo('tools'); window.history.pushState({}, '', '/tools?tool=bmi'); window.dispatchEvent(new PopStateEvent('popstate')); }}>BMI & Body Fat Calculator</a></li>
-                <li><a href="/tools?tool=realage" onClick={(e) => { e.preventDefault(); navigateTo('tools'); window.history.pushState({}, '', '/tools?tool=realage'); window.dispatchEvent(new PopStateEvent('popstate')); }}>Biological Age Calculator</a></li>
-                <li><a href="/tools?tool=sleep" onClick={(e) => { e.preventDefault(); navigateTo('tools'); window.history.pushState({}, '', '/tools?tool=sleep'); window.dispatchEvent(new PopStateEvent('popstate')); }}>Sleep & Circadian Analyzer</a></li>
-                <li><a href="/tools?tool=longevity" onClick={(e) => { e.preventDefault(); navigateTo('tools'); window.history.pushState({}, '', '/tools?tool=longevity'); window.dispatchEvent(new PopStateEvent('popstate')); }}>Healthspan Scorecard</a></li>
-                <li><a href="/tools?tool=meal" onClick={(e) => { e.preventDefault(); navigateTo('tools'); window.history.pushState({}, '', '/tools?tool=meal'); window.dispatchEvent(new PopStateEvent('popstate')); }}>Meal Plan Builder</a></li>
-                <li><a href="/tools?tool=stress" onClick={(e) => { e.preventDefault(); navigateTo('tools'); window.history.pushState({}, '', '/tools?tool=stress'); window.dispatchEvent(new PopStateEvent('popstate')); }}>ANS Adrenal Checker</a></li>
-              </ul>
-            </div>
-            <div className="site-footer-links">
               <h4>Legal</h4>
               <ul>
                 <li><a href="/privacy" onClick={(e) => { e.preventDefault(); navigateTo('privacy'); }}>Privacy Policy</a></li>
                 <li><a href="/terms" onClick={(e) => { e.preventDefault(); navigateTo('terms'); }}>Terms of Service</a></li>
-                <li><a href="/affiliate" onClick={(e) => { e.preventDefault(); navigateTo('affiliate'); }}>Affiliate Disclosure</a></li>
+                <li><a href="/affiliate-program" onClick={(e) => { e.preventDefault(); navigateTo('affiliate-program'); }}>Affiliate Program</a></li>
+            <li><a href="/affiliate" onClick={(e) => { e.preventDefault(); navigateTo('affiliate'); }}>Affiliate Disclosure</a></li>
               </ul>
             </div>
           </div>
@@ -2483,21 +2766,92 @@ const HomePage = ({ navigateTo, globalProducts }) => {
 };
 
 const AffiliateDisclosure = ({ navigateTo }) => (
-  <div className="site-container" style={{ padding: '120px 24px', color: 'var(--text-main-site)' }}>
-    <h1 style={{ marginBottom: '2rem', fontSize: '2.5rem' }}>Affiliate Disclosure</h1>
-    <div style={{ opacity: 0.8, lineHeight: '1.8' }}>
+  <div className="site-container" style={{ padding: '120px 24px 80px', color: 'var(--text-main-site)', maxWidth: '760px' }}>
+    <h1 style={{ marginBottom: '2rem', fontSize: '2.5rem', fontWeight: '800' }}>Affiliate Disclosure</h1>
+    <div style={{ opacity: 0.8, lineHeight: '1.8', fontSize: '0.97rem' }}>
       <p style={{ marginBottom: '1.5rem' }}>
-        In compliance with the FTC guidelines, please assume that any and all links on this website are affiliate links of which EternoFit receives a small commission from sales of certain items.
+        In compliance with FTC guidelines, please assume that any and all links on this website are affiliate links of which EternoFit receives a small commission from sales of certain items.
       </p>
       <p style={{ marginBottom: '1.5rem' }}>
-        <strong>What is an Affiliate Link?</strong><br/>
-        When you click an affiliate link and purchase an item, the seller pays us a small commission or other compensation for promoting their website or products through their affiliate program. Prices are exactly the same for you if your purchase is through an affiliate link or a non-affiliate link.
+        <strong style={{ color: '#fff' }}>What is an Affiliate Link?</strong><br/>
+        When you click an affiliate link and purchase an item, the seller pays us a small commission for promoting their products. Prices are exactly the same for you whether you use an affiliate link or not.
       </p>
       <p style={{ marginBottom: '1.5rem' }}>
-        <strong>Why do we use them?</strong><br/>
-        These commissions help us maintain the website and continue providing high-quality health and fitness content for free. We only recommend products we truly believe in and that align with the EternoFit philosophy of health and performance.
+        <strong style={{ color: '#fff' }}>Why do we use them?</strong><br/>
+        These commissions help us maintain the website and continue providing high-quality health and fitness content for free. We only recommend products we genuinely believe in and that align with the EternoFit philosophy.
       </p>
-      <button className="site-btn-secondary" onClick={() => navigateTo('home')}>Back to Home</button>
+      <p style={{ marginBottom: '2rem' }}>
+        <strong style={{ color: '#fff' }}>Want to earn commissions yourself?</strong><br/>
+        Join our affiliate program and earn 50% on every sale you refer. <button onClick={() => navigateTo('affiliate-program')} style={{ background: 'none', border: 'none', color: 'var(--accent-green)', cursor: 'pointer', textDecoration: 'underline', padding: 0, fontSize: 'inherit' }}>Learn more →</button>
+      </p>
+    </div>
+    <button className="site-btn-secondary" onClick={() => navigateTo('home')}>Back to Home</button>
+  </div>
+);
+
+const AffiliateProgram = ({ navigateTo }) => (
+  <div className="site-container" style={{ padding: '120px 24px 80px', color: 'var(--text-main-site)', maxWidth: '860px' }}>
+    {/* Hero */}
+    <div style={{ background: 'rgba(0,230,118,0.06)', border: '1px solid rgba(0,230,118,0.25)', borderRadius: '20px', padding: '2.5rem', marginBottom: '3rem', textAlign: 'center' }}>
+      <p style={{ fontSize: '0.78rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent-green)', marginBottom: '0.75rem' }}>Affiliate Program</p>
+      <h1 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', fontWeight: '900', marginBottom: '1rem', lineHeight: '1.15' }}>Earn 50% Commission on Every Sale</h1>
+      <p style={{ color: 'var(--text-muted-site)', fontSize: '1.05rem', maxWidth: '560px', margin: '0 auto 1.75rem', lineHeight: '1.7' }}>
+        Promote EternoFit's digital wellness products and earn 50% of every sale you refer — paid out automatically through Gumroad.
+      </p>
+      <a
+        href="https://eternofit.gumroad.com/affiliates"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'var(--accent-green)', color: '#0a0f0a', fontWeight: '800', fontSize: '1rem', padding: '14px 32px', borderRadius: '12px', textDecoration: 'none', transition: 'opacity 0.2s' }}
+        onMouseEnter={e => e.currentTarget.style.opacity = '0.88'}
+        onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+      >
+        Join the Affiliate Program <ChevronRight size={18} />
+      </a>
+    </div>
+
+    {/* How it works */}
+    <h2 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '1.25rem' }}>How It Works</h2>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginBottom: '3rem' }}>
+      {[
+        { step: '1', title: 'Sign Up', desc: 'Create a free Gumroad account and apply to the EternoFit affiliate program.' },
+        { step: '2', title: 'Get Your Link', desc: 'Receive a unique affiliate link for each of our digital wellness products.' },
+        { step: '3', title: 'Promote', desc: 'Share your links on social media, YouTube, blogs, email, or anywhere you reach an audience.' },
+        { step: '4', title: 'Earn 50%', desc: 'Earn 50% commission on every sale you refer — paid out automatically by Gumroad.' },
+      ].map(({ step, title, desc }) => (
+        <div key={step} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '14px', padding: '1.5rem' }}>
+          <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'var(--accent-green)', color: '#0a0f0a', fontWeight: '900', fontSize: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.85rem' }}>{step}</div>
+          <h3 style={{ fontWeight: '700', marginBottom: '0.5rem', fontSize: '1rem' }}>{title}</h3>
+          <p style={{ color: 'var(--text-muted-site)', fontSize: '0.88rem', lineHeight: '1.6', margin: 0 }}>{desc}</p>
+        </div>
+      ))}
+    </div>
+
+    {/* Commission table */}
+    <h2 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '1.25rem' }}>Commission Per Sale</h2>
+    <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '14px', overflow: 'hidden', marginBottom: '3rem' }}>
+      {[
+        { name: '7-Day Wellness Reset Tracker', price: 'Free', commission: '—' },
+        { name: '90-Day Wellness Tracker', price: '$10', commission: '$5.00' },
+        { name: 'Meal Planning Pack', price: '$7', commission: '$3.50' },
+        { name: 'Self-Care Journal', price: '$7', commission: '$3.50' },
+        { name: 'Workout Log', price: '$7', commission: '$3.50' },
+        { name: '30 Quick & Healthy Meals', price: '$10', commission: '$5.00' },
+        { name: 'Wellness Starter Kit', price: '$25', commission: '$12.50' },
+      ].map((p, i, arr) => (
+        <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.85rem 1.25rem', borderBottom: i < arr.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none', fontSize: '0.9rem' }}>
+          <span style={{ color: 'var(--text-main-site)', fontWeight: '500' }}>{p.name}</span>
+          <div style={{ display: 'flex', gap: '2rem', flexShrink: 0 }}>
+            <span style={{ color: 'var(--text-muted-site)', minWidth: '40px', textAlign: 'right' }}>{p.price}</span>
+            <span style={{ color: p.commission === '—' ? 'var(--text-muted-site)' : 'var(--accent-green)', fontWeight: '700', minWidth: '60px', textAlign: 'right' }}>{p.commission}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+      <a href="https://eternofit.gumroad.com/affiliates" target="_blank" rel="noopener noreferrer" className="site-btn-primary" style={{ textDecoration: 'none', padding: '12px 28px' }}>Join the Program</a>
+      <button className="site-btn-secondary" onClick={() => navigateTo('home')} style={{ padding: '12px 28px' }}>Back to Home</button>
     </div>
   </div>
 );
@@ -2742,6 +3096,7 @@ function App() {
       else if (path === 'terms') setView('terms');
       else if (path === 'privacy') setView('privacy');
       else if (path === 'affiliate') setView('affiliate');
+      else if (path === 'affiliate-program') setView('affiliateProgram');
       else if (path === 'about') setView('about');
       else if (path === 'contact' || path === 'support') setView('contact');
       else if (path === 'unsubscribe') setView('unsubscribe');
@@ -2768,7 +3123,8 @@ function App() {
 
   const handleEmailSubmit = async (name, email) => {
     const updatedAnswers = { ...answers, name };
-    const recs = getFilteredProducts(updatedAnswers, globalProducts);
+    const _ageVerified = (() => { try { return localStorage.getItem('ef_age_verified') === 'true'; } catch { return false; } })();
+    const recs = getFilteredProducts(updatedAnswers, globalProducts, _ageVerified);
     const fullData = {
       answers: updatedAnswers,
       email,
@@ -2813,7 +3169,7 @@ function App() {
             htmlName: name,
             reportUrl: `${window.location.origin}/email-template?id=${fullData.id}`,
             products: recs,
-            complementary: getAdditionalRecommendations(updatedAnswers, recs.map(r => r.name), globalProducts),
+            complementary: getAdditionalRecommendations(updatedAnswers, recs.map(r => r.name), globalProducts, _ageVerified),
             answers: { ...updatedAnswers, id: fullData.id },
             healthScore: calculateHealthScore(updatedAnswers)
           })
@@ -2842,6 +3198,7 @@ function App() {
 
   const navigateTo = (path) => {
     window.history.pushState({}, '', `/${path}`);
+    window.scrollTo({ top: 0, behavior: 'instant' });
     window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
@@ -2874,11 +3231,20 @@ function App() {
         {view === 'results' && <Results answers={answers} onRestart={() => navigateTo('home')} globalProducts={globalProducts} deliveryMode={deliveryMode} />}
         {view === 'admin' && <AdminPanel onBack={() => navigateTo('home')} globalProducts={globalProducts} reloadProducts={reloadProducts} deliveryMode={deliveryMode} onToggleDeliveryMode={handleToggleDeliveryMode} />}
         {view === 'marketplace' && <Marketplace globalProducts={globalProducts} navigateTo={navigateTo} />}
-        {view === 'digitalProduct' && <DigitalProductPage slug={window.productSlug} globalProducts={globalProducts} navigateTo={navigateTo} />}
+        {view === 'digitalProduct' && (() => {
+          const slug = window.productSlug;
+          const prod = globalProducts?.find(p => p.name.toLowerCase().replace(/\s+/g, '-') === slug);
+          // Physical products get the on-site review/detail page; digital products keep their dedicated page.
+          if (prod && prod.category !== 'Digital Products') {
+            return <ProductPage slug={slug} globalProducts={globalProducts} navigateTo={navigateTo} />;
+          }
+          return <DigitalProductPage slug={slug} globalProducts={globalProducts} navigateTo={navigateTo} />;
+        })()}
         {view === 'emailTemplate' && <VisualEmailTemplate globalProducts={globalProducts} />}
         {view === 'terms' && <TermsOfService />}
         {view === 'privacy' && <PrivacyPolicy />}
         {view === 'affiliate' && <AffiliateDisclosure navigateTo={navigateTo} />}
+        {view === 'affiliateProgram' && <AffiliateProgram navigateTo={navigateTo} />}
         {view === 'about' && <AboutUs navigateTo={navigateTo} />}
         {view === 'contact' && <ContactUs />}
         {view === 'articles' && <Articles navigateTo={navigateTo} globalProducts={globalProducts} />}

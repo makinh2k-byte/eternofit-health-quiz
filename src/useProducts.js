@@ -4,33 +4,11 @@ import { db } from './firebase'; // Wait, does src/firebase.js exist? App.jsx im
 import { products as defaultProducts } from './data/products';
 
 export const useProducts = () => {
-  const [products, setProducts] = useState(defaultProducts);
-  const [loading, setLoading] = useState(true);
+  // Always use local products.js as the single source of truth.
+  // This keeps local dev and the live site identical.
+  const [products] = useState(defaultProducts);
+  const loading = false;
+  const reloadProducts = () => {};
 
-  const fetchProducts = async () => {
-    setLoading(true);
-    try {
-      const querySnapshot = await getDocs(collection(db, "products"));
-      if (!querySnapshot.empty) {
-        const dbProducts = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        // Merge dbProducts with local defaultProducts so any new local products are visible
-        const dbIds = new Set(dbProducts.map(p => p.id.toString()));
-        const missingLocals = defaultProducts.filter(p => !dbIds.has(p.id.toString()));
-        setProducts([...dbProducts, ...missingLocals]);
-      } else {
-        setProducts(defaultProducts);
-      }
-    } catch (error) {
-      console.warn("Failed to fetch products from Firebase, using default.", error);
-      setProducts(defaultProducts);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  return { products, loading, reloadProducts: fetchProducts };
+  return { products, loading, reloadProducts };
 };
